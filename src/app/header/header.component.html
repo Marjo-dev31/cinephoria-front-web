@@ -1,0 +1,171 @@
+<header>
+    <nav
+        class="flex justify-evenly center p-4 items-center border-b-2 border-b-peach"
+    >
+        <a [routerLink]="['/']" class="md:basis-1/3">
+            <img
+                src="/logo.png"
+                alt="logo de Cinéphoria"
+                class="w-16 rounded-full border-2 border-darkblue"
+            />
+        </a>
+        <div
+            class="flex flex-col justify-center gap-1.5 p-2 border-2 border-darkblue rounded-full md:basis-1/3 md:hidden"
+            (click)="showSideMenu()"
+            (keyup.enter)="showSideMenu()"
+            tabindex="0"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-8"
+                [ngStyle]="{ display: isShow() ? 'none' : 'flex' }"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+            </svg>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-8"
+                [ngStyle]="{ display: isShow() ? 'flex' : 'none' }"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18 18 6M6 6l12 12"
+                />
+            </svg>
+        </div>
+        <div class="hidden md:flex basis-1/3 md:justify-center">
+            <ul
+                class="flex w-full justify-evenly items-center gap-4 *:px-3 *:py-1"
+            >
+                <li class="relative hover:cursor-pointer">
+                    <a
+                        [routerLink]="['movies']"
+                        class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-darkblue before:transition-all before:duration-500 hover:text-seasalt hover:before:right-0 hover:before:w-full"
+                        ><span class="relative z-10">Films</span></a
+                    >
+                </li>
+                <li class="relative hover:cursor-pointer">
+                    <a
+                        [routerLink]="['reservation']"
+                        class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-darkblue before:transition-all before:duration-500 hover:text-seasalt hover:before:right-0 hover:before:w-full"
+                        ><span class="relative z-10">Réservation</span></a
+                    >
+                </li>
+                <!-- if connection or not -->
+                @if (isLogin()) {
+                    <!-- if role admin else user -->
+                    @if (isAdmin()) {
+                        <li class="relative hover:cursor-pointer">
+                            <a
+                                [routerLink]="['administration']"
+                                class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-darkblue before:transition-all before:duration-500 hover:text-seasalt hover:before:right-0 hover:before:w-full"
+                                ><span class="relative z-10"
+                                    >Administration</span
+                                ></a
+                            >
+                        </li>
+                    } @else if (isEmployee()) {
+                        <li class="relative hover:cursor-pointer">
+                            <a
+                                [routerLink]="['intranet']"
+                                class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-darkblue before:transition-all before:duration-500 hover:text-seasalt hover:before:right-0 hover:before:w-full"
+                                ><span class="relative z-10">Intranet </span></a
+                            >
+                        </li>
+                    } @else {
+                        <li class="relative hover:cursor-pointer">
+                            <a
+                                [routerLink]="['myspace']"
+                                class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-darkblue before:transition-all before:duration-500 hover:text-seasalt hover:before:right-0 hover:before:w-full"
+                                ><span class="relative z-10"
+                                    >Mon Espace</span
+                                ></a
+                            >
+                        </li>
+                    }
+                    <li class="relative hover:cursor-pointer">
+                        <a
+                            (click)="logout()"
+                            (keyup)="logout()"
+                            tabindex="0"
+                            class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-darkblue before:transition-all before:duration-500 hover:text-seasalt hover:before:right-0 hover:before:w-full"
+                            ><span class="relative z-10">Déconnexion</span></a
+                        >
+                    </li>
+                } @else {
+                    <li class="relative hover:cursor-pointer">
+                        <a
+                            [routerLink]="['login']"
+                            class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-darkblue before:transition-all before:duration-500 hover:text-seasalt hover:before:right-0 hover:before:w-full"
+                            ><span class="relative z-10">Se connecter</span></a
+                        >
+                    </li>
+                }
+                <li class="relative hover:cursor-pointer">
+                    <a
+                        [routerLink]="['contact']"
+                        class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-darkblue before:transition-all before:duration-500 hover:text-seasalt hover:before:right-0 hover:before:w-full"
+                        ><span class="relative z-10">Contact</span></a
+                    >
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <aside
+        (click)="showSideMenu()"
+        [ngStyle]="{ display: isShow() ? 'flex' : 'none' }"
+        class="justify-center bg-secondary p-10"
+        tabindex="0"
+        (keyup.enter)="showSideMenu()"
+        role="button"
+    >
+        <ul class="text-center space-y-6">
+            <li class="">
+                <a [routerLink]="['movies']">Films</a>
+            </li>
+            <li class="relative">
+                <a [routerLink]="['reservation']">Réservation</a>
+            </li>
+            <!-- if connection or not -->
+            @if (isLogin()) {
+                <!-- if role admin else user -->
+                @if (isAdmin()) {
+                    <li>
+                        <a [routerLink]="['administration']">Administration</a>
+                    </li>
+                } @else if (isEmployee()) {
+                    <li>
+                        <a [routerLink]="['intranet']">Intranet</a>
+                    </li>
+                } @else {
+                    <li>
+                        <a [routerLink]="['myspace']">Mon espace</a>
+                    </li>
+                }
+                <li>
+                    <a (click)="logout()" (keyup)="logout()" tabindex="0"
+                        >Déconnexion</a
+                    >
+                </li>
+            } @else {
+                <li>
+                    <a [routerLink]="['login']">Se connecter</a>
+                </li>
+            }
+            <li><a [routerLink]="['contact']"></a>Contact</li>
+        </ul>
+    </aside>
+</header>
