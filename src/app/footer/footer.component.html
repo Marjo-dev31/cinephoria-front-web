@@ -1,0 +1,64 @@
+<footer class="bg-sage text-center text-sm">
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-7 md:items-center">
+        <div class="md:col-start-2">
+            <p class="p-2">Siège Social :</p>
+            <p>Cinéphoria</p>
+            <p>Place du 7ème Art</p>
+            <p>75000 Paris</p>
+            <p class="p-2">01.01.01.01.01</p>
+        </div>
+        <!-- a mettre en bdd mongo-->
+        <div class="md:col-start-4">
+            <p>Nos horaires:</p>
+            <ul>
+                <li>Du lundi au dimanche</li>
+                <li>De 9h30 à 23h</li>
+            </ul>
+        </div>
+        <div class="flex flex-col gap-2 md:col-start-6 justify-around">
+            <a [routerLink]="['contact']" class="hover:underline p-2"
+                >Contact</a
+            >
+            <a
+                [routerLink]="['/politiquedeconfidentialite']"
+                class="hover:underline"
+                >Politique de confidentialité</a
+            >
+            <a
+                [routerLink]="['/conditionsgeneralesdevente']"
+                class="hover:underline"
+                >CGV</a
+            >
+        </div>
+    </div>
+    <div>
+        <div class="md:col-start-4">
+            <ul class="flex items-center justify-center gap-4">
+                <li>
+                    <a class="cursor-pointer"
+                        ><img
+                            src="/icon-facebook.svg"
+                            alt="Lien vers notre compte Facebook"
+                    /></a>
+                </li>
+                <li>
+                    <a class="cursor-pointer"
+                        ><img
+                            src="/icon-instagram.svg"
+                            alt="Lien vers notre compte Instagram"
+                    /></a>
+                </li>
+                <li>
+                    <a class="cursor-pointer"
+                        ><img
+                            src="/twitter-x.svg"
+                            alt="Lien vers notre compte X"
+                    /></a>
+                </li>
+            </ul>
+        </div>
+        <div class="italic p-4 text-sm hover:underline">
+            <a href="https://github.com/Marjo-dev31">MB Project</a>
+        </div>
+    </div>
+</footer>
