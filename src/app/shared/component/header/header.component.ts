@@ -10,6 +10,8 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
     isShow = signal(false);
+
+    // recuperer current user and role
     isLogin = signal(false);
     isAdmin = signal(false);
     isEmployee = signal(false);

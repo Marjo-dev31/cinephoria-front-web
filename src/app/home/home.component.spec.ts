@@ -1,23 +1,45 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
+import { MoviesService } from '../movies/movies.service';
+import { environment } from '../../environments/environment';
+import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+    let component: HomeComponent;
+    let fixture: ComponentFixture<HomeComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [HomeComponent]
-    })
-    .compileComponents();
+    const mockMoviesService = {
+        getAllMovies: jest
+            .fn()
+            .mockReturnValue(
+                of([
+                    {
+                        title: 'test',
+                        description: 'test',
+                        minimun_Age: 0,
+                        is_Favorite: false,
+                        imag_Url: 'test.jpg',
+                    },
+                ]),
+            ),
+    };
 
-    fixture = TestBed.createComponent(HomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(async () => {
+        environment.serverUrl = 'http://fake-url.test';
+        await TestBed.configureTestingModule({
+            imports: [HomeComponent],
+            providers: [
+                { provide: MoviesService, useValue: mockMoviesService },
+            ],
+        }).compileComponents();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        fixture = TestBed.createComponent(HomeComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
