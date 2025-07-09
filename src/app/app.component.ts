@@ -8,7 +8,7 @@ import { FooterComponent } from './shared/component/footer/footer.component';
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `<app-header />
   <main><router-outlet /></main>
-  <app-footer class="mt-auto"/>`,
+  <app-footer class="mt-20"/>`,
   styleUrl: './app.component.css'
 })
 export class AppComponent {
