@@ -1,24 +1,20 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Signal } from '@angular/core';
 import { CarouselComponent } from '../shared/ui/carrousel';
 import { MoviesService } from '../movies/movies.service';
+import { MovieUpdateInterface } from '../movies/movie.interface';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-home',
-  imports: [CarouselComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+    selector: 'app-home',
+    imports: [CarouselComponent],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit {
-  private readonly moviesService = inject(MoviesService)
+export class HomeComponent {
+    private readonly moviesService = inject(MoviesService);
 
-  moviesback!: any
-
-  ngOnInit(): void {
-    this.getAllMovies()
-  }
-  getAllMovies() {
-    this.moviesService.getAllMovies().subscribe((response)=>{
-      this.moviesback = response
-    })
-  }
+    moviesback: Signal<MovieUpdateInterface[]> = toSignal(
+        this.moviesService.getAllMovies(),
+        { initialValue: [] },
+    );
 }
