@@ -1,4 +1,4 @@
-import { Component, inject, Signal } from '@angular/core';
+import { Component, effect, inject, Signal } from '@angular/core';
 import { MovieUpdateInterface } from './movie.interface';
 import { MoviesService } from './movies.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -20,4 +20,6 @@ export class MoviesComponent {
         this.moviesService.getAllMovies(),
         { initialValue: [] },
     );
+
+    movieeffect = effect(()=>console.log(this.movies()))
 }
