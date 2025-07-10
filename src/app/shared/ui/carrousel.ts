@@ -12,12 +12,12 @@ import { environment } from '../../../environments/environment';
                 class="flex transition-transform duration-500 ease-in-out w-full"
                 [style.transform]="transform"
             >
-                <ul class="flex shrink-[{{currentIndex}}] items-center">
+                <ul class="flex shrink-[{{ currentIndex }}] items-center">
                     @for (item of items(); track $index) {
                         <li class="min-w-full">
                             <img
                                 [src]="this.url + item.image_Url"
-                                alt="Affiche des dernières sorties"
+                                [alt]="'Affiche du film' + item.title"
                                 class="w-full"
                             />
                         </li>
@@ -25,7 +25,13 @@ import { environment } from '../../../environments/environment';
                 </ul>
             </div>
             <div class="flex space-x-10">
-                <div (click)="previous()" class="">
+                <button
+                    (click)="previous()"
+                    [tabIndex]="0"
+                    (keyup.enter)="previous()"
+                    [disabled]="currentIndex === 0"
+                    class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -40,8 +46,9 @@ import { environment } from '../../../environments/environment';
                             d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
                         />
                     </svg>
-                </div>
-                <div (click)="next()" class="">
+                </button>
+                <button (click)="next()" [tabIndex]="0" (keyup.enter)="next()"
+                [disabled]="currentIndex === items().length - 1" class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -56,13 +63,14 @@ import { environment } from '../../../environments/environment';
                             d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
                         />
                     </svg>
-                </div>
+                </button>
             </div>
         </div>
     `,
 })
 export class CarouselComponent {
     items = input.required<MovieUpdateInterface[]>();
+
     // check if it works in production
     url = `${environment.serverUrl}/uploads/`;
 
@@ -80,13 +88,13 @@ export class CarouselComponent {
         } else {
             this.currentIndex = 0;
         }
-        console.log(this.currentIndex);
     }
 
     next() {
-        if (this.currentIndex < (this.items().length)-1) {
+        if (this.currentIndex < this.items().length - 1) {
             this.currentIndex = (this.currentIndex + 1) % this.items().length;
-            console.log(this.currentIndex);
-        } else { this.currentIndex = 0 }
+        } else {
+            this.currentIndex = 0;
+        }
     }
 }

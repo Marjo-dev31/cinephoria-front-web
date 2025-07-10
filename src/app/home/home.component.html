@@ -10,9 +10,10 @@
             véritable institution du 7ᵉ art, née de la passion de cinéphiles
             convaincus. Présente depuis plusieurs décennies en
             <strong class="text-peach">France</strong> et en
-            <strong class="text-peach">Belgique</strong>, Cinéphoria séduit chaque année des
-            milliers de spectateurs grâce à une programmation riche, des salles
-            modernes, et une vision résolument tournée vers l’avenir.
+            <strong class="text-peach">Belgique</strong>, Cinéphoria séduit
+            chaque année des milliers de spectateurs grâce à une programmation
+            riche, des salles modernes, et une vision résolument tournée vers
+            l’avenir.
         </p>
         <p>
             Avec 7 cinémas répartis à Paris, Nantes, Bordeaux, Toulouse, Lille,
@@ -31,5 +32,16 @@
         Les sorties du mercredi :
     </div>
     <!-- carousel -->
-    <app-carousel [items]="moviesback()" class="flex flex-col items-center"/>
+    @if (lastMovies().length > 0) {
+        <app-carousel
+            [items]="lastMovies()"
+            class="flex flex-col items-center"
+        />
+    } @else {
+        <div class="text-center"><p>Aucun nouveau film n’est sorti depuis mercredi dernier…</p>
+        <p>
+            Mais ne manquez pas l’occasion de (re)découvrir les pépites toujours
+            à l’affiche dans nos salles !
+        </p></div>
+    }
 </div>
