@@ -30,7 +30,14 @@ export class MoviesComponent {
         { initialValue: [] },
     );
 
-    movieeffect = effect(() => console.log(this.movies()));
+    public reviewIndex: number = 0;
+
+    getRandomReview(max: number): number {
+        console.log(this.reviewIndex)
+        return this.reviewIndex = Math.floor(Math.random() * max);
+    }
+
+    movieeffect = effect(() => console.log(this.movies(), 'toto'));
 
     // make filter for cinema and date when session service created
     moviesFiltered = computed(() =>

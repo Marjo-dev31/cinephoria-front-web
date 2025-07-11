@@ -78,35 +78,43 @@
                         <div
                             class="flex flex-row lg:flex-col lg:space-y-4 justify-evenly items-center h-full w-full"
                         >
-                            <p class="pt-4">Note /5</p>
+                            <p class="pt-4">Note {{ movie.reviews[0] }}/5</p>
                             <button class="bg-peach p-2 rounded-xl font-bold">
                                 séances
                             </button>
                         </div>
                         <div class="flex border-2 border-sage text-sm italic">
-                            <p class="basis-11/12 p-2">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Quos eos deserunt eligendi
-                                itaque, voluptate explicabo at fuga aperiam
-                                harum laboriosam tenetur deleniti ad inventore
-                                quidem minus ullam. Cum, omnis quidem.
-                            </p>
-                            <button class="basis-1/12/12">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="size-6 text-darkblue"
+                            @if (movie.reviews.length > 0) {
+                                <!-- @if(review.is_Validated){} -->
+                                <p class="basis-11/12 p-2">
+                                    {{ movie.reviews[reviewIndex].description }}
+                                </p>
+                                <button
+                                    class="basis-1/12 cursor-pointer "
+                                    (click)="
+                                        getRandomReview(movie.reviews.length)
+                                    "
                                 >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M12 4.5v15m7.5-7.5h-15"
-                                    />
-                                </svg>
-                            </button>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        class="size-6 text-darkblue"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M12 4.5v15m7.5-7.5h-15"
+                                        />
+                                    </svg>
+                                </button>
+                            } @else {
+                                <p class="basis-11/12 p-2">
+                                    Il n'y pas encore d'avis sur ce film
+                                </p>
+                            }
                         </div>
                     </div>
                 </div>
