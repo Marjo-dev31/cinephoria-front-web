@@ -17,6 +17,7 @@ describe('MoviesComponent', () => {
                         id: 'A',
                         title: 'testtitle',
                         genre: { title: 'testgenretitle' },
+                        reviews: []
                     },
                 ]),
             ),

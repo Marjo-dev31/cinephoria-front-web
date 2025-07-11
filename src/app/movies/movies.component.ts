@@ -10,10 +10,12 @@ import { MovieUpdateInterface } from './movie.interface';
 import { MoviesService } from './movies.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { environment } from '../../environments/environment';
+import { AveragePipe } from './average.pipe';
+
 
 @Component({
     selector: 'app-movies',
-    imports: [],
+    imports: [AveragePipe],
     templateUrl: './movies.component.html',
     styleUrl: './movies.component.css',
 })
@@ -33,7 +35,6 @@ export class MoviesComponent {
     public reviewIndex: number = 0;
 
     getRandomReview(max: number): number {
-        console.log(this.reviewIndex)
         return this.reviewIndex = Math.floor(Math.random() * max);
     }
 

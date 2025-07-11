@@ -78,11 +78,12 @@
                         <div
                             class="flex flex-row lg:flex-col lg:space-y-4 justify-evenly items-center h-full w-full"
                         >
-                            <p class="pt-4">Note {{ movie.reviews[0] }}/5</p>
+                            <p class="pt-4">Note {{ movie.reviews | averagePipe }}/5</p>
                             <button class="bg-peach p-2 rounded-xl font-bold">
                                 séances
                             </button>
                         </div>
+                        <!-- move this div in details component -->
                         <div class="flex border-2 border-sage text-sm italic">
                             @if (movie.reviews.length > 0) {
                                 <!-- @if(review.is_Validated){} -->
