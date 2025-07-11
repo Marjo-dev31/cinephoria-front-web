@@ -48,7 +48,7 @@ import { environment } from '../../../environments/environment';
                     </svg>
                 </button>
                 <button (click)="next()" [tabIndex]="0" (keyup.enter)="next()"
-                [disabled]="currentIndex === items().length - 1" class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                class="cursor-pointer ">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -81,13 +81,9 @@ export class CarouselComponent {
     }
 
     previous() {
-        if (this.currentIndex > 0) {
             this.currentIndex =
                 (this.currentIndex - 1 + this.items().length) %
                 this.items().length;
-        } else {
-            this.currentIndex = 0;
-        }
     }
 
     next() {

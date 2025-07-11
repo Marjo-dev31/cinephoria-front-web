@@ -1,3 +1,5 @@
+import { GenreInterface } from "./genre.interface"
+
 export interface MovieCreateInterface {
   title:string,
   description: string,
@@ -8,5 +10,6 @@ export interface MovieCreateInterface {
 
 export interface MovieUpdateInterface extends MovieCreateInterface {
   id: string,
-  create_At: Date
+  create_At: Date,
+  genre: GenreInterface
 }
