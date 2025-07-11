@@ -9,8 +9,18 @@ describe('MoviesComponent', () => {
     let fixture: ComponentFixture<MoviesComponent>;
 
     const mockMovieService = {
-      getAllMovies: jest.fn().mockReturnValue(of([{id:'A',title:'testtitle'}]))
-    }
+        getAllMovies: jest
+            .fn()
+            .mockReturnValue(
+                of([
+                    {
+                        id: 'A',
+                        title: 'testtitle',
+                        genre: { title: 'testgenretitle' },
+                    },
+                ]),
+            ),
+    };
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({

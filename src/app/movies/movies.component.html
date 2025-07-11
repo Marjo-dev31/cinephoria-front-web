@@ -1,7 +1,7 @@
 <div
     class="flex flex-col md:flex-row m-10 md:w-2/3 items-center justify-evenly space-y-4 md:space-y-0"
 >
-    <p>Filtres:</p>
+    <label>Filtres:</label>
     <input
         type="text"
         class="bg-peach/20 border border-darkblue p-2 italic placeholder:text-darkblue/50"
@@ -11,6 +11,8 @@
         type="text"
         class="bg-peach/20 border border-darkblue p-2 italic placeholder:text-darkblue/50"
         placeholder="genre"
+        #searchGenre
+        (input)="onSearchGenreUpdated(searchGenre.value)"
     />
     <input
         type="text"
@@ -22,11 +24,11 @@
     <div
         class="flex flex-col items-center justify-center w-3/4 md:w-2/3 gap-10 h-fit"
     >
-        @for (movie of movies(); track $index) {
+        @for (movie of moviesFiltered(); track $index) {
             <div
                 class="border border-darkblue flex flex-col lg:flex-row relative shadow-lg shadow-darkblue"
             >
-                <div class="absolute xl:right-5 xl:top-5 right-0 top-0">
+                <div class="absolute xl:right-5 xl:top-5 right-1 top-1">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -43,7 +45,7 @@
                     </svg>
                 </div>
                 @if (movie.is_Favorite) {
-                    <div class="absolute lg:right-5 lg:top-5 right-0 top-0">
+                    <div class="absolute xl:right-5 xl:top-5 right-1 top-1">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
@@ -56,7 +58,7 @@
                         </svg>
                     </div>
                 }
-                <div class="flex justify-center items-center">
+                <div class="flex justify-center items-center bg-peach/20">
                     <img
                         [src]="this.url + movie.image_Url"
                         [alt]="'Affiche du film' + movie.title"
