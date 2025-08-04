@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
     styles: ``,
 })
 export class HeaderComponent {
-    isShow = signal(false);
+    isShowSideMenu = signal(false);
 
     // recuperer current user and role
     isLogin = signal(false);
@@ -17,7 +17,8 @@ export class HeaderComponent {
     isEmployee = signal(false);
 
     showSideMenu() {
-        this.isShow.update((value) => !value);
+        this.isShowSideMenu.update((value) => !value);
+        console.log(this.isShowSideMenu())
     }
     
     logout() {}

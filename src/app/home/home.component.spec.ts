@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { MoviesService } from '../movies/movies.service';
+
 import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
+import { MoviesService } from '../movies/data-access/movies.service';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;

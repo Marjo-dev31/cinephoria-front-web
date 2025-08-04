@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MoviesComponent } from './movies.component';
-import { MoviesService } from './movies.service';
+
 import { of } from 'rxjs';
+import { MoviesService } from '../data-access/movies.service';
 
 describe('MoviesComponent', () => {
     let component: MoviesComponent;
