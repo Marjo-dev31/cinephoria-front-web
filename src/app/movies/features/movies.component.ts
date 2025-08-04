@@ -6,13 +6,12 @@ import {
     signal,
     Signal,
 } from '@angular/core';
-import { MovieUpdateInterface } from '../models/movie.interface';
+import { MovieInterface } from '../models/movie.interface';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { environment } from '../../../environments/environment';
 import { AveragePipe } from '../utils/average.pipe';
 import { MoviesService } from '../data-access/movies.service';
-
-
+import { map } from 'rxjs';
 
 @Component({
     selector: 'app-movies',
@@ -27,15 +26,28 @@ export class MoviesComponent {
 
     public searchGenre = signal('');
 
-    public readonly movies: Signal<MovieUpdateInterface[]> = toSignal(
-        this.moviesService.getAllMovies(),
+    public readonly movies: Signal<MovieInterface[]> = toSignal(
+        this.moviesService
+            .getAllMovies()
+            .pipe(
+                map((movies) =>
+                    movies.map((movie) => ({
+                        ...movie,
+                        reviews: movie.reviews.filter(
+                            (review) => review.is_Validated,
+                        ),
+                    })),
+                ),
+            ),
         { initialValue: [] },
     );
 
-    public reviewIndex: number = 0;
+    public selectedMovie!: string | null;
+    public reviewIndex: Record<string, number> = {};
 
-    getRandomReview(max: number): number {
-        return this.reviewIndex = Math.floor(Math.random() * max);
+    getRandomReview(max: number, movieId: string) {
+        const randomIndex = Math.floor(Math.random() * max);
+        this.reviewIndex[movieId] = randomIndex;
     }
 
     movieeffect = effect(() => console.log(this.movies(), 'toto'));
