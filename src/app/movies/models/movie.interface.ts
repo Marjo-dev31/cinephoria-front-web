@@ -15,3 +15,5 @@ export interface MovieUpdateInterface extends MovieCreateInterface {
   create_At: Date,
   reviews: ReviewInterface[]
 }
+
+export interface MovieInterface extends MovieUpdateInterface {}
