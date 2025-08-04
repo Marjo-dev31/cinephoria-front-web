@@ -5,25 +5,24 @@ import {
     Signal,
 } from '@angular/core';
 import { CarouselComponent } from '../shared/ui/carrousel';
-import { MoviesService } from '../movies/movies.service';
-import { MovieUpdateInterface } from '../movies/movie.interface';
+import { MovieUpdateInterface } from '../movies/models/movie.interface';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MoviesService } from '../movies/data-access/movies.service';
 
 @Component({
     selector: 'app-home',
     imports: [CarouselComponent],
     templateUrl: './home.component.html',
-    styleUrl: './home.component.css',
 })
 export class HomeComponent {
     private readonly moviesService = inject(MoviesService);
 
-    movies: Signal<MovieUpdateInterface[]> = toSignal(
+    readonly movies: Signal<MovieUpdateInterface[]> = toSignal(
         this.moviesService.getAllMovies(),
         { initialValue: [] },
     );
 
-    lastMovies: Signal<MovieUpdateInterface[]> = computed(() => {
+    readonly lastMovies: Signal<MovieUpdateInterface[]> = computed(() => {
         return this.getMoviesSinceLastWednesday(this.movies());
     });
 

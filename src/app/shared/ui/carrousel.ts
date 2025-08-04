@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { MovieUpdateInterface } from '../../movies/movie.interface';
+import { MovieUpdateInterface } from '../../movies/models/movie.interface';
 import { environment } from '../../../environments/environment';
 
 @Component({

@@ -6,18 +6,18 @@ import {
     signal,
     Signal,
 } from '@angular/core';
-import { MovieUpdateInterface } from './movie.interface';
-import { MoviesService } from './movies.service';
+import { MovieUpdateInterface } from '../models/movie.interface';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { AveragePipe } from './average.pipe';
+import { MoviesService } from '../data-access/movies.service';
+
 
 
 @Component({
     selector: 'app-movies',
     imports: [AveragePipe],
     templateUrl: './movies.component.html',
-    styleUrl: './movies.component.css',
 })
 export class MoviesComponent {
     private readonly moviesService = inject(MoviesService);
