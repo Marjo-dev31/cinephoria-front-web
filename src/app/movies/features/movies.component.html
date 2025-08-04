@@ -92,19 +92,20 @@
                             <div
                                 class="flex border-2 border-sage text-sm italic"
                             >
+                                
                                 @if (movie.reviews.length > 0) {
-                                    <!-- @if(review.is_Validated){} -->
+                                    @if(movie.reviews[reviewIndex[movie.id] || 0].is_Validated){
                                     <p class="basis-11/12 p-2">
                                         {{
-                                            movie.reviews[reviewIndex]
+                                            movie.reviews[reviewIndex[movie.id] || 0]
                                                 .description
                                         }}
-                                    </p>
+                                    </p>}
                                     <button
                                         class="basis-1/12 cursor-pointer"
                                         (click)="
                                             getRandomReview(
-                                                movie.reviews.length
+                                                movie.reviews.length, movie.id
                                             )
                                         "
                                     >

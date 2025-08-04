@@ -4,30 +4,38 @@ import { MoviesComponent } from './movies.component';
 
 import { of } from 'rxjs';
 import { MoviesService } from '../data-access/movies.service';
+import { ReviewService } from '../../reviews/access-data/reviews.service';
 
 describe('MoviesComponent', () => {
     let component: MoviesComponent;
     let fixture: ComponentFixture<MoviesComponent>;
 
     const mockMovieService = {
-        getAllMovies: jest
-            .fn()
-            .mockReturnValue(
-                of([
-                    {
-                        id: 'A',
-                        title: 'testtitle',
-                        genre: { title: 'testgenretitle' },
-                        reviews: []
-                    },
-                ]),
-            ),
+        getAllMovies: jest.fn().mockReturnValue(
+            of([
+                {
+                    id: 'A',
+                    title: 'testtitle',
+                    genre: { title: 'testgenretitle' },
+                    reviews: [],
+                },
+            ]),
+        ),
     };
+
+    const mockReviewService = {
+        getAllReviews: jest.fn().mockReturnValue(
+            of([{id: '1', description:'testdescription', movie:'A'}])
+        )
+    }
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [MoviesComponent],
-            providers: [{ provide: MoviesService, useValue: mockMovieService }],
+            providers: [
+                { provide: MoviesService, useValue: mockMovieService },
+                { provide: ReviewService, useValue: mockReviewService },
+            ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(MoviesComponent);
