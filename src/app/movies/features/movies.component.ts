@@ -9,7 +9,7 @@ import {
 import { MovieUpdateInterface } from '../models/movie.interface';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { environment } from '../../../environments/environment';
-import { AveragePipe } from './average.pipe';
+import { AveragePipe } from '../utils/average.pipe';
 import { MoviesService } from '../data-access/movies.service';
 
 

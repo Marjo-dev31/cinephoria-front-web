@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { ReviewInterface } from "./models/review.interface";
+import { ReviewInterface } from "../models/review.interface";
 
 @Pipe({
   name:'averagePipe'
