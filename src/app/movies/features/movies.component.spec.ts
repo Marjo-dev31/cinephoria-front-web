@@ -18,16 +18,19 @@ describe('MoviesComponent', () => {
                     title: 'testtitle',
                     genre: { title: 'testgenretitle' },
                     reviews: [],
+                    showing: [],
                 },
             ]),
         ),
     };
 
     const mockReviewService = {
-        getAllReviews: jest.fn().mockReturnValue(
-            of([{id: '1', description:'testdescription', movie:'A'}])
-        )
-    }
+        getAllReviews: jest
+            .fn()
+            .mockReturnValue(
+                of([{ id: '1', description: 'testdescription', movie: 'A' }]),
+            ),
+    };
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({

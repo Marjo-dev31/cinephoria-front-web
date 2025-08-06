@@ -34,12 +34,14 @@ export class MoviesComponent {
     public readonly movies: Signal<MovieInterface[]> = toSignal(
         this.moviesService.getAllMovies().pipe(
             map((movies) =>
-                movies.map((movie) => ({
-                    ...movie,
-                    reviews: movie.reviews.filter(
-                        (review) => review.is_Validated,
-                    ),
-                })),
+                movies
+                    .map((movie) => ({
+                        ...movie,
+                        reviews: movie.reviews.filter(
+                            (review) => review.is_Validated,
+                        ),
+                    }))
+                    .filter((movie) => movie.showing.length),
             ),
         ),
         { initialValue: [] },
@@ -68,21 +70,17 @@ export class MoviesComponent {
     }
 
     // get showing
-    showing!: MovieInterface;
 
     getShowingByMovie(id: string) {
         this.moviesService
             .getById(id)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(
-                (data) => (
-                    (this.showing = data),
-                    this.dialog.open(DialogComponent, {
-                        height: '400px',
-                        width: '600px',
-                        data: this.showing,
-                    })
-                ),
+            .subscribe((data) =>
+                this.dialog.open(DialogComponent, {
+                    height: '400px',
+                    width: '600px',
+                    data: data,
+                }),
             );
     }
 }
