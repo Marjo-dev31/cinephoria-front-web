@@ -4,7 +4,7 @@ import {
     inject,
     Signal,
 } from '@angular/core';
-import { CarouselComponent } from '../shared/ui/carrousel';
+import { CarouselComponent } from '../shared/ui/carrousel.component';
 import { MovieUpdateInterface } from '../movies/models/movie.interface';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MoviesService } from '../movies/data-access/movies.service';

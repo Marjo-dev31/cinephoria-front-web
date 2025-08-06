@@ -1,25 +1,30 @@
 import {
     Component,
     computed,
+    DestroyRef,
     effect,
     inject,
     signal,
     Signal,
 } from '@angular/core';
 import { MovieInterface } from '../models/movie.interface';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { environment } from '../../../environments/environment';
 import { AveragePipe } from '../utils/average.pipe';
 import { MoviesService } from '../data-access/movies.service';
 import { map } from 'rxjs';
+import { Dialog, DialogModule } from '@angular/cdk/dialog';
+import { DialogComponent } from '../../shared/ui/dialog.component';
 
 @Component({
     selector: 'app-movies',
-    imports: [AveragePipe],
+    imports: [AveragePipe, DialogModule],
     templateUrl: './movies.component.html',
 })
 export class MoviesComponent {
     private readonly moviesService = inject(MoviesService);
+    private readonly destroyRef = inject(DestroyRef);
+    private readonly dialog = inject(Dialog);
 
     // check if it works in production
     public readonly url = `${environment.serverUrl}/uploads/`;
@@ -27,21 +32,20 @@ export class MoviesComponent {
     public searchGenre = signal('');
 
     public readonly movies: Signal<MovieInterface[]> = toSignal(
-        this.moviesService
-            .getAllMovies()
-            .pipe(
-                map((movies) =>
-                    movies.map((movie) => ({
-                        ...movie,
-                        reviews: movie.reviews.filter(
-                            (review) => review.is_Validated,
-                        ),
-                    })),
-                ),
+        this.moviesService.getAllMovies().pipe(
+            map((movies) =>
+                movies.map((movie) => ({
+                    ...movie,
+                    reviews: movie.reviews.filter(
+                        (review) => review.is_Validated,
+                    ),
+                })),
             ),
+        ),
         { initialValue: [] },
     );
 
+    // get random reviews validated
     public selectedMovie!: string | null;
     public reviewIndex: Record<string, number> = {};
 
@@ -61,5 +65,24 @@ export class MoviesComponent {
 
     onSearchGenreUpdated(genre: string) {
         this.searchGenre.set(genre);
+    }
+
+    // get showing
+    showing!: MovieInterface;
+
+    getShowingByMovie(id: string) {
+        this.moviesService
+            .getById(id)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(
+                (data) => (
+                    (this.showing = data),
+                    this.dialog.open(DialogComponent, {
+                        height: '400px',
+                        width: '600px',
+                        data: this.showing,
+                    })
+                ),
+            );
     }
 }
