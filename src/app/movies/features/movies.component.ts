@@ -15,6 +15,7 @@ import { MoviesService } from '../data-access/movies.service';
 import { map } from 'rxjs';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { DialogComponent } from '../../shared/ui/dialog.component';
+import { ShowingInterface } from '../../showing/models/showing.interface';
 
 @Component({
     selector: 'app-movies',
@@ -30,6 +31,8 @@ export class MoviesComponent {
     public readonly url = `${environment.serverUrl}/uploads/`;
 
     public searchGenre = signal('');
+    public searchCinema = signal('');
+    public searchDate = signal('')
 
     public readonly movies: Signal<MovieInterface[]> = toSignal(
         this.moviesService.getAllMovies().pipe(
@@ -56,17 +59,28 @@ export class MoviesComponent {
         this.reviewIndex[movieId] = randomIndex;
     }
 
-    movieeffect = effect(() => console.log(this.movies(), 'toto'));
+    movieeffect = effect(() =>
+        console.log(this.movies(), 'toto', this.moviesFiltered()),
+    );
 
     // make filter for cinema and date when session service created
     moviesFiltered = computed(() =>
         this.movies().filter((movie) =>
-            movie.genre.title.includes(this.searchGenre()),
+            movie.showing
+            .some((showing) => showing.room.cinema.city.toLowerCase().includes(this.searchCinema().toLowerCase())) &&
+            movie.genre.title.toLowerCase().includes(this.searchGenre().toLowerCase()) &&
+            movie.showing.some((showing)=> showing.date.toLocaleString().includes(this.searchDate()))
         ),
     );
 
     onSearchGenreUpdated(genre: string) {
         this.searchGenre.set(genre);
+    }
+    onSearchCinemaUpdated(cinema: string) {
+        this.searchCinema.set(cinema);
+    }
+    onSearchDateUpdated(date:string) {
+        this.searchDate.set(date)
     }
 
     // get showing

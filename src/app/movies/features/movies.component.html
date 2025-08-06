@@ -6,6 +6,8 @@
         type="text"
         class="bg-peach/20 border border-darkblue p-2 italic placeholder:text-darkblue/50"
         placeholder="cinema"
+        #searchCinema
+        (input)="onSearchCinemaUpdated(searchCinema.value)"
     />
     <input
         type="text"
@@ -15,9 +17,11 @@
         (input)="onSearchGenreUpdated(searchGenre.value)"
     />
     <input
-        type="text"
+        type="date"
         class="bg-peach/20 border border-darkblue p-2 italic placeholder:text-darkblue/50"
         placeholder="date"
+        #searchDate
+        (input)="onSearchDateUpdated(searchDate.value)"
     />
 </div>
 <div class="flex justify-center">
