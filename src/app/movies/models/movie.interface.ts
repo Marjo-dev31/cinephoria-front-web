@@ -1,5 +1,6 @@
 import { GenreInterface } from "./genre.interface"
 import { ReviewInterface } from "../../reviews/models/review.interface"
+import { ShowingInterface } from "../../showing/models/showing.interface"
 
 export interface MovieCreateInterface {
   title:string,
@@ -16,5 +17,6 @@ export interface MovieUpdateInterface extends MovieCreateInterface {
 }
 
 export interface MovieInterface extends MovieUpdateInterface {
-  reviews: ReviewInterface[]
+  reviews: ReviewInterface[],
+  showing: ShowingInterface[]
 }
