@@ -3,57 +3,96 @@
         Ne tardez plus à réserver vos places !
     </h2>
 </div>
-<div
-    class="flex flex-col w-96 justify-center m-auto space-y-6 bg-sage p-6 rounded-lg"
->
-    <label
-        >Cinéma :
-        <select name="" id="" class="bg-seasalt/50 border border-darkblue p-1">
-            <option value="" disabled selected>--</option>
-            @for (cinema of cinemas(); track $index) {
-                <option value="{{ cinema.id }}">
-                    {{ cinema.city }}
-                </option>
-            }
-        </select></label
+<div>
+    <form
+        [formGroup]="filterForm"
+        class="flex flex-col w-96 justify-center m-auto space-y-6 bg-sage p-6 rounded-lg"
     >
-    <label>
-        Film:
-        <select name="" id="" class="bg-seasalt/50 border border-darkblue p-1">
-            <option value="" disabled selected>--</option>
-            @for (showing of showingFiltered(); track $index) {
-                <option value="{{ showing.movie.id }}">
-                    {{ showing.movie.title }}
-                </option>
-            }
-        </select>
-    </label>
-    <label
-        >Nombre de place :
-        <input
-            type="number"
-            min="1"
-            max="10"
-            class="bg-seasalt/50 border border-darkblue p-1"
-        />
-    </label>
-    <label
-        >Avez-vous besoin de places réservées pour les personnes à mobilités
-        réduites ?
-        <select name="" id="" class="bg-seasalt/50 border border-darkblue p-1">
-            <option value="true">oui</option>
-            <option value="false">non</option>
-        </select>
-    </label>
-    <label
-        >Combien ?
-        <input type="number" min="1" max="2" class="bg-seasalt/50 border border-darkblue p-1"/>
-    </label>
+        <label
+            >Cinéma :
+            <select
+                name=""
+                id=""
+                class="bg-seasalt/50 border border-darkblue p-1"
+                formControlName="cinema"
+                #searchCinema
+                (input)="onSearchCinema(searchCinema.value)"
+            >
+                <option value="" disabled selected>--</option>
+                @for (cinema of cinemas(); track $index) {
+                    <option value="{{ cinema.id }}">
+                        {{ cinema.city }}
+                    </option>
+                }
+            </select></label
+        >
+        <label>
+            Film:
+            <select
+                name=""
+                id=""
+                class="bg-seasalt/50 border border-darkblue p-1"
+                formControlName="movie"
+            >
+                <option value="" disabled selected>--</option>
+                @for (showing of showingFilterByMovie(); track $index) {
+                    <option value="{{ showing.movie.id }}">
+                        {{ showing.movie.title }}
+                    </option>
+                }
+            </select>
+        </label>
+        <label
+            >Nombre de place :
+            <input
+                type="number"
+                min="1"
+                max="10"
+                class="bg-seasalt/50 border border-darkblue p-1"
+                formControlName="seat"
+                #wishSeat
+                (input)="onWishSeat(wishSeat.value)"
+            />
+        </label>
+        <label
+            >Avez-vous besoin de places réservées pour les personnes à mobilités
+            réduites ? <span class="italic text-sm">(Attention doit être comptabilisé dans le total des places)</span>
+            <select
+                name=""
+                id=""
+                class="bg-seasalt/50 border border-darkblue p-1"
+                formControlName="accessibleSeat"
+                #searchAccessibleSeat
+                (input)="
+                    onSearchAccessibleSeatNeeded(searchAccessibleSeat.value)
+                "
+            >
+                <option value="" selected>--</option>
+                <option value="true">oui</option>
+                <option value="false">non</option>
+            </select>
+        </label>
+        <label
+            [ngStyle]="{
+                display: displayAccessibleSeatNumber() ? 'block' : 'none'
+            }"
+            >Combien ?
+            <input
+                type="number"
+                min="1"
+                max="2"
+                class="bg-seasalt/50 border border-darkblue p-1"
+                #searchAccessibleSeatNumber
+                (input)=" onSearchAccessibleSeatNumber(searchAccessibleSeatNumber.value)"
+            />
+        </label>
+    </form>
 </div>
 <div>
-  @for (showing of showingFiltered(); track $index) {
-    <div>{{showing.date}}</div>
-  } @empty {
-    Désolé aucune séances ne correspond à vos critères.
-  }
+    @for (showing of showingFiltered(); track $index) {
+        <div>{{ showing.date }}</div>
+    } @empty {
+        Désolé aucune séances ne correspond à vos critères.
+    }
 </div>
+
