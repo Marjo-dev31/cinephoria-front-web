@@ -1,17 +1,19 @@
-import { MovieInterface } from "../../movies/models/movie.interface";
-import { RoomInterface } from "../../room/models/room.interface";
+import { MovieInterface } from '../../movies/models/movie.interface';
+import { RoomInterface } from '../../room/models/room.interface';
+import { Seat } from '../../shared/models/seat.interface';
 
 export interface CreateShowingInterface {
-  date: Date;
-  startAt: string;
-  endAt: string;
-  movie: MovieInterface;
-  room: RoomInterface;
-  
+    date: Date;
+    startAt: string;
+    endAt: string;
+    movie: MovieInterface;
+    room: RoomInterface;
 }
 
-export interface UpdateShowingInterface extends CreateShowingInterface{
-  id: string
+export interface UpdateShowingInterface extends CreateShowingInterface {
+    id: string;
 }
 
-export interface ShowingInterface extends UpdateShowingInterface{}
+export interface ShowingInterface extends UpdateShowingInterface {
+    seat: Seat[];
+}

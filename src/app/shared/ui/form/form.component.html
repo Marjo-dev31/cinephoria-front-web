@@ -1,0 +1,35 @@
+<div>
+    <form [formGroup]="formModel" (ngSubmit)="onSubmit()">
+        <div>
+            @for (control of formModelConfig; track $index) {
+                <label for="{{ control.controlKey }}"> {{ control.label }}</label>
+                <ng-container>
+                    @switch (control.formFieldType) {
+                        @case ('input') {
+                            <input
+                                type="{{ control.inputType }}"
+                                formControlName="{{ control.controlKey }}"
+                            />
+                        }
+                        @case ('select') {
+                            <select formControlName="{{ control.controlKey }}">
+                                @for (
+                                    option of control.selectOptions;
+                                    track $index
+                                ) {
+                                    <option value="{{option}}">{{ option }}</option>
+                                }
+                            </select>
+                        }
+                    }
+                </ng-container>
+                @if (
+                    formModel.touched &&
+                    formModel.get(control.controlKey)?.hasError('required')
+                ) {
+                    <span>This field is required</span>
+                }
+            }
+        </div>
+    </form>
+</div>
