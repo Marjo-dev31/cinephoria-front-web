@@ -9,7 +9,7 @@ import { upcoming } from '../util/upcoming';
     imports: [DatePipe, CurrencyPipe],
     template: `
         <ng-container>
-            <h2 class="text-center font-roboto text-2xl ">Séances à venir</h2>
+            <h2 class="text-center font-roboto font-bold text-2xl ">Séances à venir</h2>
             @for (showing of upcomingShowing(); track showing.id) {
                 <div
                     class="border-2 border-darkblue rounded-lg w-fit *:pr-2 *:pl-2 hover:bg-peach"
