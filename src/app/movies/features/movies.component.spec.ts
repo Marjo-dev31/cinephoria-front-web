@@ -4,7 +4,7 @@ import { MoviesComponent } from './movies.component';
 
 import { of } from 'rxjs';
 import { MoviesService } from '../data-access/movies.service';
-import { ReviewService } from '../../reviews/access-data/reviews.service';
+import { ReviewService } from '../../reviews/data-access/reviews.service';
 
 describe('MoviesComponent', () => {
     let component: MoviesComponent;

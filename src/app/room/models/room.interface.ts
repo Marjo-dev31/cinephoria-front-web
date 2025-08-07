@@ -1,4 +1,4 @@
-import { CinemaInterface } from "./cinema.interface";
+import { CinemaInterface } from "../../shared/models/cinema.interface";
 
 export interface CreateRoomInterface {
   number: number;

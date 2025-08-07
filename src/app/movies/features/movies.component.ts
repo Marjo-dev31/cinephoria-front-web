@@ -15,7 +15,6 @@ import { MoviesService } from '../data-access/movies.service';
 import { map } from 'rxjs';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { DialogComponent } from '../../shared/ui/dialog.component';
-import { ShowingInterface } from '../../showing/models/showing.interface';
 
 @Component({
     selector: 'app-movies',
@@ -50,7 +49,7 @@ export class MoviesComponent {
         { initialValue: [] },
     );
 
-    // get random reviews validated
+    // get random reviews
     public selectedMovie!: string | null;
     public reviewIndex: Record<string, number> = {};
 
@@ -83,7 +82,7 @@ export class MoviesComponent {
         this.searchDate.set(date)
     }
 
-    // get showing
+    // get showing dialog
 
     getShowingByMovie(id: string) {
         this.moviesService
