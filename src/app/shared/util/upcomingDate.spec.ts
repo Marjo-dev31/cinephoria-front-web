@@ -1,4 +1,4 @@
-import { upcoming } from './upcoming';
+import { upcoming } from './upcomingDate';
 
 describe('upcoming', () => {
   it('should return true for a future date', () => {

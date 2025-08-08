@@ -20,7 +20,8 @@ import { CinemaInterface } from '../../shared/models/cinema.interface';
 import { map, switchMap, tap } from 'rxjs';
 import { NgStyle } from '@angular/common';
 import { Seat } from '../../shared/models/seat.interface';
-import { countSeat } from '../../shared/util/countSeat';
+import { seatAvailableNumber } from '../../shared/util/seatAvailableNumber';
+import { accessibleSeatAvailableNumber } from '../../shared/util/accessibleSeatAvailableNumber';
 
 @Component({
     selector: 'app-showing',
@@ -31,8 +32,9 @@ export class ShowingComponent {
     private readonly showingService = inject(ShowingService);
     private readonly cinemaService = inject(CinemaService);
 
-    cinemas = toSignal(this.cinemaService.getAllCinema());
     private showings = toSignal(this.showingService.getAllShowing());
+    
+    public cinemas = toSignal(this.cinemaService.getAllCinema());
 
     public searchCinema = signal('');
     public searchAccessibleSeatNumber = signal(0);
@@ -40,26 +42,15 @@ export class ShowingComponent {
     public searchAccessibleSeatNeeded = signal(false);
     public displayAccessibleSeatNumber = signal(false);
 
-    public showingFilterByMovie = computed(() =>
-        this.showings()?.filter(
-            (showing) => showing.room.cinema.id === this.searchCinema(),
-        ),
-    );
-
     public showingFiltered = computed(() =>
-        this.showingFilterByMovie()?.filter(
+        this.showings()?.filter(
             (showing) =>
-                countSeat(showing.seat) >= this.wishSeat() &&
-                this.isAccessibleSeatRest(showing.seat) >=
+                showing.room.cinema.id === this.searchCinema() &&
+                seatAvailableNumber(showing.seat) >= this.wishSeat() &&
+                accessibleSeatAvailableNumber(showing.seat) >=
                     this.searchAccessibleSeatNumber(),
-            // && le nombre de place accessible doit etre valide
         ),
     );
-
-    isAccessibleSeatRest(seats: Seat[]): number {
-      console.log(seats.filter((seat) => seat.accessibleSeat && !seat.reserved).length)
-        return seats.filter((seat) => seat.accessibleSeat && !seat.reserved).length;
-    }
 
     filterForm = new FormGroup({
         cinema: new FormControl('', [Validators.required]),
@@ -71,6 +62,10 @@ export class ShowingComponent {
     onSearchCinema(cinema: string) {
         this.searchCinema.set(cinema);
     }
+     onWishSeat(number: string) {
+        this.wishSeat.set(+number);
+    }
+    
     onSearchAccessibleSeatNeeded(isAccessibleSeatNeeded: string) {
         if (isAccessibleSeatNeeded === 'true') {
             this.displayAccessibleSeatNumber.set(true);
@@ -83,11 +78,7 @@ export class ShowingComponent {
         this.searchAccessibleSeatNumber.set(+accessibleSeat);
     }
 
-    onWishSeat(number: string) {
-        this.wishSeat.set(+number);
-    }
-
-    effect = effect(() => console.log(this.showingFilterByMovie()));
+    effect = effect(() => console.log(this.showingFiltered()));
     // formModelConfig: DynamicControl[] = [
     //     {
     //         controlKey: 'cinema',
