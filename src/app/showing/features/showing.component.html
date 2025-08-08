@@ -35,7 +35,7 @@
                 formControlName="movie"
             >
                 <option value="" disabled selected>--</option>
-                @for (showing of showingFilterByMovie(); track $index) {
+                @for (showing of showingFiltered(); track $index) {
                     <option value="{{ showing.movie.id }}">
                         {{ showing.movie.title }}
                     </option>

@@ -2,7 +2,7 @@ import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
 import { ShowingInterface } from '../../showing/models/showing.interface';
-import { upcoming } from '../util/upcoming';
+import { upcoming } from '../util/upcomingDate';
 
 @Component({
     selector: 'app-dialog',
