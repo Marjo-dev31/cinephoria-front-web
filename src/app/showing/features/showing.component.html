@@ -1,19 +1,19 @@
 <div class="m-10">
     <h2 class="text-center text-2xl font-bold font-roboto">
-        Ne tardez plus à réserver vos places !
+        Ne tardez plus et réservez vos places !
     </h2>
 </div>
 <div>
     <form
         [formGroup]="filterForm"
-        class="flex flex-col w-96 justify-center m-auto space-y-6 bg-sage p-6 rounded-lg"
+        class="flex flex-col size-96 items-center m-auto space-y-6 p-6 rounded-lg border border-darkblue shadow-lg shadow-darkblue"
     >
         <label
             >Cinéma :
             <select
                 name=""
                 id=""
-                class="bg-seasalt/50 border border-darkblue p-1"
+                class="bg-peach/20 border border-darkblue p-1 w-64"
                 formControlName="cinema"
                 #searchCinema
                 (input)="onSearchCinema(searchCinema.value)"
@@ -31,68 +31,130 @@
             <select
                 name=""
                 id=""
-                class="bg-seasalt/50 border border-darkblue p-1"
+                class="bg-peach/20 border border-darkblue p-1 w-64"
                 formControlName="movie"
+                #searchMovie
             >
                 <option value="" disabled selected>--</option>
-                @for (showing of showingFiltered(); track $index) {
+                @for (showing of showingFilterByCinema(); track $index) {
                     <option value="{{ showing.movie.id }}">
                         {{ showing.movie.title }}
                     </option>
                 }
             </select>
         </label>
-        <label
-            >Nombre de place :
-            <input
-                type="number"
-                min="1"
-                max="10"
-                class="bg-seasalt/50 border border-darkblue p-1"
-                formControlName="seat"
-                #wishSeat
-                (input)="onWishSeat(wishSeat.value)"
-            />
-        </label>
-        <label
-            >Avez-vous besoin de places réservées pour les personnes à mobilités
-            réduites ? <span class="italic text-sm">(Attention doit être comptabilisé dans le total des places)</span>
-            <select
-                name=""
-                id=""
-                class="bg-seasalt/50 border border-darkblue p-1"
-                formControlName="accessibleSeat"
-                #searchAccessibleSeat
-                (input)="
-                    onSearchAccessibleSeatNeeded(searchAccessibleSeat.value)
-                "
-            >
-                <option value="" selected>--</option>
-                <option value="true">oui</option>
-                <option value="false">non</option>
-            </select>
-        </label>
-        <label
-            [ngStyle]="{
-                display: displayAccessibleSeatNumber() ? 'block' : 'none'
-            }"
-            >Combien ?
-            <input
-                type="number"
-                min="1"
-                max="2"
-                class="bg-seasalt/50 border border-darkblue p-1"
-                #searchAccessibleSeatNumber
-                (input)=" onSearchAccessibleSeatNumber(searchAccessibleSeatNumber.value)"
-            />
-        </label>
+        @if (searchMovie.value) {
+            <div class="flex flex-col items-center justify-center space-y-6">
+                <label
+                    >Nombre de place :
+                    <input
+                        type="number"
+                        min="1"
+                        max="10"
+                        class="bg-peach/20 border border-darkblue p-1"
+                        formControlName="seat"
+                        #wishSeat
+                        (input)="onWishSeat(wishSeat.value)"
+                    />
+                </label>
+                <label
+                    >Avez-vous besoin de places réservées pour les personnes à
+                    mobilités réduites ?
+                    <span class="italic text-sm pr-2"
+                        >(Comprises dans le total des places)</span
+                    >
+                    <select
+                        name=""
+                        id=""
+                        class="bg-peach/20 border border-darkblue p-1"
+                        formControlName="accessibleSeat"
+                        #searchAccessibleSeat
+                        (input)="
+                            onSearchAccessibleSeatNeeded(
+                                searchAccessibleSeat.value
+                            )
+                        "
+                    >
+                        <option value="" selected>--</option>
+                        <option value="true">oui</option>
+                        <option value="false">non</option>
+                    </select>
+                </label>
+                <label
+                    [ngStyle]="{
+                        display: displayAccessibleSeatNumber()
+                            ? 'block'
+                            : 'none',
+                    }"
+                    >Combien ?
+                    <input
+                        type="number"
+                        min="1"
+                        max="2"
+                        class="bg-peach/20 border border-darkblue p-1"
+                        #searchAccessibleSeatNumber
+                        (input)="
+                            onSearchAccessibleSeatNumber(
+                                searchAccessibleSeatNumber.value
+                            )
+                        "
+                    />
+                </label>
+            </div>
+        }
     </form>
 </div>
-<div>
+<div class="flex items-center justify-center m-auto mt-16 gap-10">
     @for (showing of showingFiltered(); track $index) {
-        <div>{{ showing.date }}</div>
+        <div
+            (click)="
+                onSelectShowing(
+                    showing.room.projectionQuality.price.price,
+                    $index
+                )
+            "
+            [ngStyle]="{
+                'background-color':
+                    selectedIndex() === $index ? '#FFBF69' : '#F7F7F7',
+            }"
+        >
+            <ul
+                class="border-2 border-darkblue rounded-lg w-fit *:pr-2 *:pl-2 hover:bg-peach *:px-2 shadow shadow-darkblue"
+            >
+                <li class="pt-2">
+                    Le: {{ showing.date | date: 'dd/MM/yyyy' }}
+                </li>
+                <li>Début: {{ showing.startAt | hoursDisplay }}</li>
+                <li>Fin: {{ showing.endAt | hoursDisplay }}</li>
+                <li>{{ showing.movie.title }}</li>
+                <li>Salle: {{ showing.room.number }}</li>
+                <li class="pb-2">
+                    {{ showing.room.projectionQuality.quality }}
+                </li>
+            </ul>
+        </div>
     } @empty {
-        Désolé aucune séances ne correspond à vos critères.
+        @if (searchCinema.value) {
+            <p>Désolé aucune séance ne correspond à vos critères.</p>
+        }
     }
 </div>
-
+<div class="grid m-auto">
+    @for (showing of selectedShowingSignal(); track $index) {
+        @for (seat of showing.seat; track $index) {
+            <p>{{ seat.number }}</p>
+        }
+    }
+</div>
+<div class="flex justify-end gap-6 m-10">
+    <p class="text-3xl font-bold">
+        Total : {{ totalCartSignal() | currency: 'EUR' }}
+    </p>
+    <button
+        class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
+        [disabled]="totalCartSignal() === 0"
+        (click)="onSubmit()"
+    >
+        Valider ma réservation
+    </button>
+</div>
