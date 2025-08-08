@@ -1,31 +1,29 @@
-import {
-    Component,
-    computed,
-    effect,
-    inject,
-    OnInit,
-    signal,
-} from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { ShowingService } from '../data-access/showing.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CinemaService } from '../../shared/data-access/cinema.service';
-import { DynamicControl } from '../../shared/models/form.interface';
 import {
     FormControl,
     FormGroup,
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
-import { CinemaInterface } from '../../shared/models/cinema.interface';
-import { map, switchMap, tap } from 'rxjs';
-import { NgStyle } from '@angular/common';
-import { Seat } from '../../shared/models/seat.interface';
+import { CurrencyPipe, DatePipe, NgStyle } from '@angular/common';
 import { seatAvailableNumber } from '../../shared/util/seatAvailableNumber';
 import { accessibleSeatAvailableNumber } from '../../shared/util/accessibleSeatAvailableNumber';
+import { HoursDisplayPipe } from '../../shared/util/pipes/hoursDisplay.pipe';
+import { ShowingInterface } from '../models/showing.interface';
 
 @Component({
     selector: 'app-showing',
-    imports: [ReactiveFormsModule, NgStyle],
+    imports: [
+        ReactiveFormsModule,
+        NgStyle,
+        DatePipe,
+        CurrencyPipe,
+        HoursDisplayPipe,
+        NgStyle,
+    ],
     templateUrl: './showing.component.html',
 })
 export class ShowingComponent {
@@ -33,20 +31,30 @@ export class ShowingComponent {
     private readonly cinemaService = inject(CinemaService);
 
     private showings = toSignal(this.showingService.getAllShowing());
-    
+
     public cinemas = toSignal(this.cinemaService.getAllCinema());
 
-    public searchCinema = signal('');
+    public searchCinemaSignal = signal('');
     public searchAccessibleSeatNumber = signal(0);
-    public wishSeat = signal(0);
+    public wishSeatSignal = signal(0);
     public searchAccessibleSeatNeeded = signal(false);
     public displayAccessibleSeatNumber = signal(false);
+    public totalCartSignal = signal(0);
+    public selectedIndex = signal(-1);
+    public selectedShowingSignal = signal<ShowingInterface[]>([])
+
+
+    public showingFilterByCinema = computed(() =>
+        this.showings()?.filter(
+            (showing) => showing.room.cinema.id === this.searchCinemaSignal(),
+        ),
+    );
 
     public showingFiltered = computed(() =>
         this.showings()?.filter(
             (showing) =>
-                showing.room.cinema.id === this.searchCinema() &&
-                seatAvailableNumber(showing.seat) >= this.wishSeat() &&
+                showing.room.cinema.id === this.searchCinemaSignal() &&
+                seatAvailableNumber(showing.seat) >= this.wishSeatSignal() &&
                 accessibleSeatAvailableNumber(showing.seat) >=
                     this.searchAccessibleSeatNumber(),
         ),
@@ -60,12 +68,12 @@ export class ShowingComponent {
     });
 
     onSearchCinema(cinema: string) {
-        this.searchCinema.set(cinema);
+        this.searchCinemaSignal.set(cinema);
     }
-     onWishSeat(number: string) {
-        this.wishSeat.set(+number);
+    onWishSeat(number: string) {
+        this.wishSeatSignal.set(+number);
     }
-    
+
     onSearchAccessibleSeatNeeded(isAccessibleSeatNeeded: string) {
         if (isAccessibleSeatNeeded === 'true') {
             this.displayAccessibleSeatNumber.set(true);
@@ -78,7 +86,25 @@ export class ShowingComponent {
         this.searchAccessibleSeatNumber.set(+accessibleSeat);
     }
 
-    effect = effect(() => console.log(this.showingFiltered()));
+    onSelectShowing(price: number, index: number) {
+        const total = price * this.wishSeatSignal();
+        this.selectedIndex.set(index);
+        this.totalCartSignal.set(total);
+    }
+
+    onSubmit() {
+        const selectedShowing = this.showingFiltered()?.filter(
+            (showing, index) => index === this.selectedIndex(),
+        ); 
+     this.selectedShowingSignal.set(selectedShowing || []);
+     console.log(
+            `Reservation faite pour la séance : ${selectedShowing?.[0].id}`,
+       this.selectedShowingSignal());
+    }
+
+    effect = effect(() =>
+        console.log(this.showingFiltered(), this.totalCartSignal()),
+    );
     // formModelConfig: DynamicControl[] = [
     //     {
     //         controlKey: 'cinema',

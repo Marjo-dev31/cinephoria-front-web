@@ -3,28 +3,33 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
 import { ShowingInterface } from '../../showing/models/showing.interface';
 import { upcoming } from '../util/upcomingDate';
+import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
 
 @Component({
     selector: 'app-dialog',
-    imports: [DatePipe, CurrencyPipe],
+    imports: [DatePipe, CurrencyPipe, HoursDisplayPipe],
     template: `
         <ng-container>
-            <h2 class="text-center font-roboto font-bold text-2xl ">Séances à venir</h2>
+            <h2 class="text-center font-roboto font-bold text-2xl ">
+                Séances à venir
+            </h2>
             @for (showing of upcomingShowing(); track showing.id) {
-                <div
-                    class="border-2 border-darkblue rounded-lg w-fit *:pr-2 *:pl-2 hover:bg-peach"
+                <ul
+                    class="border-2 border-darkblue rounded-lg w-fit *:px-2 hover:bg-peach"
                 >
-                    <p>Du {{ showing.date | date: 'd/MM/yyyy' }}</p>
-                    <p>Début {{ showing.startAt }}</p>
-                    <p>Fin {{ showing.endAt }}</p>
-                    <p>{{ showing.room.projectionQuality.quality }}</p>
-                    <p>
+                    <li class="pt-1">
+                        Du {{ showing.date | date: 'd/MM/yyyy' }}
+                    </li>
+                    <li>Début {{ showing.startAt | hoursDisplay }}</li>
+                    <li>Fin {{ showing.endAt | hoursDisplay }}</li>
+                    <li>{{ showing.room.projectionQuality.quality }}</li>
+                    <li class="pb-1">
                         {{
                             showing.room.projectionQuality.price.price
-                                | currency
+                                | currency: 'EUR'
                         }}
-                    </p>
-                </div>
+                    </li>
+                </ul>
             } @empty {
                 <p class="text-center p-4">Trop tôt ou trop tard ?!</p>
                 <p class="text-center">
@@ -49,7 +54,7 @@ export class DialogComponent {
     data = inject(DIALOG_DATA);
 
     today = new Date();
-    
+
     upcomingShowing = signal(
         this.data.showing.filter((showing: ShowingInterface) =>
             upcoming(showing.date),
