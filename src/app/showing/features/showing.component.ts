@@ -13,6 +13,9 @@ import { seatAvailableNumber } from '../../shared/util/seatAvailableNumber';
 import { accessibleSeatAvailableNumber } from '../../shared/util/accessibleSeatAvailableNumber';
 import { HoursDisplayPipe } from '../../shared/util/pipes/hoursDisplay.pipe';
 import { ShowingInterface } from '../models/showing.interface';
+import { DynamicControl } from '../../shared/models/form.interface';
+import { Dialog } from '@angular/cdk/dialog';
+import { PayementDialogComponent } from '../../shared/ui/payment.dialog.component';
 
 @Component({
     selector: 'app-showing',
@@ -29,6 +32,7 @@ import { ShowingInterface } from '../models/showing.interface';
 export class ShowingComponent {
     private readonly showingService = inject(ShowingService);
     private readonly cinemaService = inject(CinemaService);
+    private readonly dialog = inject(Dialog);
 
     private showings = toSignal(this.showingService.getAllShowing());
 
@@ -41,8 +45,8 @@ export class ShowingComponent {
     public displayAccessibleSeatNumber = signal(false);
     public totalCartSignal = signal(0);
     public selectedIndex = signal(-1);
-    public selectedShowingSignal = signal<ShowingInterface[]>([])
-
+    public selectedShowingSignal = signal<ShowingInterface[]>([]);
+    public selectSeatIndex = signal<number[]>([]);
 
     public showingFilterByCinema = computed(() =>
         this.showings()?.filter(
@@ -70,8 +74,12 @@ export class ShowingComponent {
     onSearchCinema(cinema: string) {
         this.searchCinemaSignal.set(cinema);
     }
+
     onWishSeat(number: string) {
         this.wishSeatSignal.set(+number);
+        this.selectedIndex.set(-1);
+        this.totalCartSignal.set(0);
+        this.selectedShowingSignal.set([]);
     }
 
     onSearchAccessibleSeatNeeded(isAccessibleSeatNeeded: string) {
@@ -87,23 +95,48 @@ export class ShowingComponent {
     }
 
     onSelectShowing(price: number, index: number) {
-        const total = price * this.wishSeatSignal();
         this.selectedIndex.set(index);
+        const selectedShowing = this.showingFiltered()?.filter(
+            (showing, index) => index === this.selectedIndex(),
+        );
+        selectedShowing ? this.selectedShowingSignal.set(selectedShowing) : [];
+        const total = price * this.wishSeatSignal();
         this.totalCartSignal.set(total);
     }
 
+    onSelectSeat(index: number) {
+        this.selectSeatIndex.update((indexArray) => {
+            if (indexArray.includes(index)) {
+                return indexArray.filter((i) => i !== index);
+            }
+            if (this.selectSeatIndex().length < this.wishSeatSignal()) {
+                return [...indexArray, index];
+            }
+            return this.selectSeatIndex();
+        });
+    }
+
     onSubmit() {
-        const selectedShowing = this.showingFiltered()?.filter(
-            (showing, index) => index === this.selectedIndex(),
-        ); 
-     this.selectedShowingSignal.set(selectedShowing || []);
-     console.log(
-            `Reservation faite pour la séance : ${selectedShowing?.[0].id}`,
-       this.selectedShowingSignal());
+        console.log(
+            `Reservation faite pour la séance : `,
+            this.selectedShowingSignal(),
+        );
+        this.dialog.open(PayementDialogComponent, {
+            height: '400px',
+            width: '400px',
+            data: {
+                form: this.formModelConfig,
+                reservation: this.selectedShowingSignal(),
+            },
+        });
     }
 
     effect = effect(() =>
-        console.log(this.showingFiltered(), this.totalCartSignal()),
+        console.log(
+            this.showingFiltered(),
+            this.totalCartSignal(),
+            this.selectedShowingSignal(),
+        ),
     );
     // formModelConfig: DynamicControl[] = [
     //     {
@@ -127,4 +160,57 @@ export class ShowingComponent {
     //     validators: [Validators.required],
     // },
     // ];
+
+    formModelConfig: DynamicControl[] = [
+        {
+            controlKey: 'firstname',
+            formFieldType: 'input',
+            inputType: 'text',
+            label: 'Prénom',
+            defaultValue: '',
+            validators: [Validators.required],
+        },
+        {
+            controlKey: 'lastname',
+            formFieldType: 'input',
+            inputType: 'text',
+            label: 'Nom',
+            defaultValue: '',
+            validators: [Validators.required],
+        },
+        {
+            controlKey: 'cardNumber',
+            formFieldType: 'input',
+            inputType: 'text',
+            inputMode: 'numeric',
+            label: 'Numéro de carte bancaire',
+            defaultValue: '',
+            validators: [
+                Validators.required,
+                Validators.minLength(16),
+                Validators.maxLength(16),
+                Validators.pattern(/^[0-9]\d*$/),
+            ],
+        },
+        {
+            controlKey: 'expiryDate',
+            formFieldType: 'input',
+            inputType:'month',
+            label: "Date d'expiration",
+            defaultValue: '',
+            validators: [Validators.required],
+        },
+        {
+            controlKey: 'code',
+            formFieldType: 'input',
+            label: 'Code de vérification',
+            defaultValue: '',
+            validators: [
+                Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(3),
+                Validators.pattern(/^[0-9]\d*$/),
+            ],
+        },
+    ];
 }

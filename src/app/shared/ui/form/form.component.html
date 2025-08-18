@@ -1,14 +1,15 @@
 <div>
     <form [formGroup]="formModel" (ngSubmit)="onSubmit()">
-        <div>
+        <div class="flex flex-col space-y-2">
             @for (control of formModelConfig; track $index) {
-                <label for="{{ control.controlKey }}"> {{ control.label }}</label>
+                <label for="control.controlKey"> {{ control.label }}</label>
                 <ng-container>
                     @switch (control.formFieldType) {
                         @case ('input') {
                             <input
                                 type="{{ control.inputType }}"
                                 formControlName="{{ control.controlKey }}"
+                                class="border bg-sage/50"
                             />
                         }
                         @case ('select') {
@@ -17,19 +18,52 @@
                                     option of control.selectOptions;
                                     track $index
                                 ) {
-                                    <option value="{{option}}">{{ option }}</option>
+                                    <option value="{{ option }}">
+                                        {{ option }}
+                                    </option>
                                 }
                             </select>
                         }
                     }
                 </ng-container>
-                @if (
-                    formModel.touched &&
-                    formModel.get(control.controlKey)?.hasError('required')
-                ) {
-                    <span>This field is required</span>
+                @if (formModel.touched && formModel.dirty) {
+                    @if (
+                        formModel.get(control.controlKey)?.hasError('required')
+                    ) {
+                        <span>Veuillez compléter ce champs</span>
+                    }
+                    @if (
+                        formModel
+                            .get(control.controlKey)
+                            ?.hasError('minLength') ||
+                        formModel
+                            .get(control.controlKey)
+                            ?.hasError('maxLength') ||
+                        formModel.get(control.controlKey)?.hasError('pattern')
+                    ) {
+                        <span class="text-red-600 text-sm"
+                            >Veuillez respecter les indications : Le numéro de
+                            carte bancaire doit être composé de 16 chiffres et
+                            le code de 3 chiffres</span
+                        >
+                    }
                 }
             }
+        </div>
+        <div class="flex justify-evenly mt-10">
+            <button
+                type="submit"
+                [disabled]="formModel.invalid"
+                class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
+            >
+                Valider</button
+            ><button
+                type="button"
+                (click)="onClose()"
+                class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
+            >
+                Annuler
+            </button>
         </div>
     </form>
 </div>
