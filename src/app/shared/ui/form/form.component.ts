@@ -1,7 +1,8 @@
 import {
     Component,
     EventEmitter,
-    Input,
+    input,
+
     Output,
     SimpleChanges,
 } from '@angular/core';
@@ -15,7 +16,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
     templateUrl: './form.component.html',
 })
 export class FormComponent {
-    @Input() formModelConfig: DynamicControl[] = [];
+   formModelConfig = input<DynamicControl[]>();
     @Output() outputForm = new EventEmitter();
 
     formModel = new FormGroup({});
@@ -23,8 +24,8 @@ export class FormComponent {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['formModelConfig']) {
             this.formModel = new FormGroup({});
-            this.formModelConfig
-            .forEach((control) =>
+            this.formModelConfig()?.
+            forEach((control: DynamicControl) =>
                 this.formModel.addControl(
                     control.controlKey,
                     new FormControl(control.defaultValue, {
@@ -39,10 +40,7 @@ export class FormComponent {
 
     onSubmit() {
         this.outputForm.emit(structuredClone(this.formModel.value));
-        // this.formModel.reset();
+        this.formModel.reset();
     }
 
-    onClose(){
-        this.formModel.reset()
-    }
 }
