@@ -159,14 +159,17 @@
                             viewBox="0 0 640 640"
                             class="size-7"
                             [ngStyle]="{
-                                opacity: seat.reserved ? 'O.5' : '1',
                                 cursor: seat.reserved
                                     ? 'not-allowed'
                                     : 'pointer',
                                 fill: selectSeatIndex().includes($index)
                                     ? '#FFBF69'
                                     : '',
+                                background: seat.accessibleSeat
+                                    ? '#D4D2A5'
+                                    : '',
                             }"
+                            [attr.fill-opacity]="seat.reserved ? 0.5 : 1"
                         >
                             <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
                             <path
@@ -177,6 +180,7 @@
                 }
             }
         </div>
+        <div><p class="bg-sage text-xs">siège mobilité réduite</p></div>
     </div>
 }
 <div class="flex justify-end gap-6 m-10">

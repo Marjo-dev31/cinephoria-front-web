@@ -16,7 +16,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
     templateUrl: './form.component.html',
 })
 export class FormComponent {
-   formModelConfig = input<DynamicControl[]>();
+   readonly formModelConfig = input<DynamicControl[]>();
     @Output() outputForm = new EventEmitter();
 
     formModel = new FormGroup({});

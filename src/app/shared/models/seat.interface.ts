@@ -1,4 +1,4 @@
-export interface Seat {
+export interface SeatInterface {
     id: string;
     number: number;
     accessibleSeat: boolean;

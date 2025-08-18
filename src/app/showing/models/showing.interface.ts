@@ -1,6 +1,6 @@
 import { MovieInterface } from '../../movies/models/movie.interface';
 import { RoomInterface } from '../../room/models/room.interface';
-import { Seat } from '../../shared/models/seat.interface';
+import {  SeatInterface } from '../../shared/models/seat.interface';
 
 export interface CreateShowingInterface {
     date: Date;
@@ -15,5 +15,5 @@ export interface UpdateShowingInterface extends CreateShowingInterface {
 }
 
 export interface ShowingInterface extends UpdateShowingInterface {
-    seat: Seat[];
+    seat: SeatInterface[];
 }
