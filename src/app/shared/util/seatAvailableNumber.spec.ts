@@ -1,10 +1,10 @@
 
-import { Seat } from '../models/seat.interface';
+import { SeatInterface } from '../models/seat.interface';
 import { seatAvailableNumber } from './seatAvailableNumber';
 
 describe('seatAvailableNumber', () => {
     it('should return total seats when none are reserved', () => {
-        const seats: Seat[] = [
+        const seats: SeatInterface[] = [
             { id: '1', reserved: false, number: 1, accessibleSeat: false },
             { id: '2', reserved: false, number: 2, accessibleSeat: false },
             { id: '3', reserved: false, number: 3, accessibleSeat: false },
@@ -13,7 +13,7 @@ describe('seatAvailableNumber', () => {
     });
 
     it('should return 0 when all seats are reserved', () => {
-        const seats: Seat[] = [
+        const seats: SeatInterface[] = [
             { id: '1', reserved: true, number: 1, accessibleSeat: false },
             { id: '2', reserved: true , number: 2, accessibleSeat: false},
         ];
@@ -21,7 +21,7 @@ describe('seatAvailableNumber', () => {
     });
 
     it('should return correct count when some seats are reserved', () => {
-        const seats: Seat[] = [
+        const seats: SeatInterface[] = [
             { id: '1', reserved: true, number: 1, accessibleSeat: false },
             { id: '2', reserved: false, number: 2, accessibleSeat: false },
             { id: '3', reserved: true , number: 3, accessibleSeat: false},

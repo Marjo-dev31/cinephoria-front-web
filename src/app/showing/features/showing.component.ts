@@ -16,6 +16,8 @@ import { ShowingInterface } from '../models/showing.interface';
 import { DynamicControl } from '../../shared/models/form.interface';
 import { Dialog } from '@angular/cdk/dialog';
 import { PayementDialogComponent } from '../../shared/ui/payment.dialog.component';
+import { SeatService } from '../../shared/data-access/seat.service';
+import { concatMap } from 'rxjs';
 
 @Component({
     selector: 'app-showing',
@@ -33,6 +35,7 @@ export class ShowingComponent {
     private readonly showingService = inject(ShowingService);
     private readonly cinemaService = inject(CinemaService);
     private readonly dialog = inject(Dialog);
+    private readonly seatService = inject(SeatService);
 
     private showings = toSignal(this.showingService.getAllShowing());
 
@@ -126,7 +129,17 @@ export class ShowingComponent {
         dialogRef.closed.subscribe((result) => {
             if (result === true) {
                 console.log(result, 'dialogRef');
-                
+                // create order
+                // resa seats if selected
+                if (this.selectSeatIndex().length) {
+                    const seatArray = this.selectSeatIndex().map(
+                        (index) => this.selectedShowingSignal()[0].seat[index],
+                    );
+                    seatArray.forEach((seat) => {
+                        ((seat.reserved = true),
+                            this.seatService.updateSeat(seat).subscribe());
+                    });
+                }
             }
         });
     }
