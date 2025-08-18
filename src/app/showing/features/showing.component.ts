@@ -117,17 +117,17 @@ export class ShowingComponent {
     }
 
     onSubmit() {
-        console.log(
-            `Reservation faite pour la séance : `,
-            this.selectedShowingSignal(),
-        );
-        this.dialog.open(PayementDialogComponent, {
+        const dialogRef = this.dialog.open(PayementDialogComponent, {
             height: '400px',
             width: '400px',
-            data: {
-                form: this.formModelConfig,
-                reservation: this.selectedShowingSignal(),
-            },
+            data: this.formModelConfig,
+        });
+
+        dialogRef.closed.subscribe((result) => {
+            if (result === true) {
+                console.log(result, 'dialogRef');
+                
+            }
         });
     }
 
@@ -195,7 +195,7 @@ export class ShowingComponent {
         {
             controlKey: 'expiryDate',
             formFieldType: 'input',
-            inputType:'month',
+            inputType: 'month',
             label: "Date d'expiration",
             defaultValue: '',
             validators: [Validators.required],

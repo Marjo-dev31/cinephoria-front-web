@@ -1,7 +1,7 @@
 <div>
     <form [formGroup]="formModel" (ngSubmit)="onSubmit()">
         <div class="flex flex-col space-y-2">
-            @for (control of formModelConfig; track $index) {
+            @for (control of formModelConfig(); track $index) {
                 <label for="control.controlKey"> {{ control.label }}</label>
                 <ng-container>
                     @switch (control.formFieldType) {
@@ -57,13 +57,7 @@
                 class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
             >
                 Valider</button
-            ><button
-                type="button"
-                (click)="onClose()"
-                class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
             >
-                Annuler
-            </button>
         </div>
     </form>
 </div>
