@@ -10,7 +10,7 @@ import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
     imports: [DatePipe, CurrencyPipe, HoursDisplayPipe],
     template: `
         <ng-container>
-            <h2 class="text-center font-roboto font-bold text-2xl ">
+            <h2 class="text-center font-roboto font-bold text-4xl ">
                 Séances à venir
             </h2>
             @for (showing of upcomingShowing(); track showing.id) {
@@ -18,7 +18,7 @@ import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
                     class="border-2 border-darkblue rounded-lg w-fit *:px-2 hover:bg-peach"
                 >
                     <li class="pt-1">
-                        Du {{ showing.date | date: 'd/MM/yyyy' }}
+                        Du {{ showing.date | date: 'dd/MM/yyyy' }}
                     </li>
                     <li>Début {{ showing.startAt | hoursDisplay }}</li>
                     <li>Fin {{ showing.endAt | hoursDisplay }}</li>
@@ -50,7 +50,7 @@ import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
         `,
     ],
 })
-export class DialogComponent {
+export class ShowingDialogComponent {
     data = inject(DIALOG_DATA);
 
     today = new Date();

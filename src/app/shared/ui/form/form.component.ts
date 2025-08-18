@@ -20,9 +20,8 @@ export class FormComponent {
 
     formModel = new FormGroup({});
 
-    ngOnChange(changes: SimpleChanges) {
-        if (changes['formModelConfig'] && this.formModelConfig.length) {
-          setTimeout(()=>{
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['formModelConfig']) {
             this.formModel = new FormGroup({});
             this.formModelConfig
             .forEach((control) =>
@@ -34,13 +33,16 @@ export class FormComponent {
                     }),
                 ),
             );
-          }, 3000)
+          }
             
-        }
-    }
+        };
 
     onSubmit() {
         this.outputForm.emit(structuredClone(this.formModel.value));
         // this.formModel.reset();
+    }
+
+    onClose(){
+        this.formModel.reset()
     }
 }

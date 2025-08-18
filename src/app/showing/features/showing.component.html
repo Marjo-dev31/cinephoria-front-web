@@ -1,19 +1,19 @@
 <div class="m-10">
-    <h2 class="text-center text-2xl font-bold font-roboto">
+    <h2 class="text-center text-4xl font-bold font-roboto">
         Ne tardez plus et réservez vos places !
     </h2>
 </div>
 <div>
     <form
         [formGroup]="filterForm"
-        class="flex flex-col size-96 items-center m-auto space-y-6 p-6 rounded-lg border border-darkblue shadow-lg shadow-darkblue"
+        class="flex flex-col w-96 items-center m-auto space-y-6 p-6 rounded-lg border border-darkblue shadow-lg shadow-darkblue"
     >
-        <label
+        <label class="w-72"
             >Cinéma :
             <select
                 name=""
                 id=""
-                class="bg-peach/20 border border-darkblue p-1 w-64"
+                class="bg-peach/20 border border-darkblue p-1 w-full"
                 formControlName="cinema"
                 #searchCinema
                 (input)="onSearchCinema(searchCinema.value)"
@@ -26,12 +26,12 @@
                 }
             </select></label
         >
-        <label>
+        <label class="w-72">
             Film:
             <select
                 name=""
                 id=""
-                class="bg-peach/20 border border-darkblue p-1 w-64"
+                class="bg-peach/20 border border-darkblue p-1 w-full"
                 formControlName="movie"
                 #searchMovie
             >
@@ -44,8 +44,8 @@
             </select>
         </label>
         @if (searchMovie.value) {
-            <div class="flex flex-col items-center justify-center space-y-6">
-                <label
+            <div class="flex flex-col items-center space-y-6">
+                <label class="w-72"
                     >Nombre de place :
                     <input
                         type="number"
@@ -57,7 +57,7 @@
                         (input)="onWishSeat(wishSeat.value)"
                     />
                 </label>
-                <label
+                <label class="w-72"
                     >Avez-vous besoin de places réservées pour les personnes à
                     mobilités réduites ?
                     <span class="italic text-sm pr-2"
@@ -81,6 +81,7 @@
                     </select>
                 </label>
                 <label
+                    class="w-72"
                     [ngStyle]="{
                         display: displayAccessibleSeatNumber()
                             ? 'block'
@@ -103,6 +104,11 @@
             </div>
         }
     </form>
+</div>
+<div class="mt-16">
+    <h3 class="text-center font-bold text-2xl">
+        Choisissez votre séance parmi la liste suivante:
+    </h3>
 </div>
 <div class="flex items-center justify-center m-auto mt-16 gap-10">
     @for (showing of showingFiltered(); track $index) {
@@ -139,13 +145,36 @@
         }
     }
 </div>
-<div class="grid m-auto">
-    @for (showing of selectedShowingSignal(); track $index) {
-        @for (seat of showing.seat; track $index) {
-            <p>{{ seat.number }}</p>
+@if (selectedShowingSignal().length) {
+<div
+    class="border-darkblue border-2 size-64 m-auto mt-16 flex flex-col justify-between items-center"
+>
+    <p class="border-b-4 w-1/2 h-6"></p>
+    <div class="grid grid-flow-col grid-rows-4 size-40 place-items-center" >
+        @for (showing of selectedShowingSignal(); track $index) {
+            @for (seat of showing.seat; track $index) {
+                <button (click)="onSelectSeat($index)"
+                    >
+                <svg
+                    
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 640 640"
+                    class="size-7"
+                    [ngStyle]="{
+                        opacity: seat.reserved ? 'O.5' : '1',
+                        cursor: seat.reserved ? 'not-allowed' : 'pointer',
+                        fill: selectSeatIndex().includes($index) ? '#FFBF69' : ''
+                    }"
+                >
+                    <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                    <path
+                        d="M144 336C144 288.7 109.8 249.4 64.8 241.5C72 177.6 126.2 128 192 128L448 128C513.8 128 568 177.6 575.2 241.5C530.2 249.5 496 288.7 496 336L496 368L144 368L144 336zM0 448L0 336C0 309.5 21.5 288 48 288C74.5 288 96 309.5 96 336L96 416L544 416L544 336C544 309.5 565.5 288 592 288C618.5 288 640 309.5 640 336L640 448C640 483.3 611.3 512 576 512L64 512C28.7 512 0 483.3 0 448z"
+                    />
+                </svg></button>
+            }
         }
-    }
-</div>
+    </div>
+</div> }
 <div class="flex justify-end gap-6 m-10">
     <p class="text-3xl font-bold">
         Total : {{ totalCartSignal() | currency: 'EUR' }}

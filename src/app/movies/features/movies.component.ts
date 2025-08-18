@@ -2,7 +2,6 @@ import {
     Component,
     computed,
     DestroyRef,
-    effect,
     inject,
     signal,
     Signal,
@@ -14,7 +13,7 @@ import { AveragePipe } from '../utils/average.pipe';
 import { MoviesService } from '../data-access/movies.service';
 import { map } from 'rxjs';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
-import { DialogComponent } from '../../shared/ui/dialog.component';
+import { ShowingDialogComponent } from '../../shared/ui/showing.dialog.component';
 
 @Component({
     selector: 'app-movies',
@@ -58,10 +57,6 @@ export class MoviesComponent {
         this.reviewIndex[movieId] = randomIndex;
     }
 
-    movieeffect = effect(() =>
-        console.log(this.movies(), 'toto', this.moviesFiltered()),
-    );
-
     // make filter for cinema and date when session service created
     moviesFiltered = computed(() =>
         this.movies().filter((movie) =>
@@ -89,7 +84,7 @@ export class MoviesComponent {
             .getById(id)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((data) =>
-                this.dialog.open(DialogComponent, {
+                this.dialog.open(ShowingDialogComponent, {
                     height: '400px',
                     width: '600px',
                     data: data,
