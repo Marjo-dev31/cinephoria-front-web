@@ -1,6 +1,6 @@
-import { DIALOG_DATA } from '@angular/cdk/dialog';
+import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
 import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
 
 @Component({
@@ -14,13 +14,16 @@ import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
             @for (showing of data; track showing.id) {
                 <ul
                     class="border-2 border-darkblue rounded-lg w-fit *:px-2 hover:bg-peach"
+                    (click)="onRedirectToResa(showing.id)"
                 >
                     <li class="pt-1">
                         Du {{ showing.date | date: 'dd/MM/yyyy' }}
                     </li>
                     <li>Début {{ showing.startAt | hoursDisplay }}</li>
                     <li>Fin {{ showing.endAt | hoursDisplay }}</li>
-                    <li class="capitalize">{{ showing.room.projectionQuality.quality }}</li>
+                    <li class="capitalize">
+                        {{ showing.room.projectionQuality.quality }}
+                    </li>
                     <li class="pb-1">
                         {{
                             showing.room.projectionQuality.price.price
@@ -49,6 +52,10 @@ import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
     ],
 })
 export class ShowingDialogComponent {
+    private readonly dialogRef = inject(DialogRef);
     data = inject(DIALOG_DATA);
 
+    onRedirectToResa(showingId: string) {
+        this.dialogRef.close(showingId);
+    }
 }

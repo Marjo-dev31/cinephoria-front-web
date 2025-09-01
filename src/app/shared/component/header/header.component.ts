@@ -18,7 +18,6 @@ export class HeaderComponent {
 
     showSideMenu() {
         this.isShowSideMenu.update((value) => !value);
-        console.log(this.isShowSideMenu())
     }
     
     logout() {}

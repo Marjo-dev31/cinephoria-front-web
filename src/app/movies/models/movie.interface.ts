@@ -1,4 +1,4 @@
-import { GenreInterface } from "./genre.interface"
+import { GenreInterface } from "../../shared/models/genre.interface"
 import { ReviewInterface } from "../../reviews/models/review.interface"
 import { ShowingInterface } from "../../showing/models/showing.interface"
 
