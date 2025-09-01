@@ -3,6 +3,8 @@ import {
     EventEmitter,
     input,
 
+    OnChanges,
+
     Output,
     SimpleChanges,
 } from '@angular/core';
@@ -15,7 +17,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
     imports: [ReactiveFormsModule],
     templateUrl: './form.component.html',
 })
-export class FormComponent {
+export class FormComponent implements OnChanges {
    readonly formModelConfig = input<DynamicControl[]>();
     @Output() outputForm = new EventEmitter();
 

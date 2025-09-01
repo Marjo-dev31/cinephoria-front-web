@@ -1,8 +1,6 @@
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
-import { ShowingInterface } from '../../showing/models/showing.interface';
-import { upcoming } from '../util/upcomingDate';
+import { Component, inject } from '@angular/core';
 import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
 
 @Component({
@@ -13,7 +11,7 @@ import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
             <h2 class="text-center font-roboto font-bold text-4xl ">
                 Séances à venir
             </h2>
-            @for (showing of upcomingShowing(); track showing.id) {
+            @for (showing of data; track showing.id) {
                 <ul
                     class="border-2 border-darkblue rounded-lg w-fit *:px-2 hover:bg-peach"
                 >
@@ -22,7 +20,7 @@ import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
                     </li>
                     <li>Début {{ showing.startAt | hoursDisplay }}</li>
                     <li>Fin {{ showing.endAt | hoursDisplay }}</li>
-                    <li>{{ showing.room.projectionQuality.quality }}</li>
+                    <li class="capitalize">{{ showing.room.projectionQuality.quality }}</li>
                     <li class="pb-1">
                         {{
                             showing.room.projectionQuality.price.price
@@ -53,11 +51,4 @@ import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
 export class ShowingDialogComponent {
     data = inject(DIALOG_DATA);
 
-    today = new Date();
-
-    upcomingShowing = signal(
-        this.data.showing.filter((showing: ShowingInterface) =>
-            upcoming(showing.date),
-        ),
-    );
 }

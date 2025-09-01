@@ -1,5 +1,5 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { Component, Inject, inject, output, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormComponent } from './form/form.component';
 
 @Component({
@@ -46,7 +46,7 @@ import { FormComponent } from './form/form.component';
         `,
     ],
 })
-export class PayementDialogComponent {
+export class PaymentDialogComponent {
     private readonly dialogRef = inject(DialogRef);
 
     data = inject(DIALOG_DATA) || [];

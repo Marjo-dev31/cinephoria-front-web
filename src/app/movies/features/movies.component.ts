@@ -30,7 +30,8 @@ export class MoviesComponent {
 
     public searchGenre = signal('');
     public searchCinema = signal('');
-    public searchDate = signal('')
+    public searchDate = signal('');
+    public today = signal(new Date().toISOString().split('T')[0]);
 
     public readonly movies: Signal<MovieInterface[]> = toSignal(
         this.moviesService.getAllMovies().pipe(
@@ -49,7 +50,6 @@ export class MoviesComponent {
     );
 
     // get random reviews
-    public selectedMovie!: string | null;
     public reviewIndex: Record<string, number> = {};
 
     getRandomReview(max: number, movieId: string) {
@@ -57,13 +57,20 @@ export class MoviesComponent {
         this.reviewIndex[movieId] = randomIndex;
     }
 
-    // make filter for cinema and date when session service created
     moviesFiltered = computed(() =>
-        this.movies().filter((movie) =>
-            movie.showing
-            .some((showing) => showing.room.cinema.city.toLowerCase().includes(this.searchCinema().toLowerCase())) &&
-            movie.genre.title.toLowerCase().includes(this.searchGenre().toLowerCase()) &&
-            movie.showing.some((showing)=> showing.date.toLocaleString().includes(this.searchDate()))
+        this.movies().filter(
+            (movie) =>
+                movie.showing.some((showing) =>
+                    showing.room.cinema.city
+                        .toLowerCase()
+                        .includes(this.searchCinema().toLowerCase()),
+                ) &&
+                movie.genre.title
+                    .toLowerCase()
+                    .includes(this.searchGenre().toLowerCase()) &&
+                movie.showing.some((showing) =>
+                    showing.date.toLocaleString().includes(this.searchDate()),
+                ),
         ),
     );
 
@@ -73,8 +80,8 @@ export class MoviesComponent {
     onSearchCinemaUpdated(cinema: string) {
         this.searchCinema.set(cinema);
     }
-    onSearchDateUpdated(date:string) {
-        this.searchDate.set(date)
+    onSearchDateUpdated(date: string) {
+        this.searchDate.set(date);
     }
 
     // get showing dialog
@@ -87,7 +94,9 @@ export class MoviesComponent {
                 this.dialog.open(ShowingDialogComponent, {
                     height: '400px',
                     width: '600px',
-                    data: data,
+                    data: data.showing.filter(
+                        (showing) => new Date(showing.date) >= new Date(),
+                    ),
                 }),
             );
     }

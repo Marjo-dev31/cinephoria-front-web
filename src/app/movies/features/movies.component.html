@@ -21,6 +21,7 @@
         class="bg-peach/20 border border-darkblue p-2 italic placeholder:text-darkblue/50"
         placeholder="date"
         #searchDate
+        [min]="today()"
         (input)="onSearchDateUpdated(searchDate.value)"
     />
 </div>
@@ -87,7 +88,7 @@
                             <button
                                 class="bg-peach p-2 rounded-xl font-bold cursor-pointer"
                                 (click)="getShowingByMovie(movie.id)"
-                                (keyup.enter)="(getShowingByMovie)"
+                                (keyup.enter)="getShowingByMovie(movie.id)"
                                 tabindex="0"
                             >
                                 séances
