@@ -4,7 +4,6 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ShowingInterface } from '../models/showing.interface';
 
-
 @Injectable({
     providedIn: 'root',
 })
@@ -16,4 +15,7 @@ export class ShowingService {
         return this.http.get<ShowingInterface[]>(this.url);
     }
 
+    getShowingById(id: string): Observable<ShowingInterface> {
+        return this.http.get<ShowingInterface>(`${this.url}/${id}`);
+    }
 }

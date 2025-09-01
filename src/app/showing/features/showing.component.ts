@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ShowingService } from '../data-access/showing.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CinemaService } from '../../shared/data-access/cinema.service';
@@ -17,27 +17,31 @@ import { DynamicControl } from '../../shared/models/form.interface';
 import { Dialog } from '@angular/cdk/dialog';
 import { PaymentDialogComponent } from '../../shared/ui/payment.dialog.component';
 import { SeatService } from '../../shared/data-access/seat.service';
+import { OrderService } from '../../order/data-access/order.service';
+import { upcomingDate } from '../../shared/util/upcomingDate';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-showing',
     imports: [
-    ReactiveFormsModule,
-    NgStyle,
-    DatePipe,
-    CurrencyPipe,
-    HoursDisplayPipe,
-    NgStyle
-],
+        ReactiveFormsModule,
+        NgStyle,
+        DatePipe,
+        CurrencyPipe,
+        HoursDisplayPipe,
+        NgStyle,
+    ],
     templateUrl: './showing.component.html',
 })
-export class ShowingComponent {
+export class ShowingComponent implements OnInit {
     private readonly showingService = inject(ShowingService);
     private readonly cinemaService = inject(CinemaService);
     private readonly dialog = inject(Dialog);
     private readonly seatService = inject(SeatService);
+    private readonly orderService = inject(OrderService);
+    private readonly router = inject(Router);
 
     private showings = toSignal(this.showingService.getAllShowing());
-
     public cinemas = toSignal(this.cinemaService.getAllCinema());
 
     public searchCinemaSignal = signal('');
@@ -60,9 +64,8 @@ export class ShowingComponent {
                 showing.room.cinema.id === this.searchCinemaSignal() &&
                 seatAvailableNumber(showing.seat) >= this.wishSeatSignal() &&
                 accessibleSeatAvailableNumber(showing.seat) >=
-                    this.searchAccessibleSeatNumber() 
-                //     &&
-                // showing.date > new Date()
+                    this.searchAccessibleSeatNumber() &&
+                upcomingDate(showing.date),
         ),
     );
 
@@ -73,19 +76,22 @@ export class ShowingComponent {
         accessibleSeat: new FormControl(0, [Validators.required]),
     });
 
+    ngOnInit() {
+        this.getShowingByRedirection();
+    }
+
     onSearchCinema(cinema: string) {
         this.searchCinemaSignal.set(cinema);
     }
 
     onWishSeat(number: string) {
         this.wishSeatSignal.set(+number);
-        this.selectedIndex.set(-1);
-        this.totalCartSignal.set(0);
-        this.selectedShowingSignal.set([]);
+        this.resetSelection();
     }
 
     onSearchAccessibleSeatNumber(accessibleSeat: string) {
         this.searchAccessibleSeatNumber.set(+accessibleSeat);
+        this.resetSelection();
     }
 
     onSelectShowing(price: number, index: number) {
@@ -119,29 +125,47 @@ export class ShowingComponent {
 
         dialogRef.closed.subscribe((resaIsValidate) => {
             if (resaIsValidate) {
+                const seatArray = this.selectSeatIndex().map(
+                    (index) => this.selectedShowingSignal()[0].seat[index],
+                );
                 // create order
-
-                // resa seats if selected
-                if (this.selectSeatIndex().length) {
-                    const seatArray = this.selectSeatIndex().map(
-                        (index) => this.selectedShowingSignal()[0].seat[index],
-                    );
+                const newOrder = {
+                    quantity: this.wishSeatSignal(),
+                    total: this.totalCartSignal(),
+                    showing: this.selectedShowingSignal()[0].id,
+                    seat: seatArray,
+                };
+                this.orderService.addOrder(newOrder).subscribe((order) =>
                     seatArray.forEach((seat) => {
                         ((seat.reserved = true),
+                            (seat.order = order),
                             this.seatService.updateSeat(seat).subscribe());
-                    });
-                }
+                    }),
+                );
+                this.resetSelection();
             }
         });
     }
 
-    effect = effect(() =>
-        console.log(
-            this.showingFiltered(),
-            this.totalCartSignal(),
-            this.selectedShowingSignal(),
-        ),
-    );
+    resetSelection() {
+        this.selectedIndex.set(-1);
+        this.totalCartSignal.set(0);
+        this.selectedShowingSignal.set([]);
+        this.selectSeatIndex.set([]);
+    }
+
+    getShowingByRedirection() {
+        const showingId =
+            this.router.getCurrentNavigation()?.extras?.state?.['data'];
+        this.showingService.getShowingById(showingId).subscribe((showing) =>
+            console.log(showing, showingId)
+            // this.filterForm.patchValue({
+            //     cinema: showing.room.cinema.city,
+            //     movie: showing.movie.title,
+            // })
+        );
+    }
+
     // formModelConfig: DynamicControl[] = [
     //     {
     //         controlKey: 'cinema',
@@ -188,7 +212,7 @@ export class ShowingComponent {
             inputType: 'text',
             label: 'Numéro de carte bancaire',
             defaultValue: '',
-            maxlength:16,
+            maxlength: 16,
             validators: [
                 Validators.required,
                 Validators.minLength(16),
@@ -200,7 +224,7 @@ export class ShowingComponent {
             controlKey: 'expiryDate',
             formFieldType: 'input',
             inputType: 'month',
-            minDate: new Date().toISOString().slice(0,7),
+            minDate: new Date().toISOString().slice(0, 7),
             label: "Date d'expiration",
             defaultValue: '',
             validators: [Validators.required],
@@ -208,10 +232,10 @@ export class ShowingComponent {
         {
             controlKey: 'code',
             formFieldType: 'input',
-            inputType:'text',
+            inputType: 'text',
             label: 'Code de vérification',
             defaultValue: '',
-            maxlength:3,
+            maxlength: 3,
             validators: [
                 Validators.required,
                 Validators.minLength(3),

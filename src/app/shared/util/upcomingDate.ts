@@ -1,3 +1,3 @@
-export const upcoming = (date: Date) => {
+export const upcomingDate = (date: Date) => {
    return new Date(date) >= new Date();
 };

@@ -14,6 +14,8 @@ import { MoviesService } from '../data-access/movies.service';
 import { map } from 'rxjs';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { ShowingDialogComponent } from '../../shared/ui/showing.dialog.component';
+import { upcomingDate } from '../../shared/util/upcomingDate';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-movies',
@@ -24,6 +26,7 @@ export class MoviesComponent {
     private readonly moviesService = inject(MoviesService);
     private readonly destroyRef = inject(DestroyRef);
     private readonly dialog = inject(Dialog);
+    private readonly router = inject(Router);
 
     // check if it works in production
     public readonly url = `${environment.serverUrl}/uploads/`;
@@ -90,14 +93,21 @@ export class MoviesComponent {
         this.moviesService
             .getById(id)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((data) =>
-                this.dialog.open(ShowingDialogComponent, {
+            .subscribe((data) => {
+                const dialogRef = this.dialog.open(ShowingDialogComponent, {
                     height: '400px',
                     width: '600px',
                     data: data.showing.filter(
-                        (showing) => new Date(showing.date) >= new Date(),
+                        (showing) =>
+                            upcomingDate(showing.date) &&
+                            showing.seat.some((seat) => !seat.reserved),
                     ),
-                }),
-            );
+                });
+                dialogRef.closed.subscribe((showingId) =>
+                    this.router.navigate(['/reservation'], {
+                        state: { data: showingId },
+                    }),
+                );
+            });
     }
 }
