@@ -15,20 +15,19 @@ import { HoursDisplayPipe } from '../../shared/util/pipes/hoursDisplay.pipe';
 import { ShowingInterface } from '../models/showing.interface';
 import { DynamicControl } from '../../shared/models/form.interface';
 import { Dialog } from '@angular/cdk/dialog';
-import { PayementDialogComponent } from '../../shared/ui/payment.dialog.component';
+import { PaymentDialogComponent } from '../../shared/ui/payment.dialog.component';
 import { SeatService } from '../../shared/data-access/seat.service';
-import { concatMap } from 'rxjs';
 
 @Component({
     selector: 'app-showing',
     imports: [
-        ReactiveFormsModule,
-        NgStyle,
-        DatePipe,
-        CurrencyPipe,
-        HoursDisplayPipe,
-        NgStyle,
-    ],
+    ReactiveFormsModule,
+    NgStyle,
+    DatePipe,
+    CurrencyPipe,
+    HoursDisplayPipe,
+    NgStyle
+],
     templateUrl: './showing.component.html',
 })
 export class ShowingComponent {
@@ -43,9 +42,7 @@ export class ShowingComponent {
 
     public searchCinemaSignal = signal('');
     public searchAccessibleSeatNumber = signal(0);
-    public wishSeatSignal = signal(0);
-    public searchAccessibleSeatNeeded = signal(false);
-    public displayAccessibleSeatNumber = signal(false);
+    public wishSeatSignal = signal(1);
     public totalCartSignal = signal(0);
     public selectedIndex = signal(-1);
     public selectedShowingSignal = signal<ShowingInterface[]>([]);
@@ -63,14 +60,16 @@ export class ShowingComponent {
                 showing.room.cinema.id === this.searchCinemaSignal() &&
                 seatAvailableNumber(showing.seat) >= this.wishSeatSignal() &&
                 accessibleSeatAvailableNumber(showing.seat) >=
-                    this.searchAccessibleSeatNumber(),
+                    this.searchAccessibleSeatNumber() 
+                //     &&
+                // showing.date > new Date()
         ),
     );
 
     filterForm = new FormGroup({
         cinema: new FormControl('', [Validators.required]),
         movie: new FormControl('', [Validators.required]),
-        seat: new FormControl(0, [Validators.required]),
+        seat: new FormControl(1, [Validators.required]),
         accessibleSeat: new FormControl(0, [Validators.required]),
     });
 
@@ -83,14 +82,6 @@ export class ShowingComponent {
         this.selectedIndex.set(-1);
         this.totalCartSignal.set(0);
         this.selectedShowingSignal.set([]);
-    }
-
-    onSearchAccessibleSeatNeeded(isAccessibleSeatNeeded: string) {
-        if (isAccessibleSeatNeeded === 'true') {
-            this.displayAccessibleSeatNumber.set(true);
-        } else {
-            this.displayAccessibleSeatNumber.set(false);
-        }
     }
 
     onSearchAccessibleSeatNumber(accessibleSeat: string) {
@@ -120,16 +111,16 @@ export class ShowingComponent {
     }
 
     onSubmit() {
-        const dialogRef = this.dialog.open(PayementDialogComponent, {
+        const dialogRef = this.dialog.open(PaymentDialogComponent, {
             height: '400px',
             width: '400px',
             data: this.formModelConfig,
         });
 
-        dialogRef.closed.subscribe((result) => {
-            if (result === true) {
-                console.log(result, 'dialogRef');
+        dialogRef.closed.subscribe((resaIsValidate) => {
+            if (resaIsValidate) {
                 // create order
+
                 // resa seats if selected
                 if (this.selectSeatIndex().length) {
                     const seatArray = this.selectSeatIndex().map(
@@ -195,9 +186,9 @@ export class ShowingComponent {
             controlKey: 'cardNumber',
             formFieldType: 'input',
             inputType: 'text',
-            inputMode: 'numeric',
             label: 'Numéro de carte bancaire',
             defaultValue: '',
+            maxlength:16,
             validators: [
                 Validators.required,
                 Validators.minLength(16),
@@ -209,6 +200,7 @@ export class ShowingComponent {
             controlKey: 'expiryDate',
             formFieldType: 'input',
             inputType: 'month',
+            minDate: new Date().toISOString().slice(0,7),
             label: "Date d'expiration",
             defaultValue: '',
             validators: [Validators.required],
@@ -216,8 +208,10 @@ export class ShowingComponent {
         {
             controlKey: 'code',
             formFieldType: 'input',
+            inputType:'text',
             label: 'Code de vérification',
             defaultValue: '',
+            maxlength:3,
             validators: [
                 Validators.required,
                 Validators.minLength(3),

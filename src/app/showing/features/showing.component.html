@@ -6,9 +6,9 @@
 <div>
     <form
         [formGroup]="filterForm"
-        class="flex flex-col w-96 items-center m-auto space-y-6 p-6 rounded-lg border border-darkblue shadow-lg shadow-darkblue"
+        class="flex flex-col w-96 min-h-48 items-center m-auto justify-between p-6 rounded-lg border border-darkblue shadow-lg shadow-darkblue"
     >
-        <label class="w-72"
+        <label class="w-72 p-2"
             >Cinéma :
             <select
                 name=""
@@ -26,7 +26,13 @@
                 }
             </select></label
         >
-        <label class="w-72">
+        @if (
+            filterForm.touched &&
+            filterForm.controls.cinema.hasError('required')
+        ) {
+            <p class="text-red-600 text-sm gap-0">Veuillez choisir un cinéma</p>
+        }
+        <label class="w-72 p-2">
             Film:
             <select
                 name=""
@@ -43,9 +49,14 @@
                 }
             </select>
         </label>
+        @if (
+            filterForm.touched && filterForm.controls.movie.hasError('required')
+        ) {
+            <p class="text-red-600 text-sm gap-0">Veuillez choisir un film</p>
+        }
         @if (searchMovie.value) {
-            <div class="flex flex-col items-center space-y-6">
-                <label class="w-72"
+            <div class="flex flex-col items-center justify-between">
+                <label class="w-72 p-2"
                     >Nombre de place :
                     <input
                         type="number"
@@ -57,43 +68,15 @@
                         (input)="onWishSeat(wishSeat.value)"
                     />
                 </label>
-                <label class="w-72"
-                    >Avez-vous besoin de places réservées pour les personnes à
-                    mobilités réduites ?
-                    <span class="italic text-sm pr-2"
-                        >(Comprises dans le total des places)</span
-                    >
-                    <select
-                        name=""
-                        id=""
-                        class="bg-peach/20 border border-darkblue p-1"
-                        formControlName="accessibleSeat"
-                        #searchAccessibleSeat
-                        (input)="
-                            onSearchAccessibleSeatNeeded(
-                                searchAccessibleSeat.value
-                            )
-                        "
-                    >
-                        <option value="" selected>--</option>
-                        <option value="true">oui</option>
-                        <option value="false">non</option>
-                    </select>
-                </label>
-                <label
-                    class="w-72"
-                    [ngStyle]="{
-                        display: displayAccessibleSeatNumber()
-                            ? 'block'
-                            : 'none',
-                    }"
-                    >Combien ?
+                <label class="w-72 p-2"
+                    >Dont siège PMR ?
                     <input
                         type="number"
-                        min="1"
+                        min="0"
                         max="2"
                         class="bg-peach/20 border border-darkblue p-1"
                         #searchAccessibleSeatNumber
+                        formControlName="accessibleSeat"
                         (input)="
                             onSearchAccessibleSeatNumber(
                                 searchAccessibleSeatNumber.value
@@ -105,46 +88,47 @@
         }
     </form>
 </div>
-<div class="mt-16">
-    <h3 class="text-center font-bold text-2xl">
-        Choisissez votre séance parmi la liste suivante:
-    </h3>
-</div>
-<div class="flex items-center justify-center m-auto mt-16 gap-10">
-    @for (showing of showingFiltered(); track $index) {
-        <div
-            (click)="
-                onSelectShowing(
-                    showing.room.projectionQuality.price.price,
-                    $index
-                )
-            "
-            [ngStyle]="{
-                'background-color':
-                    selectedIndex() === $index ? '#FFBF69' : '#F7F7F7',
-            }"
-        >
-            <ul
-                class="border-2 border-darkblue rounded-lg w-fit *:pr-2 *:pl-2 hover:bg-peach *:px-2 shadow shadow-darkblue"
+@if (searchCinema.value && searchMovie.value) {
+    <div class="mt-16">
+        <h3 class="text-center font-bold text-2xl">
+            Choisissez votre séance parmi la liste suivante:
+        </h3>
+    </div>
+    <div class="flex items-center justify-center m-auto mt-16 gap-10">
+        @for (showing of showingFiltered(); track $index) {
+            <div
+                class="cursor-pointer"
+                (click)="
+                    onSelectShowing(
+                        showing.room.projectionQuality.price.price,
+                        $index
+                    )
+                "
+                [ngStyle]="{
+                    'background-color':
+                        selectedIndex() === $index ? '#FFBF69' : '#F7F7F7',
+                }"
             >
-                <li class="pt-2">
-                    Le: {{ showing.date | date: 'dd/MM/yyyy' }}
-                </li>
-                <li>Début: {{ showing.startAt | hoursDisplay }}</li>
-                <li>Fin: {{ showing.endAt | hoursDisplay }}</li>
-                <li>{{ showing.movie.title }}</li>
-                <li>Salle: {{ showing.room.number }}</li>
-                <li class="pb-2">
-                    {{ showing.room.projectionQuality.quality }}
-                </li>
-            </ul>
-        </div>
-    } @empty {
-        @if (searchCinema.value) {
+                <ul
+                    class="border-2 border-darkblue rounded-lg w-fit *:pr-2 *:pl-2 hover:bg-peach *:px-2 shadow shadow-darkblue"
+                >
+                    <li class="pt-2">
+                        Le: {{ showing.date | date: 'dd/MM/yyyy' }}
+                    </li>
+                    <li>Début: {{ showing.startAt | hoursDisplay }}</li>
+                    <li>Fin: {{ showing.endAt | hoursDisplay }}</li>
+                    <li>{{ showing.movie.title }}</li>
+                    <li>Salle: {{ showing.room.number }}</li>
+                    <li class="pb-2">
+                        {{ showing.room.projectionQuality.quality }}
+                    </li>
+                </ul>
+            </div>
+        } @empty {
             <p>Désolé aucune séance ne correspond à vos critères.</p>
         }
-    }
-</div>
+    </div>
+}
 @if (selectedShowingSignal().length) {
     <div
         class="border-darkblue border-2 size-64 m-auto mt-16 flex flex-col justify-between items-center"
@@ -153,15 +137,27 @@
         <div class="grid grid-flow-col grid-rows-4 size-40 place-items-center">
             @for (showing of selectedShowingSignal(); track $index) {
                 @for (seat of showing.seat; track $index) {
-                    <button (click)="onSelectSeat($index)">
+                    <button
+                        (click)="onSelectSeat($index)"
+                        [disabled]="
+                            seat.reserved ||
+                            wishSeatSignal() <= 0 ||
+                            (seat.accessibleSeat &&
+                                searchAccessibleSeatNumber() <= 0)
+                        "
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 640 640"
                             class="size-7"
                             [ngStyle]="{
-                                cursor: seat.reserved
-                                    ? 'not-allowed'
-                                    : 'pointer',
+                                cursor:
+                                    seat.reserved ||
+                                    wishSeatSignal() <= 0 ||
+                                    (seat.accessibleSeat &&
+                                        searchAccessibleSeatNumber() <= 0)
+                                        ? 'not-allowed'
+                                        : 'pointer',
                                 fill: selectSeatIndex().includes($index)
                                     ? '#FFBF69'
                                     : '',
@@ -169,7 +165,7 @@
                                     ? '#D4D2A5'
                                     : '',
                             }"
-                            [attr.fill-opacity]="seat.reserved ? 0.5 : 1"
+                            [attr.fill-opacity]="seat.reserved ? 0.3 : 1"
                         >
                             <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
                             <path
@@ -182,6 +178,13 @@
         </div>
         <div><p class="bg-sage text-xs">siège mobilité réduite</p></div>
     </div>
+    @if (wishSeatSignal() <= selectSeatIndex().length) {
+        <div>
+            <p class="text-sm text-red-600 text-center p-2">
+                Vous avez atteint le nombre maximal de place sélectionné
+            </p>
+        </div>
+    }
 }
 <div class="flex justify-end gap-6 m-10">
     <p class="text-3xl font-bold">

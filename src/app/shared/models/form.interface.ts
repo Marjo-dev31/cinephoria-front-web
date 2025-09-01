@@ -4,10 +4,12 @@ export interface DynamicControl {
     controlKey: string;
     formFieldType?: 'input' | 'select';
     inputType?: string;
-    inputMode?: string;
     label?: string;
     defaultValue?: any;
     selectOptions?: string[];
     updateOn?: 'change' | 'blur' | 'submit';
     validators?: ValidatorFn[];
+    maxlength?: number;
+    minlength?: number;
+    minDate?: Date | string;
 }

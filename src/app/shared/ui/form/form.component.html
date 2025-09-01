@@ -8,8 +8,10 @@
                         @case ('input') {
                             <input
                                 type="{{ control.inputType }}"
+                                maxlength="{{ control.maxlength }}"
                                 formControlName="{{ control.controlKey }}"
                                 class="border bg-sage/50"
+                                min="{{ control.minDate }}"
                             />
                         }
                         @case ('select') {
@@ -26,27 +28,25 @@
                         }
                     }
                 </ng-container>
-                @if (formModel.touched && formModel.dirty) {
-                    @if (
-                        formModel.get(control.controlKey)?.hasError('required')
-                    ) {
-                        <span>Veuillez compléter ce champs</span>
-                    }
-                    @if (
-                        formModel
-                            .get(control.controlKey)
-                            ?.hasError('minLength') ||
-                        formModel
-                            .get(control.controlKey)
-                            ?.hasError('maxLength') ||
-                        formModel.get(control.controlKey)?.hasError('pattern')
-                    ) {
-                        <span class="text-red-600 text-sm"
-                            >Veuillez respecter les indications : Le numéro de
-                            carte bancaire doit être composé de 16 chiffres et
-                            le code de 3 chiffres</span
-                        >
-                    }
+
+                @if (
+                    formModel.touched &&
+                    formModel.get(control.controlKey)?.hasError('required')
+                ) {
+                    <span class="text-sm text-red-600"
+                        >Veuillez compléter ce champ</span
+                    >
+                }
+                @if (
+                    formModel.get(control.controlKey)?.hasError('minlength') ||
+                    formModel.get(control.controlKey)?.hasError('maxlength') ||
+                    formModel.get(control.controlKey)?.hasError('pattern')
+                ) {
+                    <span class="text-red-600 text-sm"
+                        >Veuillez respecter les indications : Le numéro de carte
+                        bancaire doit être composé de 16 chiffres et le code de
+                        3 chiffres</span
+                    >
                 }
             }
         </div>
@@ -56,8 +56,8 @@
                 [disabled]="formModel.invalid"
                 class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
             >
-                Valider</button
-            >
+                Valider
+            </button>
         </div>
     </form>
 </div>
