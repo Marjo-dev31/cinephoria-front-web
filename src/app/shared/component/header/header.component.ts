@@ -12,8 +12,8 @@ export class HeaderComponent {
     isShowSideMenu = signal(false);
 
     // recuperer current user and role
-    isLogin = signal(false);
-    isAdmin = signal(false);
+    isLogin = signal(true);
+    isAdmin = signal(true);
     isEmployee = signal(false);
 
     showSideMenu() {

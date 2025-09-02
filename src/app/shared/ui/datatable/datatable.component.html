@@ -1,0 +1,21 @@
+<table class="ml-96 w-3/4 border-collapse border border-darkblue">
+    <thead>
+        <tr class="flex bg-sage/50">
+            @for (column of displayColumns(); track $index) {
+                <th class="flex-1 capitalize p-2 border border-darkblue/50">
+                    {{ column.name }}
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>@for (data of data(); track $index) {
+        <tr class="flex">
+            
+                <td class="flex-1 text-center">{{ data.cinema }}</td>
+                <td class="flex-1 text-center">{{ data.number }}</td>
+                <td class="flex-1 text-center">{{ data.numberOfSeats }}</td>
+                <td class="flex-1 text-center">{{ data.projectionQuality }}</td>
+            
+        </tr>}
+    </tbody>
+</table>
