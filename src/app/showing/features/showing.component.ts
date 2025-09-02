@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    computed,
+    inject,
+    OnInit,
+    signal,
+} from '@angular/core';
 import { ShowingService } from '../data-access/showing.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CinemaService } from '../../shared/data-access/cinema.service';
@@ -19,7 +26,8 @@ import { PaymentDialogComponent } from '../../shared/ui/payment.dialog.component
 import { SeatService } from '../../shared/data-access/seat.service';
 import { OrderService } from '../../order/data-access/order.service';
 import { upcomingDate } from '../../shared/util/upcomingDate';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs';
 
 @Component({
     selector: 'app-showing',
@@ -39,7 +47,7 @@ export class ShowingComponent implements OnInit {
     private readonly dialog = inject(Dialog);
     private readonly seatService = inject(SeatService);
     private readonly orderService = inject(OrderService);
-    private readonly router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
 
     private showings = toSignal(this.showingService.getAllShowing());
     public cinemas = toSignal(this.cinemaService.getAllCinema());
@@ -143,6 +151,7 @@ export class ShowingComponent implements OnInit {
                     }),
                 );
                 this.resetSelection();
+                this.searchCinemaSignal.set('');
             }
         });
     }
@@ -155,15 +164,25 @@ export class ShowingComponent implements OnInit {
     }
 
     getShowingByRedirection() {
-        const showingId =
-            this.router.getCurrentNavigation()?.extras?.state?.['data'];
-        this.showingService.getShowingById(showingId).subscribe((showing) =>
-            console.log(showing, showingId)
-            // this.filterForm.patchValue({
-            //     cinema: showing.room.cinema.city,
-            //     movie: showing.movie.title,
-            // })
-        );
+        this.activatedRoute.queryParams
+            .pipe(
+                switchMap((params) => {
+                    const showingId = params['data'];
+                    return this.showingService.getShowingById(showingId);
+                }),
+            )
+            .subscribe((showing) => {
+                this.searchCinemaSignal.set(showing.room.cinema.id);
+                this.filterForm.patchValue({
+                    cinema: showing.room.cinema.id,
+                    movie: showing.movie.id,
+                });
+                const price =
+                    this.showingFiltered()?.find(
+                        (showingFilter) => showingFilter.id === showing.id,
+                    )?.room.projectionQuality.price.price ?? 0;
+                this.onSelectShowing(price, 0);
+            });
     }
 
     // formModelConfig: DynamicControl[] = [

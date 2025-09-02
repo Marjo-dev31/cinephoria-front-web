@@ -105,7 +105,7 @@ export class MoviesComponent {
                 });
                 dialogRef.closed.subscribe((showingId) =>
                     this.router.navigate(['/reservation'], {
-                        state: { data: showingId },
+                        queryParams: { data: showingId },
                     }),
                 );
             });
