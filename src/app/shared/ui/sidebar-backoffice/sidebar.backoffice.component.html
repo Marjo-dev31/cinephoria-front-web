@@ -1,0 +1,56 @@
+<aside class="h-auto bg-peach absolute rounded-br-lg">
+    <div class="relative md:w-96">
+        @if (isShowSidebar()) {
+            <h2 class="text-center text-4xl font-bold font-roboto p-4">
+                Bienvenue {{ currentUserName() }}
+            </h2>
+            <ul class="py-10">
+                @for (sidebarItem of sidebarItems(); track $index) {
+                    <li class="w-full font-bold text-2xl py-4 hover:bg-seasalt">
+                        <a
+                            [routerLink]="['/backoffice' + sidebarItem.route]"
+                            class="capitalize p-4"
+                            >{{ sidebarItem.label }}</a
+                        >
+                    </li>
+                }
+            </ul>
+        }
+        <button
+            (click)="showSidebar()"
+            class="absolute top-0 right-0 w-10 bg-peach rounded-br-lg"
+            id="btn"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-10"
+                [ngStyle]="{ display: isShowSidebar() ? 'none' : 'flex' }"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+            </svg>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-10"
+                [ngStyle]="{ display: isShowSidebar() ? 'flex' : 'none' }"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18 18 6M6 6l12 12"
+                />
+            </svg>
+        </button>
+    </div>
+</aside>

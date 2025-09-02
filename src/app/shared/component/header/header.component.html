@@ -72,7 +72,7 @@
                     @if (isAdmin()) {
                         <li class="relative hover:cursor-pointer">
                             <a
-                                [routerLink]="['administration']"
+                                [routerLink]="['backoffice']"
                                 class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
                                 ><span class="relative z-10"
                                     >Administration</span
@@ -82,7 +82,7 @@
                     } @else if (isEmployee()) {
                         <li class="relative hover:cursor-pointer">
                             <a
-                                [routerLink]="['intranet']"
+                                [routerLink]="['backoffice']"
                                 class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
                                 ><span class="relative z-10">Intranet</span></a
                             >
@@ -147,11 +147,11 @@
                 <!-- if role admin else user -->
                 @if (isAdmin()) {
                     <li>
-                        <a [routerLink]="['administration']">Administration</a>
+                        <a [routerLink]="['backoffice']">Administration</a>
                     </li>
                 } @else if (isEmployee()) {
                     <li>
-                        <a [routerLink]="['intranet']">Intranet</a>
+                        <a [routerLink]="['backoffice']">Intranet</a>
                     </li>
                 } @else {
                     <li>
