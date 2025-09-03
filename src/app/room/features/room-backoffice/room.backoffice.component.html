@@ -1,2 +1,36 @@
-<h2 class="text-center text-4xl font-bold font-roboto p-4 ml-96">Salles</h2>
-<app-datatable [data]="rooms()" [displayColumns]="displayColumns()" />
+<div class="flex flex-col justify-center items-center ml-96 w-2/3">
+    <h2 class="text-center text-4xl font-bold font-roboto p-4">Salles</h2>
+    <app-datatable
+        [data]="rooms()"
+        [displayColumns]="displayColumns()"
+        (onDeleteId)="handleDeleteRoom($event)"
+        (onUpdateItem)="handleUpdateRoom($event)"
+    />
+    <button
+        class="my-6 mx-auto w-48 bg-peach rounded-lg p-2 font-bold flex justify-between"
+        (click)="onDisplayForm()"
+    >
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+        </svg>
+        ajouter une salle
+    </button>
+    @if (IsDisplayForm()) {
+        <app-form
+            [formModelConfig]="formModelConfig"
+            (outputForm)="handleAddOrUpdateRoom($event)"
+            class="w-96"
+        />
+    }
+</div>

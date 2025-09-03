@@ -1,10 +1,11 @@
 import { CinemaInterface } from "../../shared/models/cinema.interface";
-import { ProjectionQuality } from "../../shared/models/projectionQuality.interface";
+import { ProjectionQualityInterface } from "../../shared/models/projectionQuality.interface";
 
 export interface CreateRoomInterface {
   number: number;
   numberOfSeats: number;
-  cinema: CinemaInterface
+  cinema: CinemaInterface;
+  projectionQuality: ProjectionQualityInterface;
 }
 
 export interface UpdateRoomInterface extends CreateRoomInterface {
@@ -12,5 +13,5 @@ export interface UpdateRoomInterface extends CreateRoomInterface {
 }
 
 export interface RoomInterface extends UpdateRoomInterface {
-  projectionQuality: ProjectionQuality
+  
 }

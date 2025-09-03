@@ -1,6 +1,6 @@
 import { Price } from "./price.interface";
 
-export interface ProjectionQuality {
+export interface ProjectionQualityInterface {
   id: string,
   quality: string,
   price: Price

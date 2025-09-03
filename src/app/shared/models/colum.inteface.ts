@@ -1,4 +1,5 @@
 export interface ColumnInterface {
-    name: string;
+    label: string;
     key: string;
+    accessor: (row: any) => any;
 }

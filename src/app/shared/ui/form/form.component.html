@@ -1,8 +1,8 @@
-<div>
-    <form [formGroup]="formModel" (ngSubmit)="onSubmit()">
+<div class="border p-4 rounded-lg">
+    <form [formGroup]="formModel" (ngSubmit)="onSubmit()" class="flex flex-col">
         <div class="flex flex-col space-y-2">
             @for (control of formModelConfig(); track $index) {
-                <label for="control.controlKey"> {{ control.label }}</label>
+                <label for="control.controlKey" class="capitalize font-semibold"> {{ control.label }}</label>
                 <ng-container>
                     @switch (control.formFieldType) {
                         @case ('input') {
@@ -10,12 +10,12 @@
                                 type="{{ control.inputType }}"
                                 maxlength="{{ control.maxlength }}"
                                 formControlName="{{ control.controlKey }}"
-                                class="border bg-sage/50"
-                                min="{{ control.minDate }}"
+                                class="border bg-sage/40"
+                                min="{{ control.min }}"
                             />
                         }
                         @case ('select') {
-                            <select formControlName="{{ control.controlKey }}">
+                            <select formControlName="{{ control.controlKey }}" class="border bg-sage/40">
                                 @for (
                                     option of control.selectOptions;
                                     track $index
