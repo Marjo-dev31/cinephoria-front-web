@@ -29,7 +29,7 @@ import { FormComponent } from './form/form.component';
                 </div>
                 <app-form
                     [formModelConfig]="data"
-                    (outputForm)="addReservation($event)"
+                    (outputForm)="handleAddReservation($event)"
                 ></app-form>
             </div>
         </ng-container>
@@ -53,7 +53,7 @@ export class PaymentDialogComponent {
 
     isValidated = signal(false);
 
-    addReservation(credentials: []) {
+    handleAddReservation(credentials: []) {
         console.log('Réservation faite', credentials);
         this.isValidated.set(true);
         this.dialogRef.close(this.isValidated());

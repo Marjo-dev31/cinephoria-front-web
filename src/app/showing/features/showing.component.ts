@@ -2,12 +2,13 @@ import {
     AfterViewInit,
     Component,
     computed,
+    DestroyRef,
     inject,
     OnInit,
     signal,
 } from '@angular/core';
 import { ShowingService } from '../data-access/showing.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { CinemaService } from '../../shared/data-access/cinema.service';
 import {
     FormControl,
@@ -48,6 +49,7 @@ export class ShowingComponent implements OnInit {
     private readonly seatService = inject(SeatService);
     private readonly orderService = inject(OrderService);
     private readonly activatedRoute = inject(ActivatedRoute);
+    private readonly destroyRef = inject(DestroyRef);
 
     private showings = toSignal(this.showingService.getAllShowing());
     public cinemas = toSignal(this.cinemaService.getAllCinema());
@@ -170,6 +172,7 @@ export class ShowingComponent implements OnInit {
                     const showingId = params['data'];
                     return this.showingService.getShowingById(showingId);
                 }),
+                takeUntilDestroyed(this.destroyRef),
             )
             .subscribe((showing) => {
                 this.searchCinemaSignal.set(showing.room.cinema.id);
@@ -243,7 +246,7 @@ export class ShowingComponent implements OnInit {
             controlKey: 'expiryDate',
             formFieldType: 'input',
             inputType: 'month',
-            minDate: new Date().toISOString().slice(0, 7),
+            min: new Date().toISOString().slice(0, 7),
             label: "Date d'expiration",
             defaultValue: '',
             validators: [Validators.required],

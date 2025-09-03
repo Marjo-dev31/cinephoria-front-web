@@ -11,5 +11,5 @@ export interface DynamicControl {
     validators?: ValidatorFn[];
     maxlength?: number;
     minlength?: number;
-    minDate?: Date | string;
+    min?: Date | string | number;
 }

@@ -103,11 +103,13 @@ export class MoviesComponent {
                             showing.seat.some((seat) => !seat.reserved),
                     ),
                 });
-                dialogRef.closed.subscribe((showingId) =>
-                    this.router.navigate(['/reservation'], {
-                        queryParams: { data: showingId },
-                    }),
-                );
+                dialogRef.closed.subscribe((showingId) => {
+                    if (showingId) {
+                        this.router.navigate(['/reservation'], {
+                            queryParams: { data: showingId },
+                        });
+                    }
+                });
             });
     }
 }

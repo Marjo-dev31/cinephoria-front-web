@@ -18,12 +18,13 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
     templateUrl: './form.component.html',
 })
 export class FormComponent implements OnChanges {
-   readonly formModelConfig = input<DynamicControl[]>();
+   readonly formModelConfig = input.required<DynamicControl[]>();
     @Output() outputForm = new EventEmitter();
 
     formModel = new FormGroup({});
 
     ngOnChanges(changes: SimpleChanges) {
+        console.log(this.formModelConfig(),'formmodel')
         if (changes['formModelConfig']) {
             this.formModel = new FormGroup({});
             this.formModelConfig()?.
