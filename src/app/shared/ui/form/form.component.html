@@ -2,7 +2,12 @@
     <form [formGroup]="formModel" (ngSubmit)="onSubmit()" class="flex flex-col">
         <div class="flex flex-col space-y-2">
             @for (control of formModelConfig(); track $index) {
-                <label for="control.controlKey" class="capitalize font-semibold"> {{ control.label }}</label>
+                <label
+                    for="control.controlKey"
+                    class="capitalize font-semibold"
+                >
+                    {{ control.label }}</label
+                >
                 <ng-container>
                     @switch (control.formFieldType) {
                         @case ('input') {
@@ -15,7 +20,10 @@
                             />
                         }
                         @case ('select') {
-                            <select formControlName="{{ control.controlKey }}" class="border bg-sage/40">
+                            <select
+                                formControlName="{{ control.controlKey }}"
+                                class="border bg-sage/40"
+                            >
                                 @for (
                                     option of control.selectOptions;
                                     track $index
@@ -25,6 +33,14 @@
                                     </option>
                                 }
                             </select>
+                        }
+                        @case ('textarea') {
+                            <textarea
+                                formControlName="{{ control.controlKey }}"
+                                class="border bg-sage/40"
+                                rows="{{ control.rows}}"
+                            >
+                            </textarea>
                         }
                     }
                 </ng-container>
@@ -51,6 +67,12 @@
             }
         </div>
         <div class="flex justify-evenly mt-10">
+            <button
+                (click)="onClose()"
+                class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
+            >
+               Annuler
+            </button>
             <button
                 type="submit"
                 [disabled]="formModel.invalid"

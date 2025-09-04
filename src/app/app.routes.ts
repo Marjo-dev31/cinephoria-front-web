@@ -6,6 +6,7 @@ import { GtcComponent } from './gtc/features/gtc.component';
 import { ShowingComponent } from './showing/features/showing.component';
 import { BackofficeComponent } from './shared/component/backoffice/backoffice.component';
 import { RoomBackofficeComponent } from './room/features/room-backoffice/room.backoffice.component';
+import { MovieBackofficeComponent } from './movies/features/moviebackoffice/movie.backoffice.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -18,7 +19,7 @@ export const routes: Routes = [
         children: [
             { path: 'room', component: RoomBackofficeComponent },
             { path: 'showing', component: HomeComponent },
-            { path: 'movie', component: HomeComponent },
+            { path: 'movie', component: MovieBackofficeComponent },
             { path: 'creationaccount', component: HomeComponent },
             { path: 'review', component: HomeComponent },
             { path: 'dashboard', component: HomeComponent },

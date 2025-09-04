@@ -3,12 +3,12 @@ import {
     EventEmitter,
     input,
     OnChanges,
+    output,
     Output,
     SimpleChanges,
 } from '@angular/core';
 import { DynamicControl } from '../../models/form.interface';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RoomInterface } from '../../../room/models/room.interface';
 
 @Component({
     selector: 'app-form',
@@ -20,6 +20,7 @@ export class FormComponent implements OnChanges {
     readonly formModelConfig = input.required<DynamicControl[]>();
     readonly currentItem = input();
     @Output() outputForm = new EventEmitter();
+    displayForm = output<boolean>()
 
     formModel = new FormGroup({});
 
@@ -46,6 +47,11 @@ export class FormComponent implements OnChanges {
     onSubmit() {
         this.outputForm.emit(structuredClone(this.formModel.value));
         this.formModel.reset();
+    }
+    onClose(){
+        this.displayForm.emit(false)
+        this.formModel.reset();
+
     }
 
 

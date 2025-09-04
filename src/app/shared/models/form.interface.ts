@@ -2,12 +2,13 @@ import { ValidatorFn } from "@angular/forms";
 
 export interface DynamicControl {
     controlKey: string;
-    formFieldType?: 'input' | 'select';
+    formFieldType?: 'input' | 'select' | 'textarea';
     inputType?: string;
     label?: string;
-    defaultValue?: any;
+    defaultValue?: unknown;
     selectOptions?: string[];
     updateOn?: 'change' | 'blur' | 'submit';
+    rows?: number;
     validators?: ValidatorFn[];
     maxlength?: number;
     minlength?: number;

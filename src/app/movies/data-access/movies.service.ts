@@ -2,8 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { MovieInterface} from '../models/movie.interface';
-
+import {
+    MovieCreateInterface,
+    MovieInterface,
+    MovieUpdateInterface,
+} from '../models/movie.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -17,6 +20,21 @@ export class MoviesService {
     }
 
     getById(id: string): Observable<MovieInterface> {
-        return this.http.get<MovieInterface>(`${this.url}/${id}`)
+        return this.http.get<MovieInterface>(`${this.url}/${id}`);
+    }
+
+    createMovie(movie: MovieCreateInterface): Observable<MovieInterface> {
+        return this.http.post<MovieInterface>(this.url, movie);
+    }
+
+    updateMovie(movie: MovieUpdateInterface): Observable<MovieInterface> {
+        return this.http.patch<MovieInterface>(
+            `${this.url}/${movie.id}`,
+            movie,
+        );
+    }
+
+    deleteMovie(id: string): Observable<MovieInterface> {
+        return this.http.delete<MovieInterface>(`${this.url}/${id}`);
     }
 }

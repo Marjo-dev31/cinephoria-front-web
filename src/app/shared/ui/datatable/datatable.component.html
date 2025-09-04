@@ -1,7 +1,7 @@
 <section class="border-collapse">
     <cdk-table [dataSource]="dataSource()">
         @for (column of displayColumns(); track column.key) {
-            <ng-container [cdkColumnDef]="column.key" class="flex flex-col">
+            <ng-container [cdkColumnDef]="column.key" class="flex flex-col ">
                 <cdk-header-cell
                     *cdkHeaderCellDef
                     class="flex-1 p-2 text-center font-semibold capitalize"
@@ -66,4 +66,7 @@
             class="flex border border-darkblue"
         ></cdk-row>
     </cdk-table>
+    @if(!dataSource().length){
+        <p class="text-center p-4 font-semibold">Aucun enregistrement</p>
+    }
 </section>
