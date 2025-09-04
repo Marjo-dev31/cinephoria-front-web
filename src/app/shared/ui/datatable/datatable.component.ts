@@ -30,5 +30,4 @@ export class DatatableComponent {
         this.onEditItem.emit(room)
     }
 
-    effect = effect(() => console.log(this.data(), this.displayColumns()));
 }
