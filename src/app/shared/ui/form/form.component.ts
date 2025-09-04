@@ -18,7 +18,7 @@ import { RoomInterface } from '../../../room/models/room.interface';
 })
 export class FormComponent implements OnChanges {
     readonly formModelConfig = input.required<DynamicControl[]>();
-    readonly currentItem = input<RoomInterface>();
+    readonly currentItem = input();
     @Output() outputForm = new EventEmitter();
 
     formModel = new FormGroup({});
@@ -38,7 +38,7 @@ export class FormComponent implements OnChanges {
         }
         if(this.currentItem()){
           this.formModel.patchValue(this.currentItem() as any)
-          console.log(this.formModel.value)
+          
         }
         
     }

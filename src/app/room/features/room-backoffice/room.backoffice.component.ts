@@ -1,14 +1,14 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { DatatableComponent } from '../../../shared/ui/datatable/datatable.component';
 import { RoomService } from '../../data-access/room.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { RoomInterface } from '../../models/room.interface';
+import { CreateRoomInterface, RoomDiplayFormInterface, RoomInterface, UpdateRoomInterface } from '../../models/room.interface';
 import { FormComponent } from '../../../shared/ui/form/form.component';
 import { DynamicControl } from '../../../shared/models/form.interface';
 import { Validators } from '@angular/forms';
 import { CinemaService } from '../../../shared/data-access/cinema.service';
 import { ProjectionQualityService } from '../../../shared/data-access/projectionQuality.service';
-import { combineLatest, single } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { NgStyle } from '@angular/common';
 
 @Component({
@@ -21,19 +21,26 @@ export class RoomBackofficeComponent implements OnInit {
     private readonly roomService = inject(RoomService);
     private readonly cinemaService = inject(CinemaService);
     private readonly projectionQualityService = inject(
-        ProjectionQualityService,
+        ProjectionQualityService
     );
 
     rooms = toSignal(this.roomService.getAllRooms(), { initialValue: [] });
     isDisplayAddForm = signal(false);
-    isDiplayEditForm = signal(false)
-    currentRoom = signal({
+    isDiplayEditForm = signal(false);
+    currentRoom = signal<RoomInterface>({
         id: '',
         number: 0,
         numberOfSeats: 0,
-        cinema: { id: '', city: '' },
-        projectionQuality: { id: '', quality: '' },
+        cinema:{id:'',city:''},
+        projectionQuality:{id:'', quality:''}
     });
+    
+    currentRoomDisplayOnForm = computed<RoomDiplayFormInterface>(()=>{return {
+        number: this.currentRoom().number,
+        numberOfSeats: this.currentRoom().numberOfSeats,
+        cinema: this.currentRoom().cinema.city,
+        projectionQuality: this.currentRoom().projectionQuality.quality,
+    }})
 
     formModelConfig!: DynamicControl[];
 
@@ -46,12 +53,12 @@ export class RoomBackofficeComponent implements OnInit {
     }
 
     handleEditRoom(room: RoomInterface) {
-        this.isDiplayEditForm.set(true)
+        this.isDiplayEditForm.set(true);
         this.currentRoom.set(room);
-        console.log(this.currentRoom(), 'currentroom')
+
     }
 
-    handleAddRoom(room: any) {
+    handleAddRoom(room: RoomDiplayFormInterface) {
         combineLatest([
             this.cinemaService.getAllCinema(),
             this.projectionQualityService.getAllProjectionQuality(),
@@ -63,18 +70,41 @@ export class RoomBackofficeComponent implements OnInit {
                 (quality) => quality.quality === room.projectionQuality,
             );
             if (cinema && quality) {
-                const newRoom = {
+                const newRoom:CreateRoomInterface = {
                     number: room.number,
                     numberOfSeats: room.numberOfSeats,
-                    cinema: { id: cinema.id, city: room.cinema },
-                    projectionQuality: {
-                        id: quality.id,
-                        quality: room.projectionQuality,
-                    },
+                    cinema: cinema,
+                    projectionQuality: quality,
                 };
                 this.roomService.createRoom(newRoom).subscribe();
             }
         });
+    }
+
+    handleUpdateRoom(room: RoomDiplayFormInterface){
+        combineLatest([
+            this.cinemaService.getAllCinema(),
+            this.projectionQualityService.getAllProjectionQuality(),
+        ]).subscribe(([cinemas, qualities]) => {
+            const cinema = cinemas.find(
+                (cinema) => cinema.city === room.cinema,
+            );
+            const quality = qualities.find(
+                (quality) => quality.quality === room.projectionQuality,
+            );
+            console.log(room,cinema, quality,'handleupdate')
+            if (cinema && quality) {
+                const updatedRoom:UpdateRoomInterface = {
+                    id:this.currentRoom().id,
+                    number: room.number,
+                    numberOfSeats: room.numberOfSeats,
+                    cinema: cinema,
+                    projectionQuality: quality,
+                };
+                this.roomService.updateRoom(updatedRoom).subscribe();
+            }
+        });
+
     }
 
     ngOnInit(): void {
@@ -82,9 +112,9 @@ export class RoomBackofficeComponent implements OnInit {
             this.cinemaService.getAllCinema(),
             this.projectionQualityService.getAllProjectionQuality(),
         ]).subscribe(([cinemas, qualities]) => {
-            const cinemaCities = cinemas.map((cinema) => cinema.city);
-            const projectionQualities = qualities.map(
-                (quality) => quality.quality,
+            const cinemaOptions = cinemas.map((cinema) =>cinema.city);
+            const projectionQualitiesOptions = qualities.map(
+                (quality) => quality.quality
             );
             this.formModelConfig = [
                 {
@@ -92,7 +122,7 @@ export class RoomBackofficeComponent implements OnInit {
                     formFieldType: 'select',
                     label: 'cinéma',
                     defaultValue: '',
-                    selectOptions: cinemaCities,
+                    selectOptions: cinemaOptions,
                     validators: [Validators.required],
                 },
                 {
@@ -122,7 +152,7 @@ export class RoomBackofficeComponent implements OnInit {
                     formFieldType: 'select',
                     label: 'qualité de projection',
                     defaultValue: '',
-                    selectOptions: projectionQualities,
+                    selectOptions: projectionQualitiesOptions,
                     validators: [Validators.required],
                 },
             ];

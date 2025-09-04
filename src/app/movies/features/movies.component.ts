@@ -64,7 +64,7 @@ export class MoviesComponent {
         this.movies().filter(
             (movie) =>
                 movie.showing.some((showing) =>
-                    showing.room.cinema.city
+                    showing.room.cinema?.city
                         .toLowerCase()
                         .includes(this.searchCinema().toLowerCase()),
                 ) &&

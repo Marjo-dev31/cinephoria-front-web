@@ -44,6 +44,7 @@
         ajouter une salle
     </button>
     @if (isDisplayAddForm()) {
+        <h3 class="font-bold text-2xl">Ajouter</h3>
         <app-form
             [formModelConfig]="formModelConfig"
             (outputForm)="handleAddRoom($event)"
@@ -51,9 +52,11 @@
         />
     }
     @if (isDiplayEditForm()) {
+        <h3 class="font-bold text-2xl">Modifier</h3>
         <app-form
             [formModelConfig]="formModelConfig"
-            [currentItem]="currentRoom()"
+            [currentItem]="currentRoomDisplayOnForm()"
+            (outputForm)="handleUpdateRoom($event)"
             class="w-96"
         />
     }
