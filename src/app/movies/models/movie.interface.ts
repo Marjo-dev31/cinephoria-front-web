@@ -5,7 +5,7 @@ import { ShowingInterface } from "../../showing/models/showing.interface"
 export interface MovieCreateInterface {
   title:string,
   description: string,
-  image_Url: string,
+  image_Url?: string,
   minimun_Age: number,
   genre: GenreInterface,
   is_Favorite: boolean
@@ -13,10 +13,18 @@ export interface MovieCreateInterface {
 
 export interface MovieUpdateInterface extends MovieCreateInterface {
   id: string,
-  create_At: Date,
 }
 
 export interface MovieInterface extends MovieUpdateInterface {
   reviews: ReviewInterface[],
-  showing: ShowingInterface[]
+  showing: ShowingInterface[],
+  create_At: Date,
+}
+
+export interface MovieDisplayFormInterface {
+  title:string,
+  description: string,
+  minimun_Age: number,
+  genre: string,
+  is_Favorite: string
 }

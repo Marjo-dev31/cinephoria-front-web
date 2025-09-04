@@ -1,8 +1,8 @@
-import { Component, computed, effect, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { ColumnInterface } from '../../models/colum.inteface';
 import { RoomInterface } from '../../../room/models/room.interface';
 import { CdkTableModule } from '@angular/cdk/table';
-import { JsonPipe } from '@angular/common';
+import { MovieInterface } from '../../../movies/models/movie.interface';
 
 @Component({
     selector: 'app-datatable',
@@ -12,9 +12,9 @@ import { JsonPipe } from '@angular/common';
 })
 export class DatatableComponent {
     displayColumns = input.required<ColumnInterface[]>();
-    data = input.required<RoomInterface[]>();
+    data = input.required<(RoomInterface | MovieInterface)[]>();
     onDeleteId = output<string>();
-    onEditItem = output<RoomInterface>()
+    onEditItem = output<RoomInterface | MovieInterface>()
 
     dataSource = computed(() => this.data());
     columnKeys = computed(() => [
@@ -26,8 +26,8 @@ export class DatatableComponent {
         this.onDeleteId.emit(id);
     }
 
-    editItem(room:RoomInterface){
-        this.onEditItem.emit(room)
+    editItem(item: any){
+        this.onEditItem.emit(item)
     }
 
 }

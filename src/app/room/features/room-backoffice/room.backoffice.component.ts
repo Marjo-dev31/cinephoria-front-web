@@ -73,7 +73,7 @@ export class RoomBackofficeComponent implements OnInit {
             .subscribe();
     }
 
-    handleEditRoom(room: RoomInterface) {
+    handleEditRoom(room: any) {
         this.isDiplayEditForm.set(true);
         this.currentRoom.set(room);
     }
@@ -156,74 +156,76 @@ export class RoomBackofficeComponent implements OnInit {
         combineLatest([
             this.cinemaService.getAllCinema(),
             this.projectionQualityService.getAllProjectionQuality(),
-        ]).subscribe(([cinemas, qualities]) => {
-            const cinemaOptions = cinemas.map((cinema) => cinema.city);
-            const projectionQualitiesOptions = qualities.map(
-                (quality) => quality.quality,
-            );
-            this.formModelConfig = [
-                {
-                    controlKey: 'cinema',
-                    formFieldType: 'select',
-                    label: 'cinéma',
-                    defaultValue: '',
-                    selectOptions: cinemaOptions,
-                    validators: [Validators.required],
-                },
-                {
-                    controlKey: 'number',
-                    formFieldType: 'input',
-                    inputType: 'number',
-                    label: 'numéro de salle',
-                    min: 1,
-                    validators: [
-                        Validators.required,
-                        Validators.pattern(/^[0-9]\d*$/),
-                    ],
-                },
-                {
-                    controlKey: 'numberOfSeats',
-                    formFieldType: 'input',
-                    inputType: 'number',
-                    label: 'nombre de place',
-                    min: 1,
-                    validators: [
-                        Validators.required,
-                        Validators.pattern(/^[0-9]\d*$/),
-                    ],
-                },
-                {
-                    controlKey: 'projectionQuality',
-                    formFieldType: 'select',
-                    label: 'qualité de projection',
-                    defaultValue: '',
-                    selectOptions: projectionQualitiesOptions,
-                    validators: [Validators.required],
-                },
-            ];
-        });
+        ])
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(([cinemas, qualities]) => {
+                const cinemaOptions = cinemas.map((cinema) => cinema.city);
+                const projectionQualitiesOptions = qualities.map(
+                    (quality) => quality.quality,
+                );
+                this.formModelConfig = [
+                    {
+                        controlKey: 'cinema',
+                        formFieldType: 'select',
+                        label: 'cinéma',
+                        defaultValue: '',
+                        selectOptions: cinemaOptions,
+                        validators: [Validators.required],
+                    },
+                    {
+                        controlKey: 'number',
+                        formFieldType: 'input',
+                        inputType: 'number',
+                        label: 'numéro de salle',
+                        min: 1,
+                        validators: [
+                            Validators.required,
+                            Validators.pattern(/^[0-9]\d*$/),
+                        ],
+                    },
+                    {
+                        controlKey: 'numberOfSeats',
+                        formFieldType: 'input',
+                        inputType: 'number',
+                        label: 'nombre de place',
+                        min: 1,
+                        validators: [
+                            Validators.required,
+                            Validators.pattern(/^[0-9]\d*$/),
+                        ],
+                    },
+                    {
+                        controlKey: 'projectionQuality',
+                        formFieldType: 'select',
+                        label: 'qualité de projection',
+                        defaultValue: '',
+                        selectOptions: projectionQualitiesOptions,
+                        validators: [Validators.required],
+                    },
+                ];
+            });
     }
 
     displayColumns = signal([
         {
             key: 'cinema',
             label: 'cinéma',
-            accessor: (row: any) => row.cinema?.city,
+            accessor: (row: RoomInterface) => row.cinema?.city,
         },
         {
             key: 'number',
             label: 'numéro de salle',
-            accessor: (row: any) => row.number,
+            accessor: (row: RoomInterface) => row.number,
         },
         {
             key: 'numberOfSeats',
             label: 'nombre de places',
-            accessor: (row: any) => row.numberOfSeats,
+            accessor: (row: RoomInterface) => row.numberOfSeats,
         },
         {
             key: 'projectionQuality',
             label: 'qualité de projection',
-            accessor: (row: any) => row.projectionQuality.quality,
+            accessor: (row: RoomInterface) => row.projectionQuality.quality,
         },
     ]);
 }

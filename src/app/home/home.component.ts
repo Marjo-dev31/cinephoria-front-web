@@ -5,7 +5,7 @@ import {
     Signal,
 } from '@angular/core';
 import { CarouselComponent } from '../shared/ui/carrousel.component';
-import { MovieUpdateInterface } from '../movies/models/movie.interface';
+import { MovieInterface, } from '../movies/models/movie.interface';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MoviesService } from '../movies/data-access/movies.service';
 
@@ -17,18 +17,18 @@ import { MoviesService } from '../movies/data-access/movies.service';
 export class HomeComponent {
     private readonly moviesService = inject(MoviesService);
 
-    readonly movies: Signal<MovieUpdateInterface[]> = toSignal(
+    readonly movies: Signal<MovieInterface[]> = toSignal(
         this.moviesService.getAllMovies(),
         { initialValue: [] },
     );
 
-    readonly lastMovies: Signal<MovieUpdateInterface[]> = computed(() => {
+    readonly lastMovies: Signal<MovieInterface[]> = computed(() => {
         return this.getMoviesSinceLastWednesday(this.movies());
     });
 
     getMoviesSinceLastWednesday(
-        movies: MovieUpdateInterface[],
-    ): MovieUpdateInterface[] | [] {
+        movies: MovieInterface[],
+    ): MovieInterface[] | [] {
         const today = new Date();
         const day = today.getDay();
         const daysSinceWednesday = (day + 7 - 3) % 7 || 7;
