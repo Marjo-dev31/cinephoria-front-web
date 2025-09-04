@@ -8,12 +8,13 @@ import { DynamicControl } from '../../../shared/models/form.interface';
 import { Validators } from '@angular/forms';
 import { CinemaService } from '../../../shared/data-access/cinema.service';
 import { ProjectionQualityService } from '../../../shared/data-access/projectionQuality.service';
-import { combineLatest, forkJoin, map, tap } from 'rxjs';
+import { combineLatest, single } from 'rxjs';
+import { NgStyle } from '@angular/common';
 
 @Component({
     selector: 'app-roombackoffice',
     standalone: true,
-    imports: [DatatableComponent, FormComponent],
+    imports: [DatatableComponent, FormComponent, NgStyle],
     templateUrl: './room.backoffice.component.html',
 })
 export class RoomBackofficeComponent implements OnInit {
@@ -24,24 +25,56 @@ export class RoomBackofficeComponent implements OnInit {
     );
 
     rooms = toSignal(this.roomService.getAllRooms(), { initialValue: [] });
-    IsDisplayForm = signal(false);
+    isDisplayAddForm = signal(false);
+    isDiplayEditForm = signal(false)
+    currentRoom = signal({
+        id: '',
+        number: 0,
+        numberOfSeats: 0,
+        cinema: { id: '', city: '' },
+        projectionQuality: { id: '', quality: '' },
+    });
 
     formModelConfig!: DynamicControl[];
 
     onDisplayForm() {
-        this.IsDisplayForm.update((value) => !value);
+        this.isDisplayAddForm.update((value) => !value);
     }
 
     handleDeleteRoom(id: string) {
-        console.log(id);
+        this.roomService.deleteRoom(id).subscribe();
     }
 
-    handleUpdateRoom(room: RoomInterface) {
-        console.log(room, 'room');
+    handleEditRoom(room: RoomInterface) {
+        this.isDiplayEditForm.set(true)
+        this.currentRoom.set(room);
+        console.log(this.currentRoom(), 'currentroom')
     }
 
-    handleAddOrUpdateRoom(room: RoomInterface) {
-        console.log(room);
+    handleAddRoom(room: any) {
+        combineLatest([
+            this.cinemaService.getAllCinema(),
+            this.projectionQualityService.getAllProjectionQuality(),
+        ]).subscribe(([cinemas, qualities]) => {
+            const cinema = cinemas.find(
+                (cinema) => cinema.city === room.cinema,
+            );
+            const quality = qualities.find(
+                (quality) => quality.quality === room.projectionQuality,
+            );
+            if (cinema && quality) {
+                const newRoom = {
+                    number: room.number,
+                    numberOfSeats: room.numberOfSeats,
+                    cinema: { id: cinema.id, city: room.cinema },
+                    projectionQuality: {
+                        id: quality.id,
+                        quality: room.projectionQuality,
+                    },
+                };
+                this.roomService.createRoom(newRoom).subscribe();
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -49,7 +82,6 @@ export class RoomBackofficeComponent implements OnInit {
             this.cinemaService.getAllCinema(),
             this.projectionQualityService.getAllProjectionQuality(),
         ]).subscribe(([cinemas, qualities]) => {
-            console.log(cinemas, qualities, 'qualitites');
             const cinemaCities = cinemas.map((cinema) => cinema.city);
             const projectionQualities = qualities.map(
                 (quality) => quality.quality,

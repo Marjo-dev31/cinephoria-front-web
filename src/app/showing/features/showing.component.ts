@@ -183,7 +183,7 @@ export class ShowingComponent implements OnInit {
                 const price =
                     this.showingFiltered()?.find(
                         (showingFilter) => showingFilter.id === showing.id,
-                    )?.room.projectionQuality.price.price ?? 0;
+                    )?.room.projectionQuality.price?.price ?? 0;
                 this.onSelectShowing(price, 0);
             });
     }

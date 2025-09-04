@@ -4,10 +4,10 @@
         [data]="rooms()"
         [displayColumns]="displayColumns()"
         (onDeleteId)="handleDeleteRoom($event)"
-        (onUpdateItem)="handleUpdateRoom($event)"
+        (onEditItem)="handleEditRoom($event)"
     />
     <button
-        class="my-6 mx-auto w-48 bg-peach rounded-lg p-2 font-bold flex justify-between"
+        class="my-6 mx-auto w-48 bg-peach rounded-lg p-2 font-bold text-sm flex justify-between"
         (click)="onDisplayForm()"
     >
         <svg
@@ -17,6 +17,7 @@
             stroke-width="1.5"
             stroke="currentColor"
             class="size-6"
+            [ngStyle]="{ display: isDisplayAddForm() ? 'none' : 'block' }"
         >
             <path
                 stroke-linecap="round"
@@ -24,12 +25,35 @@
                 d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
             />
         </svg>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+            [ngStyle]="{ display: isDisplayAddForm() ? 'block' : 'none' }"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+        </svg>
+
         ajouter une salle
     </button>
-    @if (IsDisplayForm()) {
+    @if (isDisplayAddForm()) {
         <app-form
             [formModelConfig]="formModelConfig"
-            (outputForm)="handleAddOrUpdateRoom($event)"
+            (outputForm)="handleAddRoom($event)"
+            class="w-96"
+        />
+    }
+    @if (isDiplayEditForm()) {
+        <app-form
+            [formModelConfig]="formModelConfig"
+            [currentItem]="currentRoom()"
             class="w-96"
         />
     }

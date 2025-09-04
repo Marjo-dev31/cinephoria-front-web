@@ -14,7 +14,7 @@ export class DatatableComponent {
     displayColumns = input.required<ColumnInterface[]>();
     data = input.required<RoomInterface[]>();
     onDeleteId = output<string>();
-    onUpdateItem = output<RoomInterface>()
+    onEditItem = output<RoomInterface>()
 
     dataSource = computed(() => this.data());
     columnKeys = computed(() => [
@@ -26,8 +26,8 @@ export class DatatableComponent {
         this.onDeleteId.emit(id);
     }
 
-    updateItem(room:RoomInterface){
-        this.onUpdateItem.emit(room)
+    editItem(room:RoomInterface){
+        this.onEditItem.emit(room)
     }
 
     effect = effect(() => console.log(this.data(), this.displayColumns()));

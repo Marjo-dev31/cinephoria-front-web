@@ -96,7 +96,7 @@
                 class="cursor-pointer"
                 (click)="
                     onSelectShowing(
-                        showing.room.projectionQuality.price.price,
+                        showing.room.projectionQuality.price?.price || 0,
                         $index
                     )
                 "
