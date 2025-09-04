@@ -13,5 +13,11 @@ export interface UpdateRoomInterface extends CreateRoomInterface {
 }
 
 export interface RoomInterface extends UpdateRoomInterface {
-  
+}
+
+export interface RoomDiplayFormInterface {
+  number: number;
+  numberOfSeats: number;
+  cinema: string;
+  projectionQuality: string;
 }

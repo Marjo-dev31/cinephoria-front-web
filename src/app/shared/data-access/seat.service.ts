@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { CinemaInterface } from '../models/cinema.interface';
 import { SeatInterface } from '../models/seat.interface';
 
 
