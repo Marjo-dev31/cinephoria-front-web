@@ -9,7 +9,7 @@ import { ProjectionQualityInterface } from '../models/projectionQuality.interfac
     providedIn: 'root',
 })
 export class ProjectionQualityService {
-    private readonly url = `${environment.serverUrl}/cinema`;
+    private readonly url = `${environment.serverUrl}/projection-quality`;
     private readonly http = inject(HttpClient);
 
     getAllProjectionQuality(): Observable<ProjectionQualityInterface[]> {
