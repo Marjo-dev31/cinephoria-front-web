@@ -6,7 +6,7 @@ export interface DynamicControl {
     inputType?: string;
     label?: string;
     defaultValue?: unknown;
-    selectOptions?: string[];
+    selectOptions?: (string | number)[];
     updateOn?: 'change' | 'blur' | 'submit';
     rows?: number;
     accept?: string;
@@ -14,4 +14,5 @@ export interface DynamicControl {
     maxlength?: number;
     minlength?: number;
     min?: Date | string | number;
+    max?: Date | string | number;
 }

@@ -6,7 +6,7 @@ export interface CreateShowingInterface {
     date: Date;
     startAt: string;
     endAt: string;
-    movie: MovieInterface;
+    movie?: MovieInterface;
     room: RoomInterface;
 }
 
@@ -16,4 +16,12 @@ export interface UpdateShowingInterface extends CreateShowingInterface {
 
 export interface ShowingInterface extends UpdateShowingInterface {
     seat: SeatInterface[];
+}
+
+export interface DisplayShowingFormInterface {
+    date: string;
+    startAt: string;
+    endAt: string;
+    movie: string | undefined;
+    room: string;
 }

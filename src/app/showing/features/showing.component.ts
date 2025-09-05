@@ -178,7 +178,7 @@ export class ShowingComponent implements OnInit {
                 this.searchCinemaSignal.set(showing.room.cinema.id);
                 this.filterForm.patchValue({
                     cinema: showing.room.cinema.id,
-                    movie: showing.movie.id,
+                    movie: showing.movie?.id,
                 });
                 const price =
                     this.showingFiltered()?.find(

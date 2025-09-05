@@ -20,7 +20,7 @@ import { DynamicControl } from '../../../shared/models/form.interface';
 import { Validators } from '@angular/forms';
 import { CinemaService } from '../../../shared/data-access/cinema.service';
 import { ProjectionQualityService } from '../../../shared/data-access/projectionQuality.service';
-import { combineLatest, forkJoin, switchMap, tap } from 'rxjs';
+import { combineLatest, tap } from 'rxjs';
 import { NgStyle } from '@angular/common';
 
 @Component({
@@ -37,7 +37,6 @@ export class RoomBackofficeComponent implements OnInit {
     );
     private readonly destroyRef = inject(DestroyRef);
 
-    rooms: RoomInterface[] = [];
     isDisplayAddForm = signal(false);
     isDiplayEditForm = signal(false);
     currentRoom = signal<RoomInterface>({
@@ -57,10 +56,16 @@ export class RoomBackofficeComponent implements OnInit {
         };
     });
 
+    rooms: RoomInterface[] = [];
     formModelConfig!: DynamicControl[];
 
     onDisplayForm() {
         this.isDisplayAddForm.update((value) => !value);
+    }
+
+    handleCloseForm(close: boolean) {
+        this.isDiplayEditForm.set(close);
+        this.isDisplayAddForm.set(close);
     }
 
     handleDeleteRoom(id: string) {
@@ -73,9 +78,9 @@ export class RoomBackofficeComponent implements OnInit {
             .subscribe();
     }
 
-    handleEditRoom(room: any) {
+    handleEditRoom(room: unknown) {
         this.isDiplayEditForm.set(true);
-        this.currentRoom.set(room);
+        this.currentRoom.set(room as RoomInterface);
     }
 
     handleAddRoom(room: RoomDiplayFormInterface) {
@@ -83,10 +88,7 @@ export class RoomBackofficeComponent implements OnInit {
             this.cinemaService.getAllCinema(),
             this.projectionQualityService.getAllProjectionQuality(),
         ])
-            .pipe(
-                tap(() => this.getAllRooms()),
-                takeUntilDestroyed(this.destroyRef),
-            )
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(([cinemas, qualities]) => {
                 const cinema = cinemas.find(
                     (cinema) => cinema.city === room.cinema,

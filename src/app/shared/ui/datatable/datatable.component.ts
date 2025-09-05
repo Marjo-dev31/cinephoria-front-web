@@ -3,6 +3,7 @@ import { ColumnInterface } from '../../models/colum.inteface';
 import { RoomInterface } from '../../../room/models/room.interface';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MovieInterface } from '../../../movies/models/movie.interface';
+import { ShowingInterface } from '../../../showing/models/showing.interface';
 
 @Component({
     selector: 'app-datatable',
@@ -12,7 +13,7 @@ import { MovieInterface } from '../../../movies/models/movie.interface';
 })
 export class DatatableComponent {
     displayColumns = input.required<ColumnInterface[]>();
-    data = input.required<(RoomInterface | MovieInterface)[]>();
+    data = input.required<(RoomInterface | MovieInterface | ShowingInterface)[]>();
     onDeleteId = output<string>();
     onEditItem = output<RoomInterface | MovieInterface>()
 
