@@ -1,4 +1,4 @@
-import { ValidatorFn } from "@angular/forms";
+import { ValidatorFn } from '@angular/forms';
 
 export interface DynamicControl {
     controlKey: string;
@@ -9,6 +9,7 @@ export interface DynamicControl {
     selectOptions?: string[];
     updateOn?: 'change' | 'blur' | 'submit';
     rows?: number;
+    accept?: string;
     validators?: ValidatorFn[];
     maxlength?: number;
     minlength?: number;

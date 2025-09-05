@@ -7,7 +7,7 @@
         (onEditItem)="handleEditMovie($event)"
     />
     <button
-        class="my-6 mx-auto w-48 bg-peach rounded-lg p-2 font-bold text-sm flex justify-between"
+        class="my-6 mx-auto w-48 bg-peach rounded-lg p-2 font-bold text-sm flex justify-between cursor-pointer"
         (click)="onDisplayForm()"
     >
         <svg
@@ -49,6 +49,7 @@
             [formModelConfig]="formModelConfig"
             (outputForm)="handleAddRoom($event)"
             (displayForm)="handleCloseForm($event)"
+            (fileOutput)="handleUploadFile($event)"
             class="w-96"
         />
     }

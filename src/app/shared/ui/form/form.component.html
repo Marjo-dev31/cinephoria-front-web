@@ -17,6 +17,8 @@
                                 formControlName="{{ control.controlKey }}"
                                 class="border bg-sage/40"
                                 min="{{ control.min }}"
+                                accept="{{ control.accept }}"
+                                (change)="onFileSelected($event)"
                             />
                         }
                         @case ('select') {
@@ -69,14 +71,14 @@
         <div class="flex justify-evenly mt-10">
             <button
                 (click)="onClose()"
-                class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
+                class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue cursor-pointer"
             >
                Annuler
             </button>
             <button
                 type="submit"
                 [disabled]="formModel.invalid"
-                class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
+                class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach cursor-pointer hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]: disabled:cursor-not-allowed"
             >
                 Valider
             </button>

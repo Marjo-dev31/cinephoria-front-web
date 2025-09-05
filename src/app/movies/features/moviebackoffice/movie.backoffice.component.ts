@@ -14,6 +14,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
 import { GenreService } from '../../../shared/data-access/genre.service';
 import { Validators } from '@angular/forms';
+import { UploadService } from '../../../shared/data-access/upload.service';
 
 @Component({
     selector: 'app-moviebackoffice',
@@ -24,6 +25,7 @@ import { Validators } from '@angular/forms';
 export class MovieBackofficeComponent {
     private readonly movieService = inject(MoviesService);
     private readonly genreService = inject(GenreService);
+    private readonly uploadService = inject(UploadService);
     private readonly destroyRef = inject(DestroyRef);
 
     movies: MovieInterface[] = [];
@@ -50,6 +52,7 @@ export class MovieBackofficeComponent {
             genre: this.currentMovie().genre.title,
             is_Favorite:
                 this.currentMovie().is_Favorite === true ? 'oui' : 'non',
+            image_Url: this.currentMovie().image_Url
         };
     });
 
@@ -75,6 +78,7 @@ export class MovieBackofficeComponent {
     }
 
     handleAddRoom(movie: MovieDisplayFormInterface) {
+        const image_Url = movie.image_Url.split('\\').pop() || ''
         this.genreService
             .getAllGenre()
             .pipe(
@@ -92,6 +96,7 @@ export class MovieBackofficeComponent {
                         minimun_Age: movie.minimun_Age,
                         genre: genre,
                         is_Favorite: movie.is_Favorite === 'oui' ? true : false,
+                        image_Url: image_Url
                     };
                     this.movieService
                         .createMovie(newMovie)
@@ -102,6 +107,13 @@ export class MovieBackofficeComponent {
                         .subscribe();
                 }
             });
+    }
+
+    handleUploadFile(file: File){
+        const formData = new FormData();
+        formData.append('file', file);
+        this.uploadService.addImage(formData).pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe();
     }
 
     handleUpdateMovie(movie: MovieDisplayFormInterface) {
@@ -120,6 +132,7 @@ export class MovieBackofficeComponent {
                         minimun_Age: movie.minimun_Age,
                         genre: genre,
                         is_Favorite: movie.is_Favorite === 'oui' ? true : false,
+                        image_Url: movie.image_Url
                     };
                     this.movieService
                         .updateMovie(updatedMovie)
@@ -142,6 +155,10 @@ export class MovieBackofficeComponent {
             .getAllMovies()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((movies) => (this.movies = movies));
+    }
+
+    uploadImg(){
+
     }
 
     ngOnInit(): void {
@@ -193,6 +210,16 @@ export class MovieBackofficeComponent {
                         selectOptions: ['oui', 'non'],
                         validators: [Validators.required],
                     },
+                    {
+                        controlKey: 'image_Url',
+                        formFieldType: 'input',
+                        inputType:'file',
+                        accept:'image/png, image/jpeg, image/jpg, image/webp',
+                        label: 'affiche',
+                        defaultValue: '',
+                        selectOptions: ['oui', 'non'],
+                        validators: [Validators.required],
+                    },
                 ];
             });
     }
@@ -222,6 +249,11 @@ export class MovieBackofficeComponent {
             key: 'is_Favorite',
             label: 'coup de coeur',
             accessor: (row: MovieInterface) => row.is_Favorite,
+        },
+        {
+            key: 'image_Url',
+            label: 'affiche',
+            accessor: (row: MovieInterface) => row.image_Url,
         },
     ]);
 }
