@@ -1,0 +1,18 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class UploadService {
+    private readonly url = `${environment.serverUrl}/upload`;
+    private readonly http = inject(HttpClient);
+
+addImage(form: FormData) {
+        return this.http.post(`${this.url}`, form);
+    }
+
+}
+
+

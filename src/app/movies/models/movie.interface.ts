@@ -5,7 +5,7 @@ import { ShowingInterface } from "../../showing/models/showing.interface"
 export interface MovieCreateInterface {
   title:string,
   description: string,
-  image_Url?: string,
+  image_Url: string,
   minimun_Age: number,
   genre: GenreInterface,
   is_Favorite: boolean
@@ -26,5 +26,6 @@ export interface MovieDisplayFormInterface {
   description: string,
   minimun_Age: number,
   genre: string,
-  is_Favorite: string
+  is_Favorite: string,
+  image_Url: string,
 }

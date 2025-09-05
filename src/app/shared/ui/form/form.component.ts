@@ -20,9 +20,12 @@ export class FormComponent implements OnChanges {
     readonly formModelConfig = input.required<DynamicControl[]>();
     readonly currentItem = input();
     @Output() outputForm = new EventEmitter();
-    displayForm = output<boolean>()
+    displayForm = output<boolean>();
+    fileOutput = output<File>();
 
     formModel = new FormGroup({});
+
+    selectedFile!: File;
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['formModelConfig']) {
@@ -37,22 +40,29 @@ export class FormComponent implements OnChanges {
                 ),
             );
         }
-        if(this.currentItem()){
-          this.formModel.patchValue(this.currentItem() as any)
-          
+        if (this.currentItem()) {
+            this.formModel.patchValue(this.currentItem() as any);
         }
-        
     }
 
     onSubmit() {
         this.outputForm.emit(structuredClone(this.formModel.value));
+        if (this.selectedFile) {
+            this.fileOutput.emit(this.selectedFile);
+        }
+        console.log(this.formModel.value);
         this.formModel.reset();
     }
-    onClose(){
-        this.displayForm.emit(false)
+    onClose() {
+        this.displayForm.emit(false);
         this.formModel.reset();
-
     }
 
+    onFileSelected(event: Event) {
+        const input = event.target as HTMLInputElement;
+        if (input.type === 'file' && input.files && input.files.length > 0) {
+            this.selectedFile = input.files[0];
+        }
+    }
 
 }
