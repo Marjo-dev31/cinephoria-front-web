@@ -17,6 +17,7 @@
                                 formControlName="{{ control.controlKey }}"
                                 class="border bg-sage/40"
                                 min="{{ control.min }}"
+                                max="{{ control.max }}"
                                 accept="{{ control.accept }}"
                                 (change)="onFileSelected($event)"
                             />
@@ -40,7 +41,7 @@
                             <textarea
                                 formControlName="{{ control.controlKey }}"
                                 class="border bg-sage/40"
-                                rows="{{ control.rows}}"
+                                rows="{{ control.rows }}"
                             >
                             </textarea>
                         }
@@ -73,7 +74,7 @@
                 (click)="onClose()"
                 class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue cursor-pointer"
             >
-               Annuler
+                Annuler
             </button>
             <button
                 type="submit"

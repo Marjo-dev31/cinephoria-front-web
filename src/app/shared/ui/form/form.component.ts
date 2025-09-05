@@ -50,9 +50,9 @@ export class FormComponent implements OnChanges {
         if (this.selectedFile) {
             this.fileOutput.emit(this.selectedFile);
         }
-        console.log(this.formModel.value);
-        this.formModel.reset();
+        
     }
+
     onClose() {
         this.displayForm.emit(false);
         this.formModel.reset();
@@ -64,5 +64,4 @@ export class FormComponent implements OnChanges {
             this.selectedFile = input.files[0];
         }
     }
-
 }

@@ -39,8 +39,8 @@
             >
                 <option value="" disabled selected>--</option>
                 @for (showing of showingFilterByCinema(); track $index) {
-                    <option value="{{ showing.movie.id }}">
-                        {{ showing.movie.title }}
+                    <option value="{{ showing.movie?.id }}">
+                        {{ showing.movie?.title }}
                     </option>
                 }
             </select>
@@ -113,7 +113,7 @@
                     </li>
                     <li>Début: {{ showing.startAt | hoursDisplay }}</li>
                     <li>Fin: {{ showing.endAt | hoursDisplay }}</li>
-                    <li>{{ showing.movie.title }}</li>
+                    <li>{{ showing.movie?.title }}</li>
                     <li>Salle: {{ showing.room.number }}</li>
                     <li class="pb-2 capitalize">
                         {{ showing.room.projectionQuality.quality }}

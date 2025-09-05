@@ -1,10 +1,10 @@
 <div class="flex flex-col justify-center items-center ml-96 w-2/3">
-    <h2 class="text-center text-4xl font-bold font-roboto p-4">Salles</h2>
+    <h2 class="text-center text-4xl font-bold font-roboto p-4">Séances</h2>
     <app-datatable
-        [data]="rooms"
+        [data]="showings"
         [displayColumns]="displayColumns()"
-        (onDeleteId)="handleDeleteRoom($event)"
-        (onEditItem)="handleEditRoom($event)"
+        (onDeleteId)="handleDeleteShowing($event)"
+        (onEditItem)="handleEditShowing($event)"
     />
     <button
         class="my-6 mx-auto w-48 bg-peach rounded-lg p-2 font-bold text-sm flex justify-between"
@@ -41,13 +41,13 @@
             />
         </svg>
 
-        ajouter une salle
+        ajouter une séance
     </button>
     @if (isDisplayAddForm()) {
         <h3 class="font-bold text-2xl">Ajouter</h3>
         <app-form
             [formModelConfig]="formModelConfig"
-            (outputForm)="handleAddRoom($event)"
+            (outputForm)="handleAddShowing($event)"
             (displayForm)="handleCloseForm($event)"
             class="w-96"
         />
@@ -56,8 +56,8 @@
         <h3 class="font-bold text-2xl">Modifier</h3>
         <app-form
             [formModelConfig]="formModelConfig"
-            [currentItem]="currentRoomDisplayOnForm()"
-            (outputForm)="handleUpdateRoom($event)"
+            [currentItem]="currentShowingDisplayOnForm()"
+            (outputForm)="handleUpdateShowing($event)"
             (displayForm)="handleCloseForm($event)"
             class="w-96"
         />
