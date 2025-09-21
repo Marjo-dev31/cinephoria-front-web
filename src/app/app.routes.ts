@@ -8,6 +8,7 @@ import { BackofficeComponent } from './shared/component/backoffice/backoffice.co
 import { RoomBackofficeComponent } from './room/features/room-backoffice/room.backoffice.component';
 import { MovieBackofficeComponent } from './movies/features/moviebackoffice/movie.backoffice.component';
 import { ShowingBackofficeComponent } from './showing/features/showing-backoffice/showing-backoffice.component';
+import { UserBackofficeComponent } from './user/features/user-backoffice/user-backoffice.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -21,7 +22,7 @@ export const routes: Routes = [
             { path: 'room', component: RoomBackofficeComponent },
             { path: 'showing', component: ShowingBackofficeComponent },
             { path: 'movie', component: MovieBackofficeComponent },
-            { path: 'creationaccount', component: HomeComponent },
+            { path: 'creationaccount', component: UserBackofficeComponent },
             { path: 'review', component: HomeComponent },
             { path: 'dashboard', component: HomeComponent },
         ],

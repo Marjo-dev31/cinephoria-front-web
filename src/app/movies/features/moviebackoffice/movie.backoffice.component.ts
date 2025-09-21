@@ -77,7 +77,7 @@ export class MovieBackofficeComponent {
         this.currentMovie.set(movie as MovieInterface);
     }
 
-    handleAddRoom(movie: MovieDisplayFormInterface) {
+    handleAddMovie(movie: MovieDisplayFormInterface) {
         const image_Url = movie.image_Url.split('\\').pop() || ''
         this.genreService
             .getAllGenre()
