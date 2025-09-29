@@ -14,4 +14,8 @@ export class OrderService {
     addOrder(order: OrderCreateInterface): Observable<OrderInterface> {
         return this.http.post<OrderInterface>(this.url, order);
     }
+
+    getOrdersByUser(id: string): Observable<OrderInterface[]>{
+        return this.http.get<OrderInterface[]>(`${this.url}/${id}`)
+    }
 }

@@ -142,7 +142,7 @@ export class ShowingComponent implements OnInit {
                 const newOrder = {
                     quantity: this.wishSeatSignal(),
                     total: this.totalCartSignal(),
-                    showing: this.selectedShowingSignal()[0].id,
+                    showing: this.selectedShowingSignal()[0],
                     seat: seatArray,
                 };
                 this.orderService.addOrder(newOrder).subscribe((order) =>

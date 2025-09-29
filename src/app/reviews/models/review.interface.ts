@@ -1,11 +1,14 @@
+import { MovieInterface } from "../../movies/models/movie.interface";
+
 export interface ReviewCreateInterface {
     description: string;
     grade: number;
-    is_Validated: boolean;
-    movie: string;
+    movie: MovieInterface;
+    username: string;
 }
 
 export interface ReviewUpdateInterface extends ReviewCreateInterface {
+    is_Validated: boolean;
     id: string;
 }
 

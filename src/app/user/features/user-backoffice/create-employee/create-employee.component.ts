@@ -1,20 +1,20 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { FormComponent } from '../../../shared/ui/form/form.component';
-import { DynamicControl } from '../../../shared/models/form.interface';
+import { Component, DestroyRef, inject} from '@angular/core';
+import { FormComponent } from '../../../../shared/ui/form/form.component';
+import { DynamicControl } from '../../../../shared/models/form.interface';
 import { Validators } from '@angular/forms';
-import { UserService } from '../../data-access/user.service';
-import { UserCreateInterface } from '../../models/user.interface';
-import { RoleService } from '../../data-access/role.service';
-import { RoleInterface } from '../../models/role.interface';
+import { UserService } from '../../../data-access/user.service';
+import { UserCreateInterface } from '../../../models/user.interface';
+import { RoleService } from '../../../data-access/role.service';
+import { RoleInterface } from '../../../models/role.interface';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-    selector: 'app-user-backoffice',
+    selector: 'app-create-employee-form',
     standalone: true,
     imports: [FormComponent],
-    templateUrl: './user-backoffice.component.html',
+    templateUrl: './create-employee.component.html',
 })
-export class UserBackofficeComponent {
+export class CreateEmployeeComponent {
     private readonly userService = inject(UserService);
     private readonly roleService = inject(RoleService);
     private readonly destroyRef = inject(DestroyRef);
