@@ -84,8 +84,10 @@
                 @if(formModel.get(control.controlKey)?.hasError('email')){
                     <span class="text-red-600 text-sm">Le format de mail est incorrect</span>
                 }
-                @if(formModel.get('password')?.value !== formModel.get('confirmPassword')?.value){
-                    <span>Le password et sa confirmation doivent être identiques</span>
+                @if( control.controlKey === 'confirmPassword'){
+                    @if(formModel.get('password')?.value !== formModel.get('confirmPassword')?.value){
+                        <span class="text-red-600 text-sm">Le password et sa confirmation doivent être identiques</span>
+                    }
                 }
             }
         </div>
