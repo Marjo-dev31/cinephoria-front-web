@@ -1,9 +1,11 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { ColumnInterface } from '../../models/colum.inteface';
 import { RoomInterface } from '../../../room/models/room.interface';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MovieInterface } from '../../../movies/models/movie.interface';
 import { ShowingInterface } from '../../../showing/models/showing.interface';
+import { ReviewInterface } from '../../../reviews/models/review.interface';
+import { OrderInterface } from '../../../order/models/oder.interface';
 
 @Component({
     selector: 'app-datatable',
@@ -13,9 +15,23 @@ import { ShowingInterface } from '../../../showing/models/showing.interface';
 })
 export class DatatableComponent {
     displayColumns = input.required<ColumnInterface[]>();
-    data = input.required<(RoomInterface | MovieInterface | ShowingInterface)[]>();
+    data =
+        input.required<
+            (
+                | RoomInterface
+                | MovieInterface
+                | ShowingInterface
+                | ReviewInterface
+                | OrderInterface
+            )[]
+        >();
+    isReviewData = input(false);
+    isOrderData = input(false);
     onDeleteId = output<string>();
-    onEditItem = output<RoomInterface | MovieInterface>()
+    onEditItem = output<RoomInterface | MovieInterface>();
+    onChangeStatus = output<string>();
+
+    today = new Date().toISOString().split('T')[0]
 
     dataSource = computed(() => this.data());
     columnKeys = computed(() => [
@@ -27,8 +43,11 @@ export class DatatableComponent {
         this.onDeleteId.emit(id);
     }
 
-    editItem(item: any){
-        this.onEditItem.emit(item)
+    editItem(item: any) {
+        this.onEditItem.emit(item);
     }
 
+    changeStatus(id: string) {
+        this.onChangeStatus.emit(id);
+    }
 }

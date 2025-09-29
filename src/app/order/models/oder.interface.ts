@@ -1,9 +1,10 @@
 import { SeatInterface } from "../../shared/models/seat.interface";
+import { ShowingInterface } from "../../showing/models/showing.interface";
 
 export interface OrderCreateInterface {
     quantity: number;
     total: number;
-    showing: string;
+    showing: ShowingInterface;
     seat?: SeatInterface[];
 }
 

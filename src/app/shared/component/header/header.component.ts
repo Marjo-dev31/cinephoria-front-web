@@ -13,7 +13,7 @@ export class HeaderComponent {
 
     // recuperer current user and role
     isLogin = signal(true);
-    isAdmin = signal(true);
+    isAdmin = signal(false);
     isEmployee = signal(false);
 
     showSideMenu() {

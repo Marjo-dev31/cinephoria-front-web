@@ -157,10 +157,6 @@ export class MovieBackofficeComponent {
             .subscribe((movies) => (this.movies = movies));
     }
 
-    uploadImg(){
-
-    }
-
     ngOnInit(): void {
         this.getAllMovies();
         this.genreService
