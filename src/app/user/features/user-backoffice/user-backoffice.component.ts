@@ -3,7 +3,7 @@ import { FormComponent } from '../../../shared/ui/form/form.component';
 import { DynamicControl } from '../../../shared/models/form.interface';
 import { Validators } from '@angular/forms';
 import { UserService } from '../../data-access/user.service';
-import { EmployeeCreateInterface } from '../../models/user.interface';
+import { UserCreateInterface } from '../../models/user.interface';
 import { RoleService } from '../../data-access/role.service';
 import { RoleInterface } from '../../models/role.interface';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -23,21 +23,23 @@ export class UserBackofficeComponent {
         initialValue: [],
     });
 
-    handleAddEmployeeAccount(userEmployee: EmployeeCreateInterface) {
+    handleAddEmployeeAccount(userEmployee: UserCreateInterface) {
         const roleEmployee = this.allRoles().find(
             (role: RoleInterface) => role.name === 'employee',
         );
-        const newEmployee: EmployeeCreateInterface = {
+        const newEmployee: UserCreateInterface = {
             firstname: userEmployee.firstname,
             lastname: userEmployee.lastname,
             mail: userEmployee.mail,
             password: userEmployee.password,
+            username: userEmployee.firstname + userEmployee.lastname.charAt(0),
             role: roleEmployee!,
         };
         this.userService
             .addEmployeeAccount(newEmployee)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe();
+
     }
 
     readonly formModelConfig: DynamicControl[] = [

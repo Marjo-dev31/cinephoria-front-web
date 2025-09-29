@@ -50,7 +50,7 @@ export class FormComponent implements OnChanges {
         if (this.selectedFile) {
             this.fileOutput.emit(this.selectedFile);
         }
-        
+        this.formModel.reset()
     }
 
     onClose() {

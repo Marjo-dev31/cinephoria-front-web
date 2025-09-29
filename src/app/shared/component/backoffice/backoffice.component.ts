@@ -29,8 +29,8 @@ export class BackofficeComponent {
 
     // recuperer current user and role
     isLogin = signal(true);
-    isAdmin = signal(true);
-    isEmployee = signal(false);
+    isAdmin = signal(false);
+    isEmployee = signal(true);
 
     sidebarItems = computed(() => {
   return this.isAdmin()
