@@ -1,6 +1,8 @@
 import { NgStyle } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { UserService } from '../../../user/data-access/user.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-header',
@@ -9,16 +11,22 @@ import { RouterLink } from '@angular/router';
     styles: ``,
 })
 export class HeaderComponent {
+    private readonly userService = inject(UserService);
+    private readonly router = inject(Router);
+    readonly currentUser = toSignal(this.userService.currentUser);
+
     isShowSideMenu = signal(false);
 
-    // recuperer current user and role
-    isLogin = signal(true);
-    isAdmin = signal(false);
-    isEmployee = signal(false);
+    isLogin = computed(() => !!this.currentUser()?.id);
+
+    effect = effect(() => console.log(this.currentUser(), this.isLogin()));
 
     showSideMenu() {
         this.isShowSideMenu.update((value) => !value);
     }
-    
-    logout() {}
+
+    logout() {
+        this.userService.logout();
+        this.router.navigate(['/login']);
+    }
 }

@@ -1,23 +1,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CreateEmployeeComponent } from './create-employee.component';
+import { RoleService } from '../../../data-access/role.service';
+import { UserService } from '../../../data-access/user.service';
 
 describe('CreateEmployeeComponent', () => {
-  let component: CreateEmployeeComponent;
-  let fixture: ComponentFixture<CreateEmployeeComponent>;
+    let component: CreateEmployeeComponent;
+    let fixture: ComponentFixture<CreateEmployeeComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CreateEmployeeComponent]
-    })
-    .compileComponents();
+    const mockRoleService = {
+        getAllRole: jest.fn(),
+    };
+    const mockUserService = {
+        addEmployeeAccount: jest.fn(),
+    };
 
-    fixture = TestBed.createComponent(CreateEmployeeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [CreateEmployeeComponent],
+            providers: [{ provide: RoleService, useValue: mockRoleService },{ provide: UserService, useValue: mockUserService }],
+        }).compileComponents();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        fixture = TestBed.createComponent(CreateEmployeeComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

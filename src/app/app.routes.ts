@@ -11,13 +11,14 @@ import { ShowingBackofficeComponent } from './showing/features/showing-backoffic
 import { CreateEmployeeComponent } from './user/features/user-backoffice/create-employee/create-employee.component';
 import { ReviewBackofficeComponent } from './reviews/feature/review-backoffice/review-backoffice.component';
 import { MySpaceComponent } from './user/features/user-backoffice/my-space/my-space.component';
+import { SignUpComponent } from './user/features/sign-up/sign-up.component';
+import { LoginComponent } from './user/features/login/login.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'movies', component: MoviesComponent },
     { path: 'reservation', component: ShowingComponent },
-    // { path: 'login' },
-    
+    { path: 'login', component: LoginComponent },
     {
         path: 'backoffice',
         component: BackofficeComponent,
@@ -25,11 +26,12 @@ export const routes: Routes = [
             { path: 'room', component: RoomBackofficeComponent },
             { path: 'showing', component: ShowingBackofficeComponent },
             { path: 'movie', component: MovieBackofficeComponent },
-            { path: 'creationaccount', component: CreateEmployeeComponent },
+            { path: 'employeeaccount', component: CreateEmployeeComponent },
             { path: 'review', component: ReviewBackofficeComponent },
             { path: 'dashboard', component: HomeComponent },
         ],
     },
+    { path: 'signup', component: SignUpComponent },
     { path: 'myspace', component: MySpaceComponent },
     // { path: 'contact' },
     { path: 'politiquedeconfidentialite', component: PrivacyPolicyComponent },

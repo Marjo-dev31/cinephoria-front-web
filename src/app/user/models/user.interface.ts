@@ -14,5 +14,16 @@ export interface UserUpdateInterface extends UserCreateInterface {
 }
 
 export interface UserInterface extends UserUpdateInterface {
-    reviews: ReviewInterface;
+    reviews?: ReviewInterface;
+}
+
+export interface LoginCredantialInterface {
+    mail: string;
+    password: string;
+}
+
+export interface CurrentUserInterface {
+    id: string;
+    username: string;
+    role: string;
 }
