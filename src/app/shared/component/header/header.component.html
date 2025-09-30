@@ -69,7 +69,7 @@
                 <!-- if connection or not -->
                 @if (isLogin()) {
                     <!-- if role admin or employee else user -->
-                    @if (isAdmin()) {
+                    @if (currentUser()?.role === 'admin') {
                         <li class="relative hover:cursor-pointer">
                             <a
                                 [routerLink]="['backoffice']"
@@ -79,7 +79,7 @@
                                 ></a
                             >
                         </li>
-                    } @else if (isEmployee()) {
+                    } @else if (currentUser()?.role === 'employee') {
                         <li class="relative hover:cursor-pointer">
                             <a
                                 [routerLink]="['backoffice']"
@@ -145,11 +145,11 @@
             <!-- if connection or not -->
             @if (isLogin()) {
                 <!-- if role admin else user -->
-                @if (isAdmin()) {
+                @if (currentUser()?.role === 'admin') {
                     <li>
                         <a [routerLink]="['backoffice']">Administration</a>
                     </li>
-                } @else if (isEmployee()) {
+                } @else if (currentUser()?.role === 'employee') {
                     <li>
                         <a [routerLink]="['backoffice']">Intranet</a>
                     </li>

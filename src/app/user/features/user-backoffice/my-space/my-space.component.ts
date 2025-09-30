@@ -9,13 +9,18 @@ import {
 import { OrderComponent } from '../../../../order/feature/order.component';
 import { DynamicControl } from '../../../../shared/models/form.interface';
 import { Validators } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { OrderService } from '../../../../order/data-access/order.service';
 import { ReviewCreateInterface } from '../../../../reviews/models/review.interface';
 import { ReviewService } from '../../../../reviews/data-access/reviews.service';
 import { OrderInterface } from '../../../../order/models/oder.interface';
-import { UserInterface } from '../../../models/user.interface';
+import {
+    CurrentUserInterface,
+    UserInterface,
+} from '../../../models/user.interface';
 import { ReviewsComponent } from '../../../../reviews/feature/review/reviews.component';
+import { UserService } from '../../../data-access/user.service';
+import { single } from 'rxjs';
 
 @Component({
     selector: 'app-my-space-form',
@@ -26,27 +31,32 @@ import { ReviewsComponent } from '../../../../reviews/feature/review/reviews.com
         <h2 class="text-center text-4xl font-bold font-roboto p-4">
             Mon compte personnel
         </h2>
-        <app-order [orders]="orders" class="w-full"/>
+        <app-order [orders]="orders" class="w-full" />
         <div class="my-4">
-            <app-reviews [formModelConfig]="formModelConfig" (outPutForm)="handleAddReview($event)"/>
+            <app-reviews
+                [formModelConfig]="formModelConfig"
+                (outPutForm)="handleAddReview($event)"
+            />
         </div>
     </div>`,
 })
 export class MySpaceComponent implements OnInit {
     private readonly orderService = inject(OrderService);
     private readonly reviewService = inject(ReviewService);
+    private readonly userService = inject(UserService);
     private readonly destroyRef = inject(DestroyRef);
 
     // recuperer current user and role
-    currentUser = signal({
-        id: 'ef8357b7-d6f0-48c3-b9b4-2c7f28df18ca',
-        username: 'nico',
-    } as UserInterface);
+    currentUser = signal<CurrentUserInterface>({
+        id: '',
+        username: '',
+        role: '',
+    });
+
     formModelConfig: DynamicControl[] = [];
     orders: OrderInterface[] = [];
 
     handleAddReview(review: ReviewCreateInterface) {
-        console.log(review, 'review');
         const movieToReview = this.orders.find(
             (order) => order.showing.movie?.title === review.movie.title,
         )?.showing.movie;
@@ -55,7 +65,7 @@ export class MySpaceComponent implements OnInit {
                 description: review.description,
                 grade: review.grade,
                 movie: movieToReview,
-                user: this.currentUser(),
+                user: this.currentUser() as unknown as UserInterface,
             };
             this.reviewService
                 .addReview(newReview)
@@ -64,15 +74,24 @@ export class MySpaceComponent implements OnInit {
         }
     }
 
-    effect = effect(() => console.log(this.orders));
+    initializeCurrentUser() {
+        this.userService.currentUser.subscribe((response) => {
+            this.currentUser.set({
+                id: response.id,
+                username: response.username,
+                role: response.role,
+            });
+        });
+    }
+    effect = effect(() => console.log(this.orders, this.currentUser()));
 
     ngOnInit(): void {
+        this.initializeCurrentUser();
         this.orderService
             .getOrdersByUser(this.currentUser().id)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((orders) => {
                 this.orders = orders;
-
                 const orderFiltered = orders.filter(
                     (order) => new Date(order.showing.date) < new Date(),
                 );

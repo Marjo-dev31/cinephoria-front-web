@@ -1,9 +1,12 @@
-import { Component, DestroyRef, inject} from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormComponent } from '../../../../shared/ui/form/form.component';
 import { DynamicControl } from '../../../../shared/models/form.interface';
 import { Validators } from '@angular/forms';
 import { UserService } from '../../../data-access/user.service';
-import { UserCreateInterface } from '../../../models/user.interface';
+import {
+    UserCreateInterface,
+    UserUpdateInterface,
+} from '../../../models/user.interface';
 import { RoleService } from '../../../data-access/role.service';
 import { RoleInterface } from '../../../models/role.interface';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -14,7 +17,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
     imports: [FormComponent],
     templateUrl: './create-employee.component.html',
 })
-export class CreateEmployeeComponent {
+export class CreateEmployeeComponent implements OnInit {
     private readonly userService = inject(UserService);
     private readonly roleService = inject(RoleService);
     private readonly destroyRef = inject(DestroyRef);
@@ -22,6 +25,10 @@ export class CreateEmployeeComponent {
     private readonly allRoles = toSignal(this.roleService.getAllRole(), {
         initialValue: [],
     });
+
+    employees!: UserUpdateInterface[];
+
+    formModelUpdatePassword: DynamicControl[] = [];
 
     handleAddEmployeeAccount(userEmployee: UserCreateInterface) {
         const roleEmployee = this.allRoles().find(
@@ -36,10 +43,54 @@ export class CreateEmployeeComponent {
             role: roleEmployee!,
         };
         this.userService
-            .addEmployeeAccount(newEmployee)
+            .addAccount(newEmployee)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe();
+    }
 
+    handleUpdatePassword(userUpdate: any) {
+        const employeeToUpdate = this.employees.find(
+            (employee) => employee.username === userUpdate.username,
+        );
+        console.log(this.employees,userUpdate, employeeToUpdate, 'employeeToUpdate')
+        if (employeeToUpdate) {
+            this.userService
+                .updatePassword(employeeToUpdate)
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe();
+        }
+    }
+
+    ngOnInit(): void {
+        this.userService.getAllEmployee().subscribe((employees) => {
+            this.employees = employees.filter(
+                (employee) => employee.role.name === 'employee',
+            );
+            const employeeOptions = this.employees.map(
+                (employee) => employee.username,
+            );
+            this.formModelUpdatePassword = [
+                {
+                    controlKey: 'username',
+                    formFieldType: 'select',
+                    selectOptions: employeeOptions,
+                    label: 'employé',
+                    validators: [Validators.required],
+                },
+                {
+                    controlKey: 'password',
+                    formFieldType: 'input',
+                    inputType: 'password',
+                    label: 'password',
+                    validators: [
+                        Validators.required,
+                        Validators.pattern(
+                            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,}$',
+                        ),
+                    ],
+                },
+            ];
+        });
     }
 
     readonly formModelConfig: DynamicControl[] = [
