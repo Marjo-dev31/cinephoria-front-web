@@ -1,6 +1,6 @@
 import { Component, computed, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SidebarBackofficeComponent } from '../../ui/sidebar-backoffice/sidebar.backoffice.component';
+import { SidebarBackofficeComponent } from '../../../../shared/ui/sidebar-backoffice/sidebar.backoffice.component';
 
 @Component({
     selector: 'app-backoffice',

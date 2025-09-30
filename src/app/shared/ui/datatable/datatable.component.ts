@@ -31,8 +31,6 @@ export class DatatableComponent {
     onEditItem = output<RoomInterface | MovieInterface>();
     onChangeStatus = output<string>();
 
-    today = new Date().toISOString().split('T')[0]
-
     dataSource = computed(() => this.data());
     columnKeys = computed(() => [
         ...this.displayColumns().map((column) => column.key),

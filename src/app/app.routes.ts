@@ -4,7 +4,7 @@ import { MoviesComponent } from './movies/features/movies.component';
 import { PrivacyPolicyComponent } from './privacy-policy/features/privacy-policy.component';
 import { GtcComponent } from './gtc/features/gtc.component';
 import { ShowingComponent } from './showing/features/showing.component';
-import { BackofficeComponent } from './shared/component/backoffice/backoffice.component';
+import { BackofficeComponent } from './user/features/user-backoffice/shared-backoffice/backoffice.component';
 import { RoomBackofficeComponent } from './room/features/room-backoffice/room.backoffice.component';
 import { MovieBackofficeComponent } from './movies/features/moviebackoffice/movie.backoffice.component';
 import { ShowingBackofficeComponent } from './showing/features/showing-backoffice/showing-backoffice.component';
