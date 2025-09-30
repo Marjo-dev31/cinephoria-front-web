@@ -51,7 +51,7 @@ export class ReviewBackofficeComponent implements OnInit {
         {
             key: 'username',
             label: 'pseudo',
-            accessor: (row: ReviewInterface) => row.username,
+            accessor: (row: ReviewInterface) => row.user?.username,
         },
         {
             key: 'description',

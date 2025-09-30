@@ -1,7 +1,5 @@
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { DatatableComponent } from '../../shared/ui/datatable/datatable.component';
-import { OrderService } from '../data-access/order.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { OrderInterface } from '../models/oder.interface';
 
 @Component({
@@ -11,16 +9,7 @@ import { OrderInterface } from '../models/oder.interface';
     templateUrl: './order.component.html',
 })
 export class OrderComponent {
-    private readonly orderService = inject(OrderService);
-    onEditForm = output<string>();
-    currentUser = input<string>('ef8357b7-d6f0-48c3-b9b4-2c7f28df18ca');
-    orders = toSignal(this.orderService.getOrdersByUser(this.currentUser()), {
-        initialValue: [],
-    });
-
-    handleEditForm(item: any) {
-        this.onEditForm.emit(item);
-    }
+    orders = input.required<OrderInterface[]>()
 
     displayColumns = signal([
         {
