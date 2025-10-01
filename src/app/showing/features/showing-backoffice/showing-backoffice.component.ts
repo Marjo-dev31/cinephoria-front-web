@@ -184,7 +184,7 @@ export class ShowingBackofficeComponent implements OnInit {
                     {
                         controlKey: 'room',
                         formFieldType: 'select',
-                        label: 'salle',
+                        label: 'salle/Cinéma',
                         defaultValue: '',
                         selectOptions: roomOptions,
                         validators: [Validators.required],
@@ -203,7 +203,7 @@ export class ShowingBackofficeComponent implements OnInit {
                         inputType: 'date',
                         label: 'date',
                         defaultValue: '',
-                        min: new Date().toISOString(),
+                        min: new Date().toISOString().split('T')[0],
                         validators: [Validators.required],
                     },
                     {

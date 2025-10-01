@@ -16,8 +16,8 @@
                                 maxlength="{{ control.maxlength }}"
                                 formControlName="{{ control.controlKey }}"
                                 class="border bg-sage/40"
-                                min="{{ control.min }}"
-                                max="{{ control.max }}"
+                                [min]="control.min"
+                                [max]="control.max"
                                 accept="{{ control.accept }}"
                                 (change)="onFileSelected($event)"
                             />

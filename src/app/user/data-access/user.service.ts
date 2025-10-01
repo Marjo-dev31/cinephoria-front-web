@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import {
     CurrentUserInterface,
     LoginCredantialInterface,
@@ -40,6 +40,10 @@ export class UserService {
                         username: user.username,
                         role: user.role.name,
                     });
+                }),
+                catchError((err) => {
+                    const errorMessage = err?.error?.message;
+                    return throwError(() => new Error(errorMessage));
                 }),
             );
     }
