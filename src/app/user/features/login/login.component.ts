@@ -1,11 +1,11 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormComponent } from '../../../shared/ui/form/form.component';
 import { DynamicControl } from '../../../shared/models/form.interface';
 import { Validators } from '@angular/forms';
 import { UserService } from '../../data-access/user.service';
 import { LoginCredantialInterface } from '../../models/user.interface';
-import { Router, RouterLink } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-login',
@@ -17,6 +17,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         <h2 class="text-center text-4xl font-bold font-roboto p-4 capitalize">
             se connecter
         </h2>
+        @if (errorMessage()) {
+            <p class="text-red-600 text-center">{{ errorMessage() }}</p>
+        }
         <app-form
             [formModelConfig]="formModelConfig"
             (outputForm)="handleLogin($event)"
@@ -34,23 +37,41 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         </div>
     </div>`,
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     private readonly userService = inject(UserService);
     private readonly router = inject(Router);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly activatedRoute = inject(ActivatedRoute);
+    private readonly params = toSignal(this.activatedRoute.queryParams, {
+        initialValue: { data: '', seat: 0 },
+    });
+
+    readonly errorMessage = signal('');
 
     handleLogin(loginCredentials: LoginCredantialInterface) {
         this.userService
             .login(loginCredentials)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((response) => {
-                if (response.role.name === 'user') {
-                    this.router.navigate(['myspace']);
-                } else {
-                    this.router.navigate(['backoffice']);
-                }
+            .subscribe({
+                next: (response) => {
+                    if (this.params()) {
+                        this.router.navigate(['reservation'], {
+                            queryParams: {
+                                data: this.params().data,
+                                seat: this.params().seat,
+                            },
+                        });
+                    } else if (response.role.name === 'user') {
+                        this.router.navigate(['myspace']);
+                    } else {
+                        this.router.navigate(['backoffice']);
+                    }
+                },
+                error: (err) => this.errorMessage.set(err.message),
             });
     }
+
+    ngOnInit(): void {}
 
     readonly formModelConfig: DynamicControl[] = [
         {

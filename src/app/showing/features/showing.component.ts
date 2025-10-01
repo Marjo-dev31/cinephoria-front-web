@@ -27,8 +27,9 @@ import { PaymentDialogComponent } from '../../shared/ui/payment.dialog.component
 import { SeatService } from '../../shared/data-access/seat.service';
 import { OrderService } from '../../order/data-access/order.service';
 import { upcomingDate } from '../../shared/util/upcomingDate';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { UserService } from '../../user/data-access/user.service';
 
 @Component({
     selector: 'app-showing',
@@ -50,17 +51,22 @@ export class ShowingComponent implements OnInit {
     private readonly orderService = inject(OrderService);
     private readonly activatedRoute = inject(ActivatedRoute);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly userService = inject(UserService);
+    private readonly router = inject(Router);
 
     private showings = toSignal(this.showingService.getAllShowing());
     public cinemas = toSignal(this.cinemaService.getAllCinema());
 
     public searchCinemaSignal = signal('');
+    public searchMovieSignal = signal('');
     public searchAccessibleSeatNumber = signal(0);
     public wishSeatSignal = signal(1);
     public totalCartSignal = signal(0);
     public selectedIndex = signal(-1);
     public selectedShowingSignal = signal<ShowingInterface[]>([]);
     public selectSeatIndex = signal<number[]>([]);
+    readonly currentUser = toSignal(this.userService.currentUser);
+    isLogin = computed(() => !!this.currentUser()?.id);
 
     public showingFilterByCinema = computed(() =>
         this.showings()?.filter(
@@ -71,7 +77,7 @@ export class ShowingComponent implements OnInit {
     public showingFiltered = computed(() =>
         this.showings()?.filter(
             (showing) =>
-                showing.room.cinema.id === this.searchCinemaSignal() &&
+                this.searchMovieSignal() === showing.movie?.id &&
                 seatAvailableNumber(showing.seat) >= this.wishSeatSignal() &&
                 accessibleSeatAvailableNumber(showing.seat) >=
                     this.searchAccessibleSeatNumber() &&
@@ -92,6 +98,10 @@ export class ShowingComponent implements OnInit {
 
     onSearchCinema(cinema: string) {
         this.searchCinemaSignal.set(cinema);
+    }
+
+    onSearchMovie(movie: string) {
+        this.searchMovieSignal.set(movie);
     }
 
     onWishSeat(number: string) {
@@ -127,35 +137,45 @@ export class ShowingComponent implements OnInit {
     }
 
     onSubmit() {
-        const dialogRef = this.dialog.open(PaymentDialogComponent, {
-            height: '400px',
-            width: '400px',
-            data: this.formModelConfig,
-        });
+        if (!this.isLogin()) {
+            this.router.navigate(['/login'], {
+                queryParams: {
+                    data: this.selectedShowingSignal()[0].id,
+                    seat: this.wishSeatSignal(),
+                },
+            });
+        } else {
+            const dialogRef = this.dialog.open(PaymentDialogComponent, {
+                height: '400px',
+                width: '400px',
+                data: this.formModelConfig,
+            });
 
-        dialogRef.closed.subscribe((resaIsValidate) => {
-            if (resaIsValidate) {
-                const seatArray = this.selectSeatIndex().map(
-                    (index) => this.selectedShowingSignal()[0].seat[index],
-                );
-                // create order
-                const newOrder = {
-                    quantity: this.wishSeatSignal(),
-                    total: this.totalCartSignal(),
-                    showing: this.selectedShowingSignal()[0],
-                    seat: seatArray,
-                };
-                this.orderService.addOrder(newOrder).subscribe((order) =>
-                    seatArray.forEach((seat) => {
-                        ((seat.reserved = true),
-                            (seat.order = order),
-                            this.seatService.updateSeat(seat).subscribe());
-                    }),
-                );
-                this.resetSelection();
-                this.searchCinemaSignal.set('');
-            }
-        });
+            dialogRef.closed.subscribe((resaIsValidate) => {
+                if (resaIsValidate) {
+                    const seatArray = this.selectSeatIndex().map(
+                        (index) => this.selectedShowingSignal()[0].seat[index],
+                    );
+                    // create order
+                    const newOrder = {
+                        quantity: this.wishSeatSignal(),
+                        total: this.totalCartSignal(),
+                        showing: this.selectedShowingSignal()[0],
+                        seat: seatArray,
+                    };
+                    this.orderService.addOrder(newOrder).subscribe((order) =>
+                        seatArray.forEach((seat) => {
+                            ((seat.reserved = true),
+                                (seat.order = order),
+                                this.seatService.updateSeat(seat).subscribe());
+                        }),
+                    );
+                    this.resetSelection();
+                    this.searchCinemaSignal.set('');
+                    this.searchMovieSignal.set('');
+                }
+            });
+        }
     }
 
     resetSelection() {
@@ -170,15 +190,18 @@ export class ShowingComponent implements OnInit {
             .pipe(
                 switchMap((params) => {
                     const showingId = params['data'];
+                    this.wishSeatSignal.set(params['seat']);
                     return this.showingService.getShowingById(showingId);
                 }),
                 takeUntilDestroyed(this.destroyRef),
             )
             .subscribe((showing) => {
                 this.searchCinemaSignal.set(showing.room.cinema.id);
+                this.searchMovieSignal.set(showing.movie!.id);
                 this.filterForm.patchValue({
                     cinema: showing.room.cinema.id,
                     movie: showing.movie?.id,
+                    seat: this.wishSeatSignal(),
                 });
                 const price =
                     this.showingFiltered()?.find(

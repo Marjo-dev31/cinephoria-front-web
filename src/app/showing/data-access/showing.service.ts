@@ -23,12 +23,21 @@ export class ShowingService {
         return this.http.get<ShowingInterface>(`${this.url}/${id}`);
     }
 
+    getShowingByRoomId(id: string): Observable<ShowingInterface[]>{
+        return this.http.get<ShowingInterface[]>(`${this.url}/room/${id}`);
+    }
+
     addShowing(showing: CreateShowingInterface): Observable<ShowingInterface> {
         return this.http.post<ShowingInterface>(this.url, showing);
     }
 
-    updateShowing(showing: UpdateShowingInterface): Observable<ShowingInterface>{
-        return this.http.patch<ShowingInterface>(`${this.url}/${showing.id}`, showing)
+    updateShowing(
+        showing: UpdateShowingInterface,
+    ): Observable<ShowingInterface> {
+        return this.http.patch<ShowingInterface>(
+            `${this.url}/${showing.id}`,
+            showing,
+        );
     }
 
     deleteShowing(id: string): Observable<ShowingInterface> {

@@ -36,6 +36,7 @@
                 class="bg-peach/20 border border-darkblue p-1 w-full"
                 formControlName="movie"
                 #searchMovie
+                (input)="onSearchMovie(searchMovie.value)"
             >
                 <option value="" disabled selected>--</option>
                 @for (showing of showingFilterByCinema(); track $index) {

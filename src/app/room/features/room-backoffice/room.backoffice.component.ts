@@ -22,6 +22,7 @@ import { CinemaService } from '../../../shared/data-access/cinema.service';
 import { ProjectionQualityService } from '../../../shared/data-access/projectionQuality.service';
 import { combineLatest, tap } from 'rxjs';
 import { NgStyle } from '@angular/common';
+import { ShowingService } from '../../../showing/data-access/showing.service';
 
 @Component({
     selector: 'app-roombackoffice',
@@ -31,6 +32,7 @@ import { NgStyle } from '@angular/common';
 })
 export class RoomBackofficeComponent implements OnInit {
     private readonly roomService = inject(RoomService);
+    private readonly showingService = inject(ShowingService);
     private readonly cinemaService = inject(CinemaService);
     private readonly projectionQualityService = inject(
         ProjectionQualityService,
@@ -39,6 +41,8 @@ export class RoomBackofficeComponent implements OnInit {
 
     isDisplayAddForm = signal(false);
     isDiplayEditForm = signal(false);
+    isShowingExist = signal(false);
+
     currentRoom = signal<RoomInterface>({
         id: '',
         number: 0,
@@ -78,9 +82,20 @@ export class RoomBackofficeComponent implements OnInit {
             .subscribe();
     }
 
-    handleEditRoom(room: unknown) {
-        this.isDiplayEditForm.set(true);
-        this.currentRoom.set(room as RoomInterface);
+    handleEditRoom(room: any) {
+        this.showingService
+            .getShowingByRoomId(room.id)
+            .subscribe((response) => {
+                this.isShowingExist.set(response.length > 0);
+                if (this.isShowingExist()) {
+                    console.log(
+                        'il existe des séances pour cette salle, mise à jour impossible',
+                    );
+                } else {
+                    this.isDiplayEditForm.set(true);
+                    this.currentRoom.set(room as RoomInterface);
+                }
+            });
     }
 
     handleAddRoom(room: RoomDiplayFormInterface) {
@@ -110,6 +125,7 @@ export class RoomBackofficeComponent implements OnInit {
                             takeUntilDestroyed(this.destroyRef),
                         )
                         .subscribe();
+                    this.isDiplayEditForm.set(false);
                 }
             });
     }
