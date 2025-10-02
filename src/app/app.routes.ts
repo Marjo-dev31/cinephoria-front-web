@@ -14,6 +14,10 @@ import { MySpaceComponent } from './user/features/user-backoffice/my-space/my-sp
 import { SignUpComponent } from './user/features/sign-up/sign-up.component';
 import { LoginComponent } from './user/features/login/login.component';
 import { DashboardComponent } from './movies/features/moviebackoffice/dashboard/dashboard.component';
+import { ErrorComponent } from './shared/component/error/error.component';
+import { ForbiddenComponent } from './shared/component/error/forbidden.component';
+import { authGuard } from './shared/guards/auth.guard';
+import { roleGuard } from './shared/guards/role.guard';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -23,20 +27,49 @@ export const routes: Routes = [
     {
         path: 'backoffice',
         component: BackofficeComponent,
+        canActivate: [authGuard, roleGuard],
+        canActivateChild: [authGuard, roleGuard],
+        data: { expectedRoles: ['admin', 'employee'] },
         children: [
-            { path: 'room', component: RoomBackofficeComponent },
-            { path: 'showing', component: ShowingBackofficeComponent },
-            { path: 'movie', component: MovieBackofficeComponent },
-            { path: 'employeeaccount', component: CreateEmployeeComponent },
-            { path: 'review', component: ReviewBackofficeComponent },
-            { path: 'dashboard', component: DashboardComponent },
+            {
+                path: 'room',
+                component: RoomBackofficeComponent,
+                data: { expectedRoles: ['admin', 'employee'] },
+            },
+            {
+                path: 'showing',
+                component: ShowingBackofficeComponent,
+                data: { expectedRoles: ['admin', 'employee'] },
+            },
+            {
+                path: 'movie',
+                component: MovieBackofficeComponent,
+                data: { expectedRoles: ['admin', 'employee'] },
+            },
+            {
+                path: 'employeeaccount',
+                component: CreateEmployeeComponent,
+                data: { expectedRoles: ['admin'] },
+            },
+            {
+                path: 'review',
+                component: ReviewBackofficeComponent,
+                data: { expectedRoles: ['employee'] },
+            },
+            {
+                path: 'dashboard',
+                component: DashboardComponent,
+                data: { expectedRoles: ['admin'] },
+            },
         ],
     },
     { path: 'signup', component: SignUpComponent },
-    { path: 'myspace', component: MySpaceComponent },
+    { path: 'myspace', component: MySpaceComponent, canActivate: [authGuard] },
     // { path: 'contact' },
     // { path: 'passwordforgot' },
     { path: 'politiquedeconfidentialite', component: PrivacyPolicyComponent },
     { path: 'cgv', component: GtcComponent },
-    { path: '**', component: HomeComponent },
+    { path: 'error', component: ErrorComponent },
+    { path: 'forbidden', component: ForbiddenComponent },
+    { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

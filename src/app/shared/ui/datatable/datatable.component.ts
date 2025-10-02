@@ -1,5 +1,5 @@
 import { Component, computed, input, output, signal } from '@angular/core';
-import { ColumnInterface } from '../../models/colum.inteface';
+import { ColumnInterface } from '../../models/column.interface';
 import { RoomInterface } from '../../../room/models/room.interface';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MovieInterface, MovieOnMongoInterface } from '../../../movies/models/movie.interface';
