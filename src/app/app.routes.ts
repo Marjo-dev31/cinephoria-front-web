@@ -13,6 +13,7 @@ import { ReviewBackofficeComponent } from './reviews/feature/review-backoffice/r
 import { MySpaceComponent } from './user/features/user-backoffice/my-space/my-space.component';
 import { SignUpComponent } from './user/features/sign-up/sign-up.component';
 import { LoginComponent } from './user/features/login/login.component';
+import { DashboardComponent } from './movies/features/moviebackoffice/dashboard/dashboard.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -28,12 +29,13 @@ export const routes: Routes = [
             { path: 'movie', component: MovieBackofficeComponent },
             { path: 'employeeaccount', component: CreateEmployeeComponent },
             { path: 'review', component: ReviewBackofficeComponent },
-            { path: 'dashboard', component: HomeComponent },
+            { path: 'dashboard', component: DashboardComponent },
         ],
     },
     { path: 'signup', component: SignUpComponent },
     { path: 'myspace', component: MySpaceComponent },
     // { path: 'contact' },
+    // { path: 'passwordforgot' },
     { path: 'politiquedeconfidentialite', component: PrivacyPolicyComponent },
     { path: 'cgv', component: GtcComponent },
     { path: '**', component: HomeComponent },

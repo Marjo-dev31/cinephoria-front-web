@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import {
     MovieCreateInterface,
     MovieInterface,
+    MovieOnMongoInterface,
     MovieUpdateInterface,
 } from '../models/movie.interface';
 
@@ -17,6 +18,10 @@ export class MoviesService {
 
     getAllMovies(): Observable<MovieInterface[]> {
         return this.http.get<MovieInterface[]>(this.url);
+    }
+
+    getAllSales(): Observable<MovieOnMongoInterface[]> {
+        return this.http.get<MovieOnMongoInterface[]>(`${this.url}/sales`);
     }
 
     getById(id: string): Observable<MovieInterface> {
