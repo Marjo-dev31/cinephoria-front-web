@@ -15,6 +15,7 @@ export interface UserUpdateInterface extends UserCreateInterface {
 
 export interface UserInterface extends UserUpdateInterface {
     reviews?: ReviewInterface;
+    access_token?: string
 }
 
 export interface LoginCredantialInterface {

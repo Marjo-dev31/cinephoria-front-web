@@ -7,7 +7,6 @@ import {
     LoginCredantialInterface,
     UserCreateInterface,
     UserInterface,
-    UserUpdateInterface,
 } from '../models/user.interface';
 @Injectable({
     providedIn: 'root',
@@ -22,6 +21,8 @@ export class UserService {
         role: '',
     });
 
+    access_token = new BehaviorSubject<string | undefined >('');
+
     addAccount(userEmployee: UserCreateInterface): Observable<UserInterface> {
         return this.http.post<UserInterface>(this.url, userEmployee);
     }
@@ -34,12 +35,13 @@ export class UserService {
         return this.http
             .post<UserInterface>(`${this.url}/login`, credentials)
             .pipe(
-                tap((user: UserInterface) => {
+                tap((user) => {
                     this.currentUser.next({
                         id: user.id,
                         username: user.username,
                         role: user.role.name,
                     });
+                    this.access_token.next(user.access_token);
                 }),
                 catchError((err) => {
                     const errorMessage = err?.error?.message;
