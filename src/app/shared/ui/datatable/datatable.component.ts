@@ -2,7 +2,7 @@ import { Component, computed, input, output, signal } from '@angular/core';
 import { ColumnInterface } from '../../models/colum.inteface';
 import { RoomInterface } from '../../../room/models/room.interface';
 import { CdkTableModule } from '@angular/cdk/table';
-import { MovieInterface } from '../../../movies/models/movie.interface';
+import { MovieInterface, MovieOnMongoInterface } from '../../../movies/models/movie.interface';
 import { ShowingInterface } from '../../../showing/models/showing.interface';
 import { ReviewInterface } from '../../../reviews/models/review.interface';
 import { OrderInterface } from '../../../order/models/oder.interface';
@@ -23,6 +23,7 @@ export class DatatableComponent {
                 | ShowingInterface
                 | ReviewInterface
                 | OrderInterface
+                | MovieOnMongoInterface
             )[]
         >();
     isReviewData = input(false);

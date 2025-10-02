@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ReviewInterface } from '../../../reviews/models/review.interface';
 
 @Pipe({
     name: 'hoursDisplay',

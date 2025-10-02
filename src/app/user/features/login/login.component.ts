@@ -54,15 +54,17 @@ export class LoginComponent implements OnInit {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
                 next: (response) => {
-                    if (this.params()) {
-                        this.router.navigate(['reservation'], {
-                            queryParams: {
-                                data: this.params().data,
-                                seat: this.params().seat,
-                            },
-                        });
-                    } else if (response.role.name === 'user') {
-                        this.router.navigate(['myspace']);
+                    if (response.role.name === 'user') {
+                        if (this.params()) {
+                            this.router.navigate(['reservation'], {
+                                queryParams: {
+                                    data: this.params().data,
+                                    seat: this.params().seat,
+                                },
+                            });
+                        } else {
+                            this.router.navigate(['myspace']);
+                        }
                     } else {
                         this.router.navigate(['backoffice']);
                     }
