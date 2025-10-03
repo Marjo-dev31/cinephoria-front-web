@@ -1,23 +1,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReviewBackofficeComponent } from './review-backoffice.component';
+import { of } from 'rxjs';
+import { ReviewService } from '../../data-access/reviews.service';
 
 describe('ReviewBackofficeComponent', () => {
-  let component: ReviewBackofficeComponent;
-  let fixture: ComponentFixture<ReviewBackofficeComponent>;
+    let component: ReviewBackofficeComponent;
+    let fixture: ComponentFixture<ReviewBackofficeComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ReviewBackofficeComponent]
-    })
-    .compileComponents();
+    const mockReviewService = {
+        getAllReviews: jest.fn().mockReturnValue(of([{movie:{title:""}}])),
+    };
 
-    fixture = TestBed.createComponent(ReviewBackofficeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [ReviewBackofficeComponent],
+            providers: [
+                { provide: ReviewService, useValue: mockReviewService },
+            ],
+        }).compileComponents();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        fixture = TestBed.createComponent(ReviewBackofficeComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

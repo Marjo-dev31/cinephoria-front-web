@@ -1,16 +1,8 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    computed,
-    inject,
-    OnInit,
-    Signal,
-} from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MoviesService } from '../../../data-access/movies.service';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { MovieOnMongoInterface } from '../../../models/movie.interface';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { map } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 Chart.register(...registerables);
 
 @Component({
@@ -32,6 +24,8 @@ Chart.register(...registerables);
 })
 export class DashboardComponent implements OnInit {
     private readonly movieService = inject(MoviesService);
+    private readonly destroyRef = inject(DestroyRef);
+    
 
     chart!: Chart;
 
@@ -47,16 +41,21 @@ export class DashboardComponent implements OnInit {
                         return new Date(movie.create_At) >= sevenDaysAgo;
                     }),
                 ),
+                takeUntilDestroyed(this.destroyRef)
             )
-            .subscribe((movies) => {
+            .subscribe((moviesFiltered) => {
+                const salesByMovie = moviesFiltered.reduce<Record<string, number>>((acc, movie) => {
+                    acc[movie.title] = (acc[movie.title] || 0) + movie.nbOfSales;
+                    return acc;
+                }, {});
                 const config: ChartConfiguration = {
                     type: 'bar',
                     data: {
-                        labels: movies.map((movie) => movie.title),
+                        labels: Object.keys(salesByMovie),
                         datasets: [
                             {
                                 label: 'Vente des 7 derniers jours par films',
-                                data: movies.map((movie) => movie.nbOfSales),
+                                data: Object.values(salesByMovie),
                                 backgroundColor: ['rgba(61, 90, 128, 0.2)'],
                                 borderColor: ['rgb(61, 90, 128)'],
                                 borderWidth: 2,
@@ -70,9 +69,9 @@ export class DashboardComponent implements OnInit {
                         scales: {
                             x: {
                                 beginAtZero: true,
-                                ticks:{
+                                ticks: {
                                     maxTicksLimit: 6,
-                                }
+                                },
                             },
                         },
                     },

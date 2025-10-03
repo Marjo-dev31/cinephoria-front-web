@@ -52,7 +52,6 @@ export class CreateEmployeeComponent implements OnInit {
         const employeeToUpdate = this.employees.find(
             (employee) => employee.username === userUpdate.username,
         );
-        console.log(this.employees,userUpdate, employeeToUpdate, 'employeeToUpdate')
         if (employeeToUpdate) {
             this.userService
                 .updatePassword(employeeToUpdate)

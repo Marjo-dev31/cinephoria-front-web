@@ -1,23 +1,41 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BackofficeComponent } from './backoffice.component';
+import { UserService } from '../../../data-access/user.service';
+import { BehaviorSubject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 describe('BackofficeComponent', () => {
-  let component: BackofficeComponent;
-  let fixture: ComponentFixture<BackofficeComponent>;
+    let component: BackofficeComponent;
+    let fixture: ComponentFixture<BackofficeComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [BackofficeComponent]
-    })
-    .compileComponents();
+    const mockUserService = {
+        currentUser: new BehaviorSubject({}),
+    };
 
-    fixture = TestBed.createComponent(BackofficeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    const mockActivatedRoute = {
+        snapshot: {
+            paramMap: {
+                get: (key: string) => (key === 'id' ? '42' : null),
+            },
+        },
+    };
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [BackofficeComponent],
+            providers: [
+                { provide: UserService, useValue: mockUserService },
+                { provide: ActivatedRoute, useValue: mockActivatedRoute },
+            ],
+        }).compileComponents();
+
+        fixture = TestBed.createComponent(BackofficeComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

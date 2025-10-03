@@ -20,7 +20,7 @@ import {
 } from '../../../models/user.interface';
 import { ReviewsComponent } from '../../../../reviews/feature/review/reviews.component';
 import { UserService } from '../../../data-access/user.service';
-import { single } from 'rxjs';
+import { single, tap } from 'rxjs';
 
 @Component({
     selector: 'app-my-space-form',
@@ -46,12 +46,11 @@ export class MySpaceComponent implements OnInit {
     private readonly userService = inject(UserService);
     private readonly destroyRef = inject(DestroyRef);
 
-    // recuperer current user and role
-    currentUser = signal<CurrentUserInterface>({
+    readonly currentUser = toSignal(this.userService.currentUser, {initialValue:{
         id: '',
         username: '',
         role: '',
-    });
+    }})
 
     formModelConfig: DynamicControl[] = [];
     orders: OrderInterface[] = [];
@@ -74,24 +73,13 @@ export class MySpaceComponent implements OnInit {
         }
     }
 
-    initializeCurrentUser() {
-        this.userService.currentUser.subscribe((response) => {
-            this.currentUser.set({
-                id: response.id,
-                username: response.username,
-                role: response.role,
-            });
-        });
-    }
-    effect = effect(() => console.log(this.orders, this.currentUser()));
-
     ngOnInit(): void {
-        this.initializeCurrentUser();
         this.orderService
             .getOrdersByUser(this.currentUser().id)
-            .pipe(takeUntilDestroyed(this.destroyRef))
+            .pipe(
+                tap((orders)=>this.orders = orders),
+                takeUntilDestroyed(this.destroyRef))
             .subscribe((orders) => {
-                this.orders = orders;
                 const orderFiltered = orders.filter(
                     (order) => new Date(order.showing.date) < new Date(),
                 );

@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     Component,
     computed,
     DestroyRef,
@@ -54,9 +53,15 @@ export class ShowingComponent implements OnInit {
     private readonly userService = inject(UserService);
     private readonly router = inject(Router);
 
-    private showings = toSignal(this.showingService.getAllShowing());
-    public cinemas = toSignal(this.cinemaService.getAllCinema());
-
+    private showings = toSignal(this.showingService.getAllShowing(), {
+        initialValue: [],
+    });
+    public cinemas = toSignal(this.cinemaService.getAllCinema(), {
+        initialValue: [],
+    });
+    readonly currentUser = toSignal(this.userService.currentUser, {
+        initialValue: { id: '', username: '', role: '' },
+    });
     public searchCinemaSignal = signal('');
     public searchMovieSignal = signal('');
     public searchAccessibleSeatNumber = signal(0);
@@ -65,7 +70,7 @@ export class ShowingComponent implements OnInit {
     public selectedIndex = signal(-1);
     public selectedShowingSignal = signal<ShowingInterface[]>([]);
     public selectSeatIndex = signal<number[]>([]);
-    readonly currentUser = toSignal(this.userService.currentUser);
+
     isLogin = computed(() => !!this.currentUser()?.id);
 
     public showingFilterByCinema = computed(() =>
@@ -75,7 +80,7 @@ export class ShowingComponent implements OnInit {
     );
 
     public showingFiltered = computed(() =>
-        this.showings()?.filter(
+        this.showingFilterByCinema()?.filter(
             (showing) =>
                 this.searchMovieSignal() === showing.movie?.id &&
                 seatAvailableNumber(showing.seat) >= this.wishSeatSignal() &&
@@ -102,6 +107,10 @@ export class ShowingComponent implements OnInit {
 
     onSearchMovie(movie: string) {
         this.searchMovieSignal.set(movie);
+        this.wishSeatSignal.set(0);
+        this.filterForm.patchValue({
+            seat: this.wishSeatSignal(),
+        });
     }
 
     onWishSeat(number: string) {
@@ -162,6 +171,7 @@ export class ShowingComponent implements OnInit {
                         total: this.totalCartSignal(),
                         showing: this.selectedShowingSignal()[0],
                         seat: seatArray,
+                        user: this.currentUser().id,
                     };
                     this.orderService.addOrder(newOrder).subscribe((order) =>
                         seatArray.forEach((seat) => {

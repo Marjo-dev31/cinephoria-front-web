@@ -18,9 +18,7 @@ export class HeaderComponent {
     isShowSideMenu = signal(false);
 
     isLogin = computed(() => !!this.currentUser()?.id);
-
-    effect = effect(() => console.log(this.currentUser(), this.isLogin()));
-
+    
     showSideMenu() {
         this.isShowSideMenu.update((value) => !value);
     }

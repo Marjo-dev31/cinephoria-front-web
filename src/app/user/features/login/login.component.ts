@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
             .subscribe({
                 next: (response) => {
                     if (response.role.name === 'user') {
-                        if (this.params()) {
+                        if (this.params().seat > 0) {
                             this.router.navigate(['reservation'], {
                                 queryParams: {
                                     data: this.params().data,

@@ -1,15 +1,22 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { UserService } from './user/data-access/user.service';
 
 describe('AppComponent', () => {
     let mockActivatedRoute;
+
+    const mockUserService = {
+        currentUser: new BehaviorSubject({})
+    }
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [AppComponent],
             providers: [
                 { provide: ActivatedRoute, useValue: mockActivatedRoute },
+                { provide: UserService, useValue: mockUserService },
             ],
         }).compileComponents();
     });
