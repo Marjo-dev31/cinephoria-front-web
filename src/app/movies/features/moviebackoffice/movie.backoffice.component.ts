@@ -93,7 +93,7 @@ export class MovieBackofficeComponent {
                     const newMovie: MovieCreateInterface = {
                         title: movie.title,
                         description: movie.description,
-                        minimun_Age: movie.minimun_Age,
+                        minimun_Age: +movie.minimun_Age,
                         genre: genre,
                         is_Favorite: movie.is_Favorite === 'oui' ? true : false,
                         image_Url: image_Url
