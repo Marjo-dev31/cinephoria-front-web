@@ -183,15 +183,40 @@
         </div>
     }
 }
-<div class="flex justify-end gap-6 m-10">
+<div class="flex flex-col justify-end gap-6 my-10 mx-auto w-1/2">
     <p class="text-3xl font-bold">
         Total : {{ totalCartSignal() | currency: 'EUR' }}
     </p>
-    <button
-        class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
-        [disabled]="totalCartSignal() === 0"
-        (click)="onSubmit()"
-    >
-        Valider ma réservation
-    </button>
+    <div class="text-sm flex flex-col justify-center">
+        <label
+            ><input
+                type="checkbox"
+                [checked]="isPDCChecked()"
+                class="p-2"
+            />J'accepte
+            <a [routerLink]="['politiquedeconfidentialite']" class="underline"
+                >politique de confidentialité</a
+            ></label
+        >
+        <label
+            ><input
+                type="checkbox"
+                [checked]="isCGVChecked()"
+                class="p-2"
+            />J'accepte
+            <a [routerLink]="['cgv']" class="underline"
+                >les conditions générales de vente</a
+            ></label
+        >
+
+        <button
+            class="w-1/2 rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
+            [disabled]="
+                (totalCartSignal() === 0) || isCGVChecked() || isPDCChecked()
+            "
+            (click)="onSubmit()"
+        >
+            Valider ma réservation
+        </button>
+    </div>
 </div>
