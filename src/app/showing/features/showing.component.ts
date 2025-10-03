@@ -12,6 +12,7 @@ import { CinemaService } from '../../shared/data-access/cinema.service';
 import {
     FormControl,
     FormGroup,
+    NgForm,
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
@@ -26,7 +27,7 @@ import { PaymentDialogComponent } from '../../shared/ui/payment.dialog.component
 import { SeatService } from '../../shared/data-access/seat.service';
 import { OrderService } from '../../order/data-access/order.service';
 import { upcomingDate } from '../../shared/util/upcomingDate';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { UserService } from '../../user/data-access/user.service';
 
@@ -39,6 +40,7 @@ import { UserService } from '../../user/data-access/user.service';
         CurrencyPipe,
         HoursDisplayPipe,
         NgStyle,
+        RouterLink,
     ],
     templateUrl: './showing.component.html',
 })
@@ -52,6 +54,9 @@ export class ShowingComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
     private readonly userService = inject(UserService);
     private readonly router = inject(Router);
+
+    isPDCChecked = signal(false);
+    isCGVChecked = signal(false);
 
     private showings = toSignal(this.showingService.getAllShowing(), {
         initialValue: [],
