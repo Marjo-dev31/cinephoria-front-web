@@ -40,7 +40,7 @@
             >
                 <option value="" disabled selected>--</option>
                 @for (showing of showingFilterByCinema(); track $index) {
-                    <option value="{{ showing.movie?.id }}">
+                    <option value="{{ showing.movie!.id }}">
                         {{ showing.movie?.title }}
                     </option>
                 }

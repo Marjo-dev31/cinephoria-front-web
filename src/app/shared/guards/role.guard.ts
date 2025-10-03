@@ -10,7 +10,6 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
         const role = userService.currentUser.value.role;
         
         const expectedRole = route.data['expectedRoles'];
-        console.log(role, expectedRole)
         if (expectedRole.indexOf(role) !== -1) {
             return true;
         }

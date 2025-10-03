@@ -2,16 +2,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateEmployeeComponent } from './create-employee.component';
 import { RoleService } from '../../../data-access/role.service';
 import { UserService } from '../../../data-access/user.service';
+import { of } from 'rxjs';
 
 describe('CreateEmployeeComponent', () => {
     let component: CreateEmployeeComponent;
     let fixture: ComponentFixture<CreateEmployeeComponent>;
 
     const mockRoleService = {
-        getAllRole: jest.fn(),
+        getAllRole: jest.fn().mockReturnValue(of([{}])),
     };
     const mockUserService = {
-        addEmployeeAccount: jest.fn(),
+        getAllEmployee: jest.fn().mockReturnValue(of([{}])),
     };
 
     beforeEach(async () => {
