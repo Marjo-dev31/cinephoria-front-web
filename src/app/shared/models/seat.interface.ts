@@ -1,4 +1,4 @@
-import { OrderInterface } from '../../order/models/oder.interface';
+import { OrderInterface } from '../../order/models/order.interface';
 
 export interface SeatCreatInterface {
     number: number;

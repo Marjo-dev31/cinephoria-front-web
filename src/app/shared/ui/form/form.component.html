@@ -93,7 +93,10 @@
         </div>
         <div class="flex justify-evenly mt-10">
             <button
+            type="reset"
                 (click)="onClose()"
+                (keyup.enter)="onClose()"
+        tabindex="0"
                 class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue cursor-pointer"
             >
                 Annuler

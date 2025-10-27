@@ -11,7 +11,7 @@
         <label class="w-72 p-2"
             >Cinéma :
             <select
-                class="bg-peach/20 border border-darkblue p-1 w-full"
+                class="bg-peach/20 border border-darkblue p-1 w-full capitalize"
                 formControlName="cinema"
                 #searchCinema
                 (input)="onSearchCinema(searchCinema.value)"
@@ -33,7 +33,7 @@
         <label class="w-72 p-2">
             Film:
             <select
-                class="bg-peach/20 border border-darkblue p-1 w-full"
+                class="bg-peach/20 border border-darkblue p-1 w-full capitalize"
                 formControlName="movie"
                 #searchMovie
                 (input)="onSearchMovie(searchMovie.value)"
@@ -101,6 +101,9 @@
                         $index
                     )
                 "
+                (keyup.enter)="onSelectShowing(showing.room.projectionQuality.price?.price || 0,
+                        $index)"
+                tabindex="0"
                 [ngStyle]="{
                     'background-color':
                         selectedIndex() === $index ? '#FFBF69' : '#F7F7F7',
@@ -122,7 +125,7 @@
                 </ul>
             </div>
         } @empty {
-            <p>Désolé aucune séance ne correspond à vos critères.</p>
+            <p class="text-center">Désolé aucune séance ne correspond à vos critères.</p>
         }
     </div>
 }
@@ -142,6 +145,8 @@
                             (seat.accessibleSeat &&
                                 searchAccessibleSeatNumber() <= 0)
                         "
+                        (keyup.enter)="onSelectSeat($index)"
+        tabindex="0"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +196,7 @@
         <label
             ><input
                 type="checkbox"
-                [checked]="isPDCChecked()"
+                [(ngModel)]="isPDCChecked"
                 class="p-2"
             />J'accepte
             <a [routerLink]="['politiquedeconfidentialite']" class="underline"
@@ -201,7 +206,7 @@
         <label
             ><input
                 type="checkbox"
-                [checked]="isCGVChecked()"
+                [(ngModel)]="isCGVChecked"
                 class="p-2"
             />J'accepte
             <a [routerLink]="['cgv']" class="underline"
@@ -212,9 +217,11 @@
         <button
             class="w-1/2 rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]:"
             [disabled]="
-                (totalCartSignal() === 0) || isCGVChecked() || isPDCChecked()
+                (totalCartSignal() === 0) || !isCGVChecked || !isPDCChecked
             "
             (click)="onSubmit()"
+            (keyup.enter)="onSubmit()"
+            tabindex="0"
         >
             Valider ma réservation
         </button>

@@ -1,12 +1,18 @@
 import { Component, input, signal } from '@angular/core';
 import { DatatableComponent } from '../../shared/ui/datatable/datatable.component';
-import { OrderInterface } from '../models/oder.interface';
+import { OrderInterface } from '../models/order.interface';
 
 @Component({
     selector: 'app-order',
     standalone: true,
     imports: [DatatableComponent],
-    templateUrl: './order.component.html',
+    template:` <app-datatable
+    [data]="orders()"
+    [displayColumns]="displayColumns()"
+    [isOrderData]="true"
+    class=""
+/>`
+,
 })
 export class OrderComponent {
     orders = input.required<OrderInterface[]>()

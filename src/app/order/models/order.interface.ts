@@ -1,6 +1,5 @@
 import { SeatInterface } from "../../shared/models/seat.interface";
 import { ShowingInterface } from "../../showing/models/showing.interface";
-import { UserInterface } from "../../user/models/user.interface";
 
 export interface OrderCreateInterface {
     quantity: number;

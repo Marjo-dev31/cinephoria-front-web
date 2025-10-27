@@ -10,7 +10,7 @@ Chart.register(...registerables);
     standalone: true,
     imports: [],
     template: `
-        <div class="flex flex-col justify-center items-center ml-96 w-2/3">
+        <div class="flex flex-col justify-center items-center mx-2 md:ml-96 md:w-2/3">
             <h2 class="text-center text-4xl font-bold font-roboto p-4">
                 Suivi des ventes
             </h2>
@@ -26,7 +26,6 @@ export class DashboardComponent implements OnInit {
     private readonly movieService = inject(MoviesService);
     private readonly destroyRef = inject(DestroyRef);
     
-
     chart!: Chart;
 
     ngOnInit(): void {
