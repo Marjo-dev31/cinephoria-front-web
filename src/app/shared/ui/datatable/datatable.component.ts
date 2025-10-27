@@ -5,7 +5,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { MovieInterface, MovieOnMongoInterface } from '../../../movies/models/movie.interface';
 import { ShowingInterface } from '../../../showing/models/showing.interface';
 import { ReviewInterface } from '../../../reviews/models/review.interface';
-import { OrderInterface } from '../../../order/models/oder.interface';
+import { OrderInterface } from '../../../order/models/order.interface';
 
 @Component({
     selector: 'app-datatable',

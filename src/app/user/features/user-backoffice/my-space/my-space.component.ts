@@ -13,26 +13,25 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { OrderService } from '../../../../order/data-access/order.service';
 import { ReviewCreateInterface } from '../../../../reviews/models/review.interface';
 import { ReviewService } from '../../../../reviews/data-access/reviews.service';
-import { OrderInterface } from '../../../../order/models/oder.interface';
+import { OrderInterface } from '../../../../order/models/order.interface';
 import {
-    CurrentUserInterface,
     UserInterface,
 } from '../../../models/user.interface';
 import { ReviewsComponent } from '../../../../reviews/feature/review/reviews.component';
 import { UserService } from '../../../data-access/user.service';
-import { single, tap } from 'rxjs';
+import { tap } from 'rxjs';
 
 @Component({
     selector: 'app-my-space-form',
     imports: [OrderComponent, ReviewsComponent],
     template: `<div
-        class="flex flex-col justify-center items-center m-auto w-2/3"
+        class="flex flex-col justify-center items-center m-auto md:w-2/3"
     >
         <h2 class="text-center text-4xl font-bold font-roboto p-4">
             Mon compte personnel
         </h2>
         <app-order [orders]="orders" class="w-full" />
-        <div class="my-4">
+        <div class="my-16">
             <app-reviews
                 [formModelConfig]="formModelConfig"
                 (outPutForm)="handleAddReview($event)"

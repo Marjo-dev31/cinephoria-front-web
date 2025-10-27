@@ -11,7 +11,8 @@ import { FormComponent } from './form/form.component';
                 <h2 class="text-center font-roboto font-bold text-4xl ">
                     Paiement
                 </h2>
-                <div class="absolute top-0 right-0" (click)="onClose()">
+                <div class="absolute top-0 right-0" (click)="onClose()" (keyup.enter)="onClose()"
+        tabindex="0">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

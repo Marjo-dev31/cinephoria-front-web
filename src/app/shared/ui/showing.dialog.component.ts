@@ -15,6 +15,8 @@ import { HoursDisplayPipe } from '../util/pipes/hoursDisplay.pipe';
                 <ul
                     class="border-2 border-darkblue rounded-lg w-fit *:px-2 hover:bg-peach"
                     (click)="onRedirectToResa(showing.id)"
+                    (keyup.enter)="onRedirectToResa(showing.id)"
+        tabindex="0"
                 >
                     <li class="pt-1">
                         Du {{ showing.date | date: 'dd/MM/yyyy' }}

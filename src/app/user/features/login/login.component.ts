@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormComponent } from '../../../shared/ui/form/form.component';
 import { DynamicControl } from '../../../shared/models/form.interface';
 import { Validators } from '@angular/forms';
@@ -37,7 +37,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
         </div>
     </div>`,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
     private readonly userService = inject(UserService);
     private readonly router = inject(Router);
     private readonly destroyRef = inject(DestroyRef);
@@ -72,8 +72,6 @@ export class LoginComponent implements OnInit {
                 error: (err) => this.errorMessage.set(err.message),
             });
     }
-
-    ngOnInit(): void {}
 
     readonly formModelConfig: DynamicControl[] = [
         {

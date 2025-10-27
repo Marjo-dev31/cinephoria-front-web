@@ -1,14 +1,17 @@
-<div class="flex flex-col justify-center items-center ml-96 w-2/3">
+<div class="flex flex-col justify-center items-center mx-2 md:ml-96 md:w-2/3">
     <h2 class="text-center text-4xl font-bold font-roboto p-4">Salles</h2>
     <app-datatable
         [data]="movies"
         [displayColumns]="displayColumns()"
         (onDeleteId)="handleDeleteMovie($event)"
         (onEditItem)="handleEditMovie($event)"
+        class="w-full"
     />
     <button
-        class="my-6 mx-auto w-48 bg-peach rounded-lg p-2 font-bold text-sm flex justify-between cursor-pointer"
+        class="my-6 mx-auto w-48 bg-peach rounded-lg p-2 font-bold text-sm flex justify-between items-center cursor-pointer"
         (click)="onDisplayForm()"
+        (keyup.entet)="onDisplayForm()"
+        tabindex="0"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +19,7 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="size-6"
+            class="size-10"
             [ngStyle]="{ display: isDisplayAddForm() ? 'none' : 'block' }"
         >
             <path
@@ -31,7 +34,7 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="size-6"
+            class="size-10"
             [ngStyle]="{ display: isDisplayAddForm() ? 'block' : 'none' }"
         >
             <path
@@ -44,23 +47,23 @@
         ajouter un film
     </button>
     @if (isDisplayAddForm()) {
-        <h3 class="font-bold text-2xl">Ajouter</h3>
+        <h3 class="font-bold text-2xl text-center">Ajouter</h3>
         <app-form
             [formModelConfig]="formModelConfig"
             (outputForm)="handleAddMovie($event)"
             (displayForm)="handleCloseForm($event)"
             (fileOutput)="handleUploadFile($event)"
-            class="w-96"
+            class="w-80 m-auto md:w-96"
         />
     }
     @if (isDiplayEditForm()) {
-        <h3 class="font-bold text-2xl">Modifier</h3>
+        <h3 class="font-bold text-2xl text-center">Modifier</h3>
         <app-form
             [formModelConfig]="formModelConfig"
             [currentItem]="currentMovieDisplayOnForm()"
             (outputForm)="handleUpdateMovie($event)"
             (displayForm)="handleCloseForm($event)"
-            class="w-96"
+            class="w-80 md:w-96 m-auto"
         />
     }
 </div>

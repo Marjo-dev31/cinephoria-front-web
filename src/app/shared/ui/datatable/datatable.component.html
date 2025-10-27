@@ -1,5 +1,5 @@
-<section class="border-collapse">
-    <cdk-table [dataSource]="dataSource()">
+<section class="border-collapse overflow-x-auto min-w-full">
+    <cdk-table [dataSource]="dataSource()" class="min-w-full">
         @for (column of displayColumns(); track column.key) {
             <ng-container [cdkColumnDef]="column.key" class="flex flex-col">
                 <cdk-header-cell
@@ -14,21 +14,23 @@
             </ng-container>
         }
 
-        <ng-container cdkColumnDef="action" class="flex flex-col">
+        <ng-container cdkColumnDef="action" class="flex flex-col w-fit">
             <cdk-header-cell
                 *cdkHeaderCellDef
-                class="flex-1 p-2 text-center font-semibold capitalize"
+                class="flex-1 p-2 text-center font-semibold capitalize w-fit"
             >
                 Action
             </cdk-header-cell>
             <cdk-cell
                 *cdkCellDef="let row"
-                class="flex-1 p-2 text-center flex justify-evenly"
+                class="flex-1 p-2 text-center flex flex-col md:flex-row justify-evenly"
             >
                 @if (isReviewData()) {
                     <button
                         class="cursor-pointer"
                         (click)="changeStatus(row.id)"
+                        (keyup.enter)="changeStatus(row.id)"
+        tabindex="0"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +63,8 @@
                         />
                     </svg>
                 } @else {
-                    <button class="cursor-pointer" (click)="deleteItem(row.id)">
+                    <button class="cursor-pointer" (click)="deleteItem(row.id)" (keyup.enter)="deleteItem(row.id)"
+        tabindex="0">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -77,7 +80,8 @@
                             />
                         </svg>
                     </button>
-                    <button (click)="editItem(row)" class="cursor-pointer">
+                    <button (click)="editItem(row)" (keyup.enter)="editItem(row)"
+        tabindex="0" class="cursor-pointer">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -99,11 +103,11 @@
 
         <cdk-header-row
             *cdkHeaderRowDef="columnKeys()"
-            class="flex bg-sage/30 border border-darkblue"
+            class="flex bg-sage/30 border border-darkblue min-w-fit"
         ></cdk-header-row>
         <cdk-row
             *cdkRowDef="let row; columns: columnKeys()"
-            class="flex border border-darkblue"
+            class="flex border border-darkblue min-w-fit"
         ></cdk-row>
     </cdk-table>
     @if (!dataSource().length) {

@@ -12,7 +12,9 @@ import { CinemaService } from '../../shared/data-access/cinema.service';
 import {
     FormControl,
     FormGroup,
+    FormsModule,
     NgForm,
+    NgModel,
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
@@ -41,6 +43,7 @@ import { UserService } from '../../user/data-access/user.service';
         HoursDisplayPipe,
         NgStyle,
         RouterLink,
+        FormsModule
     ],
     templateUrl: './showing.component.html',
 })
@@ -55,8 +58,8 @@ export class ShowingComponent implements OnInit {
     private readonly userService = inject(UserService);
     private readonly router = inject(Router);
 
-    isPDCChecked = signal(false);
-    isCGVChecked = signal(false);
+    isPDCChecked = false;
+    isCGVChecked = false;
 
     private showings = toSignal(this.showingService.getAllShowing(), {
         initialValue: [],
@@ -166,6 +169,7 @@ export class ShowingComponent implements OnInit {
             });
 
             dialogRef.closed.subscribe((resaIsValidate) => {
+                console.log(resaIsValidate)
                 if (resaIsValidate) {
                     const seatArray = this.selectSeatIndex().map(
                         (index) => this.selectedShowingSignal()[0].seat[index],

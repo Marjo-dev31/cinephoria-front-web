@@ -63,5 +63,6 @@ export class UserService {
             username: '',
             role: '',
         });
+        this.access_token.next('')
     }
 }
