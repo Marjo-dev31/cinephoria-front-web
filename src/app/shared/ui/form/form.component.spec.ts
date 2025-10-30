@@ -14,6 +14,7 @@ describe('FormComponent', () => {
 
     fixture = TestBed.createComponent(FormComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('formModelConfig', [])
     fixture.detectChanges();
   });
 

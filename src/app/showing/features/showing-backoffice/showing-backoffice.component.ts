@@ -97,7 +97,7 @@ export class ShowingBackofficeComponent implements OnInit {
                         room.number === +showing.room.split('/')[0],
                 );
                 const movie = movies.find(
-                    (movie) => movie.title === showing.movie,
+                    (movie) => movie.title.toLowerCase() === showing.movie?.toLowerCase(),
                 );
                 if (room && movie) {
                     const newShowing: CreateShowingInterface = {
@@ -136,7 +136,7 @@ export class ShowingBackofficeComponent implements OnInit {
                         room.number === +showing.room.split('/')[0],
                 );
                 const movie = movies.find(
-                    (movie) => movie.title === showing.movie,
+                    (movie) => movie.title.toLowerCase() === showing.movie?.toLowerCase(),
                 );
                 if (room && movie) {
                     const updatedShowing: UpdateShowingInterface = {

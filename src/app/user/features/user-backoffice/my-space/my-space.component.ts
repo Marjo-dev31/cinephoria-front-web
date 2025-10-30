@@ -11,7 +11,7 @@ import { DynamicControl } from '../../../../shared/models/form.interface';
 import { Validators } from '@angular/forms';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { OrderService } from '../../../../order/data-access/order.service';
-import { ReviewCreateInterface } from '../../../../reviews/models/review.interface';
+import { ReviewCreateInterface, ReviewFormInterface } from '../../../../reviews/models/review.interface';
 import { ReviewService } from '../../../../reviews/data-access/reviews.service';
 import { OrderInterface } from '../../../../order/models/order.interface';
 import {
@@ -54,16 +54,16 @@ export class MySpaceComponent implements OnInit {
     formModelConfig: DynamicControl[] = [];
     orders: OrderInterface[] = [];
 
-    handleAddReview(review: ReviewCreateInterface) {
+    handleAddReview(review: ReviewFormInterface) {
         const movieToReview = this.orders.find(
-            (order) => order.showing.movie?.title === review.movie.title,
+            (order) => order.showing.movie?.title.toLowerCase() === review.movie.toLowerCase(),
         )?.showing.movie;
         if (movieToReview) {
             const newReview: ReviewCreateInterface = {
                 description: review.description,
                 grade: review.grade,
                 movie: movieToReview,
-                user: this.currentUser() as unknown as UserInterface,
+                user: this.currentUser(),
             };
             this.reviewService
                 .addReview(newReview)
