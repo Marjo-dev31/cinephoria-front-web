@@ -98,14 +98,14 @@
                 (keyup.enter)="onClose()"
         tabindex="0"
                 class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach hover:text-darkblue p-2 border border-darkblue cursor-pointer"
-            >
+            data-e2e="cancel-form-btn">
                 Annuler
             </button>
             <button
                 type="submit"
                 [disabled]="formModel.invalid"
                 class="rounded-lg bg-darkblue text-seasalt shadow-sm shadow-peach hover:bg-peach cursor-pointer hover:text-darkblue p-2 border border-darkblue disabled:opacity-30 disabled:hover:not-[]: disabled:cursor-not-allowed"
-            >
+            data-e2e="submit-form-btn">
                 Valider
             </button>
         </div>
