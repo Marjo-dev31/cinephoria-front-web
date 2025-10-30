@@ -8,7 +8,7 @@
                 >
                     {{ column.label }}
                 </cdk-header-cell>
-                <cdk-cell *cdkCellDef="let row" class="flex-1 p-2 text-center">
+                <cdk-cell *cdkCellDef="let row" class="flex-1 p-2 text-center capitalize">
                     {{ column.accessor(row) }}
                 </cdk-cell>
             </ng-container>

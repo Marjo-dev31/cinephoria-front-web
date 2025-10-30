@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { FormComponent } from '../../../shared/ui/form/form.component';
 import { DynamicControl } from '../../../shared/models/form.interface';
-import { ReviewCreateInterface } from '../../models/review.interface';
+import { ReviewFormInterface } from '../../models/review.interface';
 
 @Component({
     selector: 'app-reviews',
@@ -20,9 +20,9 @@ import { ReviewCreateInterface } from '../../models/review.interface';
 })
 export class ReviewsComponent {
     formModelConfig = input.required<DynamicControl[]>();
-    outPutForm = output<ReviewCreateInterface>();
+    outPutForm = output<ReviewFormInterface>();
 
-    handleAddReview(review: ReviewCreateInterface){
+    handleAddReview(review: ReviewFormInterface){
      this.outPutForm.emit(review)
     }
 }

@@ -25,7 +25,7 @@ export class ReviewBackofficeComponent implements OnInit {
     handleStatus(id: string) {
         const reviewToUpdate = this.reviews.find((review) => review.id === id);
         if (reviewToUpdate) {
-            reviewToUpdate.is_Validated = !reviewToUpdate?.is_Validated;
+            reviewToUpdate.is_Validated = !reviewToUpdate.is_Validated;
             this.reviewService
                 .updateReviewStatus(reviewToUpdate)
                 .pipe(

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatatableComponent } from '../datatable.component';
+import { DatatableComponent } from './datatable.component';
 
 describe('DatatableComponent', () => {
   let component: DatatableComponent;
@@ -14,6 +14,8 @@ describe('DatatableComponent', () => {
 
     fixture = TestBed.createComponent(DatatableComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('displayColumns', [])
+    fixture.componentRef.setInput('data', [])
     fixture.detectChanges();
   });
 

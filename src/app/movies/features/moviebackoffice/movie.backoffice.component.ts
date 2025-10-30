@@ -87,7 +87,7 @@ export class MovieBackofficeComponent {
             )
             .subscribe((genres) => {
                 const genre = genres.find(
-                    (genre) => genre.title === movie.genre,
+                    (genre) => genre.title.toLowerCase() === movie.genre.toLowerCase(),
                 );
                 if (genre) {
                     const newMovie: MovieCreateInterface = {
@@ -122,7 +122,7 @@ export class MovieBackofficeComponent {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((genres) => {
                 const genre = genres.find(
-                    (genre) => genre.title === movie.genre,
+                    (genre) => genre.title.toLowerCase() === movie.genre.toLowerCase(),
                 );
                 if (genre) {
                     const updatedMovie: MovieUpdateInterface = {

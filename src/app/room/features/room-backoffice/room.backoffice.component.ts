@@ -106,7 +106,7 @@ export class RoomBackofficeComponent implements OnInit {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(([cinemas, qualities]) => {
                 const cinema = cinemas.find(
-                    (cinema) => cinema.city === room.cinema,
+                    (cinema) => cinema.city.toLowerCase() === room.cinema.toLowerCase(),
                 );
                 const quality = qualities.find(
                     (quality) => quality.quality === room.projectionQuality,
@@ -138,7 +138,7 @@ export class RoomBackofficeComponent implements OnInit {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(([cinemas, qualities]) => {
                 const cinema = cinemas.find(
-                    (cinema) => cinema.city === room.cinema,
+                    (cinema) => cinema.city.toLowerCase() === room.cinema.toLowerCase(),
                 );
                 const quality = qualities.find(
                     (quality) => quality.quality === room.projectionQuality,
