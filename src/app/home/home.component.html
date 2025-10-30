@@ -1,4 +1,4 @@
-<h1 class="font-roboto text-6xl text-center my-10">Cinéphoria</h1>
+<h1 class="font-roboto text-6xl text-center my-10" data-e2e="herotitle">Cinéphoria</h1>
 <div class="m-auto w-3/4 md:w-2/3">
     <div class="">
         <p>
@@ -36,9 +36,10 @@
         <app-carousel
             [items]="lastMovies()"
             class="flex flex-col items-center"
+            data-e2e="carousel"
         />
     } @else {
-        <div class="text-center">
+        <div class="text-center" data-e2e="empty-lastMovies">
             <p>Aucun nouveau film n’est sorti depuis mercredi dernier…</p>
             <p>
                 Mais ne manquez pas l’occasion de (re)découvrir les pépites

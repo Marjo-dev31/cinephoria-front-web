@@ -1,0 +1,408 @@
+[
+    {
+        "id": "1edabd3f-16e4-4c25-9ef5-84802212612d",
+        "title": "I Love Peru",
+        "description": "Lancé dans une course effrénée vers le succès, un comédien biscornu abandonne ses plus fidèles alliés. Seul face à lui-même, une vision troublante le percute. Direction le Pérou pour une aventure spirituelle.",
+        "image_Url": "iloveperu.jpg",
+        "minimun_Age": 13,
+        "is_Favorite": false,
+        "create_At": "2025-07-08T15:14:09.924Z",
+        "genre": {
+            "id": "e3d87fe4-94de-4f1a-b1c7-57e4230d2858",
+            "title": "comédie"
+        },
+        "reviews": [
+            {
+                "id": "117528d8-ed94-4cf0-a324-aa4a4ca7eb1f",
+                "description": "J’y suis allé sans attentes, et j’en suis ressorti émerveillé. Entre la musique, les traditions, et la narration émotive, ce film est une déclaration d’amour vibrante au Pérou.",
+                "grade": 5,
+                "is_Validated": true
+            },
+            {
+                "id": "7a3a0504-949a-4ab3-9dff-2ca5d35db2fd",
+                "description": "Certaines scènes sont magnifiques et très touchantes, mais le scénario aurait gagné à être plus solide. Cela dit, ça donne clairement envie de partir au Pérou.",
+                "grade": 3,
+                "is_Validated": true
+            },
+            {
+                "id": "9dda4945-bbf7-4168-8643-d4509b7dd753",
+                "description": "J’ai adoré les paysages à couper le souffle et la richesse culturelle mise en avant. On sent que le réalisateur est tombé amoureux du pays. Petit bémol : le rythme est un peu lent par moments.",
+                "grade": 4,
+                "is_Validated": true
+            }
+        ],
+        "showing": [
+            {
+                "id": "e85311a8-6624-41b2-b816-4fbf11a6cf7f",
+                "date": "2025-08-23T00:00:00.000Z",
+                "startAt": "20:00:00",
+                "endAt": "22:00:00",
+                "room": {
+                    "id": "53905187-7212-11f0-9e9c-36b09edbb3e4",
+                    "number": 3,
+                    "numberOfSeats": 18,
+                    "cinema": {
+                        "id": "1e26dce1-4b78-4288-9774-b5dbee604d3c",
+                        "city": "Toulouse"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "3171c515-f757-412b-9c52-63e18b2bc23f",
+        "title": "The Ugly Stepsister",
+        "description": "Dans un royaume où la beauté règne en maître, la jeune Elvira doit faire face à une redoutable concurrence pour espérer conquérir le cœur du prince. Parmi les nombreuses prétendantes, se trouve notamment sa demi-sœur, à l'insolente beauté. Pour parvenir à ses fins dans cette impitoyable course au physique parfait, Elvira devra recourir aux méthodes les plus extrêmes...",
+        "image_Url": "theuglystepsister.webp",
+        "minimun_Age": 16,
+        "is_Favorite": true,
+        "create_At": "2025-07-08T15:01:40.880Z",
+        "genre": {
+            "id": "d0059c72-889e-4394-b9b6-5f00a5dfce3d",
+            "title": "épouvante"
+        },
+        "reviews": [
+            {
+                "id": "08175ba8-2e9d-4bf6-a09b-a8c66483899b",
+                "description": "Un bien mauvais film, froid, sombre, ou on s'ennuie beaucoup, notamment à cause du mauvais jeu des actrices.",
+                "grade": 1,
+                "is_Validated": true
+            },
+            {
+                "id": "213ee51f-284c-441a-b55f-569442956c99",
+                "description": "Adapté de Cendrillon la réalisatrice Emilie Blichfeldt en déconstruit là le mythe et sa réalisation joue avec la part d'ombre du Conte et crée un Poème morbide aussi beau que dégoûtant !",
+                "grade": 4,
+                "is_Validated": true
+            },
+            {
+                "id": "215e49e5-f8ee-48e8-938f-73260f376a64",
+                "description": "Un bon petit film de bodyhorror. Ca n'atteint pas l'excès de The substance, mais cela demeure une vision originale de Cendrillon avec un nouveau point de vue. L'actrice est troublante, touchante, géniale. La photographie est très belle. La musique est parfois un peu décalée pour l'époque. Une belle trouvaille",
+                "grade": 3,
+                "is_Validated": true
+            },
+            {
+                "id": "4bf66c2c-d3ac-40ff-9518-5310a663a95e",
+                "description": "test",
+                "grade": 2,
+                "is_Validated": false
+            },
+            {
+                "id": "69c0eea4-29c7-4ccc-b73f-b99064a6f4ff",
+                "description": "C'est un conte de fée pour lequel il faut avoir le cœur bien accroché. L'actrice principale est excellente.",
+                "grade": 3,
+                "is_Validated": true
+            },
+            {
+                "id": "94235ffa-d726-4987-ac36-21a3f1762f28",
+                "description": "test2",
+                "grade": 3,
+                "is_Validated": false
+            },
+            {
+                "id": "ef17d644-f800-4400-8f7e-04df887aea45",
+                "description": "tes3",
+                "grade": 3,
+                "is_Validated": false
+            }
+        ],
+        "showing": [
+            {
+                "id": "46ab29d9-04ca-46d9-93aa-31d3dadb6bec",
+                "date": "2025-09-23T00:00:00.000Z",
+                "startAt": "09:00:00",
+                "endAt": "11:00:00",
+                "room": {
+                    "id": "ab244aaa-7211-11f0-9e9c-36b09edbb3e4",
+                    "number": 1,
+                    "numberOfSeats": 18,
+                    "cinema": {
+                        "id": "d4e029d7-7dc3-415b-90ab-759457a135fd",
+                        "city": "Bordeaux"
+                    }
+                }
+            },
+            {
+                "id": "b33b9987-db24-405c-a80e-f81b9f65677b",
+                "date": "2025-09-17T00:00:00.000Z",
+                "startAt": "20:32:00",
+                "endAt": "22:32:00",
+                "room": {
+                    "id": "ab244423-7211-11f0-9e9c-36b09edbb3e4",
+                    "number": 2,
+                    "numberOfSeats": 15,
+                    "cinema": {
+                        "id": "d2422c06-9b7d-43f7-b23e-31c1bbe7051c",
+                        "city": "Nantes"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "39970368-8007-45eb-9c6f-878137a03ed0",
+        "title": "L'accident de piano",
+        "description": "Magalie est une star du web hors sol et sans morale qui gagne des fortunes en postant des contenus choc sur les réseaux. Après un accident grave survenu sur le tournage d'une de ses vidéos, Magalie s'isole à la montagne avec Patrick, son assistant personnel, pour faire un break. Une journaliste détenant une information sensible commence à lui faire du chantage… La vie de Magalie bascule.",
+        "image_Url": "l'accidentdepiano.webp",
+        "minimun_Age": 13,
+        "is_Favorite": false,
+        "create_At": "2025-07-08T14:56:29.972Z",
+        "genre": {
+            "id": "e3d87fe4-94de-4f1a-b1c7-57e4230d2858",
+            "title": "comédie"
+        },
+        "reviews": [
+            {
+                "id": "4d9f3a4a-3770-47b9-8394-920c256f9b0b",
+                "description": "bon film",
+                "grade": 4,
+                "is_Validated": true
+            }
+        ],
+        "showing": [
+            {
+                "id": "0a85e8dd-2435-4422-ad2d-a30eaa1fe322",
+                "date": "2025-09-30T00:00:00.000Z",
+                "startAt": "20:00:00",
+                "endAt": "21:08:00",
+                "room": {
+                    "id": "53904b02-7212-11f0-9e9c-36b09edbb3e4",
+                    "number": 2,
+                    "numberOfSeats": 15,
+                    "cinema": {
+                        "id": "1e26dce1-4b78-4288-9774-b5dbee604d3c",
+                        "city": "Toulouse"
+                    }
+                }
+            },
+            {
+                "id": "2f52eeb9-0568-4f02-8e99-2b3bf8ab4bab",
+                "date": "2025-08-23T00:00:00.000Z",
+                "startAt": "20:00:00",
+                "endAt": "22:00:00",
+                "room": {
+                    "id": "ab244aaa-7211-11f0-9e9c-36b09edbb3e4",
+                    "number": 1,
+                    "numberOfSeats": 18,
+                    "cinema": {
+                        "id": "d4e029d7-7dc3-415b-90ab-759457a135fd",
+                        "city": "Bordeaux"
+                    }
+                }
+            },
+            {
+                "id": "526bdc98-d1d9-45ed-a8c1-83acbe031c74",
+                "date": "2025-10-04T00:00:00.000Z",
+                "startAt": "18:00:00",
+                "endAt": "20:00:00",
+                "room": {
+                    "id": "ab245cc7-7211-11f0-9e9c-36b09edbb3e4",
+                    "number": 1,
+                    "numberOfSeats": 15,
+                    "cinema": {
+                        "id": "5ea09a06-b33c-42f2-b16e-276823d7bf50",
+                        "city": "Charleroi"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "80db24b8-8066-4bd9-96ed-46e33d039d65",
+        "title": "avatar: la voie de l'eau",
+        "description": "Se déroulant plus d’une décennie après les événements relatés dans le premier film, AVATAR : LA VOIE DE L’EAU raconte l'histoire des membres de la famille Sully (Jake, Neytiri et leurs enfants), les épreuves auxquelles ils sont confrontés, les chemins qu’ils doivent emprunter pour se protéger les uns les autres, les batailles qu’ils doivent mener pour rester en vie et les tragédies qu'ils endurent.",
+        "image_Url": "avatar.jpg",
+        "minimun_Age": 3,
+        "is_Favorite": true,
+        "create_At": "2025-10-03T15:27:44.121Z",
+        "genre": {
+            "id": "856eed4e-246b-4199-a469-6f0572651296",
+            "title": "science-fiction"
+        },
+        "reviews": [],
+        "showing": [
+            {
+                "id": "0c73c019-64fc-4274-bb05-f9fd7a13b766",
+                "date": "2025-11-27T00:00:00.000Z",
+                "startAt": "14:30:00",
+                "endAt": "16:45:00",
+                "room": {
+                    "id": "ab245753-7211-11f0-9e9c-36b09edbb3e4",
+                    "number": 1,
+                    "numberOfSeats": 10,
+                    "cinema": {
+                        "id": "6387b0cc-eb2a-4067-9ed0-7d29b1d54d50",
+                        "city": "Lille"
+                    }
+                }
+            },
+            {
+                "id": "5b919293-7714-4a02-8e70-9865444f2b12",
+                "date": "2025-11-27T00:00:00.000Z",
+                "startAt": "14:30:00",
+                "endAt": "17:45:00",
+                "room": {
+                    "id": "ab245753-7211-11f0-9e9c-36b09edbb3e4",
+                    "number": 1,
+                    "numberOfSeats": 10,
+                    "cinema": {
+                        "id": "6387b0cc-eb2a-4067-9ed0-7d29b1d54d50",
+                        "city": "Lille"
+                    }
+                }
+            },
+            {
+                "id": "6bdf0f69-6cfe-442a-bb9b-10bae26b3d85",
+                "date": "2025-12-08T00:00:00.000Z",
+                "startAt": "21:15:00",
+                "endAt": "23:15:00",
+                "room": {
+                    "id": "53903d25-7212-11f0-9e9c-36b09edbb3e4",
+                    "number": 1,
+                    "numberOfSeats": 20,
+                    "cinema": {
+                        "id": "1e26dce1-4b78-4288-9774-b5dbee604d3c",
+                        "city": "Toulouse"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "9d29265c-e764-4285-af11-667e0e2e0058",
+        "title": "Other",
+        "description": "Lorsque sa mère meurt brutalement, Alice, qui avait rompu tous les ponts depuis des années, se voit contrainte de rentrer chez elle pour régler les démarches funéraires. Elle renoue, malgré elle, avec une jeunesse traumatique quand elle revient dans cette maison où rien, pas même sa chambre d’adolescente, ne semble avoir changé... si ce n’est cet étrange système de vidéosurveillance très sophistiqué, ou cette ombre qui rôde alentour. Le passé ne s’enfouit pas si facilement, surtout quand il est aussi monstrueux.",
+        "image_Url": "other.jpg",
+        "minimun_Age": 12,
+        "is_Favorite": false,
+        "create_At": "2025-07-11T08:21:00.211Z",
+        "genre": {
+            "id": "cd7b8cec-0cd1-4c9a-bcff-ae28ac03a458",
+            "title": "thriller"
+        },
+        "reviews": [],
+        "showing": [
+            {
+                "id": "63eb5f47-97c5-4023-8feb-7d0262ad1e44",
+                "date": "2025-09-29T00:00:00.000Z",
+                "startAt": "18:25:00",
+                "endAt": "20:25:00",
+                "room": {
+                    "id": "ab245753-7211-11f0-9e9c-36b09edbb3e4",
+                    "number": 1,
+                    "numberOfSeats": 10,
+                    "cinema": {
+                        "id": "6387b0cc-eb2a-4067-9ed0-7d29b1d54d50",
+                        "city": "Lille"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "c53f4a8f-b78e-4649-8d6f-affae391744b",
+        "title": "yoroi",
+        "description": "Après une dernière tournée éprouvante, Aurélien décide de s'installer au Japon avec sa femme Nanako, enceinte de leur premier enfant. Alors que le jeune couple emménage dans une maison traditionnelle dans la campagne japonaise, Aurélien découvre dans un puits une armure ancestrale qui va réveiller d'étranges créatures, les Yokaïs.",
+        "image_Url": "yoroi.jpg",
+        "minimun_Age": 12,
+        "is_Favorite": true,
+        "create_At": "2025-10-30T08:40:03.189Z",
+        "genre": {
+            "id": "266e0722-914a-4015-adf8-09bac7fcd9d7",
+            "title": "aventure"
+        },
+        "reviews": [],
+        "showing": [
+            {
+                "id": "bddccf24-82ca-4818-b56e-10157bd14574",
+                "date": "2025-12-04T00:00:00.000Z",
+                "startAt": "20:00:00",
+                "endAt": "22:00:00",
+                "room": {
+                    "id": "53904b02-7212-11f0-9e9c-36b09edbb3e4",
+                    "number": 2,
+                    "numberOfSeats": 15,
+                    "cinema": {
+                        "id": "1e26dce1-4b78-4288-9774-b5dbee604d3c",
+                        "city": "Toulouse"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "e3e4127d-6544-46e3-b6c1-a71f941a882d",
+        "title": "Jurassic World : Renaissance",
+        "description": "Cinq ans après JURASSIC WORLD : LE MONDE D’APRÈS, l’environnement de la planète s’est révélé hostile pour la plupart des dinosaures. Ceux qui subsistent vivent dans des zones équatoriales isolées, aux conditions proches de celles de leur ère d’origine. Parmi ces créatures terrifiantes, trois spécimens renferment peut-être la clé d’un remède capable de changer le destin de l’humanité.",
+        "image_Url": "jurassicworld.jpg",
+        "minimun_Age": 12,
+        "is_Favorite": false,
+        "create_At": "2025-07-10T08:58:53.731Z",
+        "genre": {
+            "id": "266e0722-914a-4015-adf8-09bac7fcd9d7",
+            "title": "aventure"
+        },
+        "reviews": [],
+        "showing": [
+            {
+                "id": "73cb39e1-7493-439b-a218-c281e7a7cff2",
+                "date": "2025-08-23T00:00:00.000Z",
+                "startAt": "20:00:00",
+                "endAt": "22:00:00",
+                "room": {
+                    "id": "ab244dfb-7211-11f0-9e9c-36b09edbb3e4",
+                    "number": 2,
+                    "numberOfSeats": 10,
+                    "cinema": {
+                        "id": "d4e029d7-7dc3-415b-90ab-759457a135fd",
+                        "city": "Bordeaux"
+                    }
+                }
+            },
+            {
+                "id": "8639ace7-5c77-4d55-96a9-23e9f21c3f56",
+                "date": "2025-09-29T00:00:00.000Z",
+                "startAt": "20:15:00",
+                "endAt": "22:15:00",
+                "room": {
+                    "id": "53903d25-7212-11f0-9e9c-36b09edbb3e4",
+                    "number": 1,
+                    "numberOfSeats": 20,
+                    "cinema": {
+                        "id": "1e26dce1-4b78-4288-9774-b5dbee604d3c",
+                        "city": "Toulouse"
+                    }
+                }
+            },
+            {
+                "id": "b4c8aac6-7e05-463e-9838-eecb42d108ee",
+                "date": "2025-10-05T00:00:00.000Z",
+                "startAt": "16:30:00",
+                "endAt": "18:45:00",
+                "room": {
+                    "id": "60eb5cba-e505-457e-ace3-747e809a0b3c",
+                    "number": 5,
+                    "numberOfSeats": 2,
+                    "cinema": {
+                        "id": "5ea09a06-b33c-42f2-b16e-276823d7bf50",
+                        "city": "Charleroi"
+                    }
+                }
+            },
+            {
+                "id": "b5052ccf-4078-4965-8b17-eb3653e289d4",
+                "date": "2025-10-18T00:00:00.000Z",
+                "startAt": "18:00:00",
+                "endAt": "20:30:00",
+                "room": {
+                    "id": "ab245466-7211-11f0-9e9c-36b09edbb3e4",
+                    "number": 2,
+                    "numberOfSeats": 20,
+                    "cinema": {
+                        "id": "f07c1ac1-2c8a-4711-b188-eaf1581a0782",
+                        "city": "Paris"
+                    }
+                }
+            }
+        ]
+    }
+]
