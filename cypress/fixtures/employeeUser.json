@@ -1,5 +1,13 @@
-[{
-  "id":"3",
-  "username":"employeeUser",
-  "role":"employee"
-}]
+{
+    "id": "ef8357b7-d6f0-48c3-b9b4-2c7f28df18ca",
+    "firstname": "nicolas",
+    "lastname": "riot",
+    "mail": "nico.riot@gmail.com",
+    "password": "$2b$10$.aAjebj9b0ol0axWeHJW5uQyr8UmHY0jf6Z6lKx.C6H/v9iR20xUe",
+    "username": "nicolasr",
+    "role": {
+        "id": "e515a4db-1444-4d0e-91e9-71f82b091fe5",
+        "name": "employee"
+    },
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVmODM1N2I3LWQ2ZjAtNDhjMy1iOWI0LTJjN2YyOGRmMThjYSIsIm1haWwiOiJuaWNvLnJpb3RAZ21haWwuY29tIiwicm9sZSI6eyJpZCI6ImU1MTVhNGRiLTE0NDQtNGQwZS05MWU5LTcxZjgyYjA5MWZlNSIsIm5hbWUiOiJlbXBsb3llZSJ9LCJpYXQiOjE3NjE4NDA4NDQsImV4cCI6MTc2MTg1MTY0NH0.UrTuwMsKX6lyWPQ3eMvdACjxWxhPyUmoAd-X0Jl0t-0"
+}
