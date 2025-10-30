@@ -9,7 +9,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "private": true,
   "dependencies": {
@@ -35,8 +38,10 @@
     "@angular/build": "^20.0.5",
     "@angular/cli": "^18.0.7",
     "@angular/compiler-cli": "^20.0.6",
+    "@cypress/schematic": "^4.1.4",
     "@types/jest": "^30.0.0",
     "angular-eslint": "20.1.1",
+    "cypress": "^15.5.0",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",

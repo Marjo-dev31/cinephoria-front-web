@@ -1,8 +1,13 @@
 <header>
     <nav
         class="flex justify-between md:justify-evenly center p-4 items-center border-b-2 border-b-peach"
+        data-e2e="header-nav"
     >
-        <a [routerLink]="['/']" class="md:basis-1/3 md:pl-10">
+        <a
+            [routerLink]="['/']"
+            class="md:basis-1/3 md:pl-10"
+            data-e2e="navbar-logo"
+        >
             <img
                 src="/logo.png"
                 alt="logo de Cinéphoria"
@@ -15,6 +20,7 @@
             (click)="showSideMenu()"
             (keyup.enter)="showSideMenu()"
             tabindex="0"
+            data-e2e="header-burgermenu"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -48,18 +54,27 @@
             </svg>
         </div>
         <!-- navbar -->
-        <div class="hidden md:flex basis-1/3 md:justify-center">
+        <div
+            class="hidden md:flex basis-1/3 md:justify-center"
+            data-e2e="navbar"
+        >
             <ul
                 class="flex w-full justify-evenly items-center gap-4 *:px-3 *:py-1"
             >
-                <li class="relative hover:cursor-pointer">
+                <li
+                    class="relative hover:cursor-pointer"
+                    data-e2e="navbar-movies"
+                >
                     <a
                         [routerLink]="['movies']"
                         class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
                         ><span class="relative z-10">Films</span></a
                     >
                 </li>
-                <li class="relative hover:cursor-pointer">
+                <li
+                    class="relative hover:cursor-pointer"
+                    data-e2e="navbar-reservation"
+                >
                     <a
                         [routerLink]="['reservation']"
                         class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
@@ -104,19 +119,25 @@
                             (keyup)="logout()"
                             tabindex="0"
                             class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
+                            data-e2e="navbar-logout"
                             ><span class="relative z-10">Déconnexion</span></a
                         >
                     </li>
                 } @else {
-                    <li class="relative hover:cursor-pointer">
+                    <li
+                        class="relative hover:cursor-pointer"
+                    >
                         <a
-                            [routerLink]="['login']"
+                            [routerLink]="['login']" data-e2e="navbar-login"
                             class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
                             ><span class="relative z-10">Se connecter</span></a
                         >
                     </li>
                 }
-                <li class="relative hover:cursor-pointer">
+                <li
+                    class="relative hover:cursor-pointer"
+                    data-e2e="navbar-contact"
+                >
                     <a
                         [routerLink]="['contact']"
                         class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
@@ -134,13 +155,14 @@
         tabindex="0"
         (keyup.enter)="showSideMenu()"
         role="button"
+        data-e2e="aside-burger"
     >
         <ul class="text-center space-y-6">
             <li>
-                <a [routerLink]="['movies']">Films</a>
+                <a [routerLink]="['movies']" data-e2e="aside-movies">Films</a>
             </li>
             <li class="relative">
-                <a [routerLink]="['reservation']">Réservation</a>
+                <a [routerLink]="['reservation']" data-e2e="aside-reservation">Réservation</a>
             </li>
             <!-- if connection or not -->
             @if (isLogin()) {
@@ -165,7 +187,7 @@
                 </li>
             } @else {
                 <li>
-                    <a [routerLink]="['login']">Se connecter</a>
+                    <a [routerLink]="['login']" data-e2e="aside-login">Se connecter</a>
                 </li>
             }
             <li><a [routerLink]="['contact']"></a>Contact</li>
