@@ -2,7 +2,7 @@ describe('Header', () => {
     beforeEach(() => {
         cy.visit('/');
         cy.intercept('GET', '/movies', {
-            fixture: './movies.json',
+            fixture: './get-movies.json',
         });
     });
 

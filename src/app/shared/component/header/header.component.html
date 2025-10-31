@@ -89,6 +89,7 @@
                             <a
                                 [routerLink]="['backoffice']"
                                 class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
+                                data-e2e="navbar-administration"
                                 ><span class="relative z-10"
                                     >Administration</span
                                 ></a
@@ -99,6 +100,7 @@
                             <a
                                 [routerLink]="['backoffice']"
                                 class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
+                                data-e2e="navbar-intranet"
                                 ><span class="relative z-10">Intranet</span></a
                             >
                         </li>
@@ -107,7 +109,7 @@
                             <a
                                 [routerLink]="['myspace']"
                                 class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
-                                ><span class="relative z-10"
+                                data-e2e="navbar-myspace"><span class="relative z-10"
                                     >Mon Espace</span
                                 ></a
                             >
@@ -124,11 +126,10 @@
                         >
                     </li>
                 } @else {
-                    <li
-                        class="relative hover:cursor-pointer"
-                    >
+                    <li class="relative hover:cursor-pointer">
                         <a
-                            [routerLink]="['login']" data-e2e="navbar-login"
+                            [routerLink]="['login']"
+                            data-e2e="navbar-login"
                             class="transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-peach before:transition-all before:duration-500 hover:before:right-0 hover:before:w-full"
                             ><span class="relative z-10">Se connecter</span></a
                         >
@@ -162,7 +163,9 @@
                 <a [routerLink]="['movies']" data-e2e="aside-movies">Films</a>
             </li>
             <li class="relative">
-                <a [routerLink]="['reservation']" data-e2e="aside-reservation">Réservation</a>
+                <a [routerLink]="['reservation']" data-e2e="aside-reservation"
+                    >Réservation</a
+                >
             </li>
             <!-- if connection or not -->
             @if (isLogin()) {
@@ -187,7 +190,9 @@
                 </li>
             } @else {
                 <li>
-                    <a [routerLink]="['login']" data-e2e="aside-login">Se connecter</a>
+                    <a [routerLink]="['login']" data-e2e="aside-login"
+                        >Se connecter</a
+                    >
                 </li>
             }
             <li><a [routerLink]="['contact']"></a>Contact</li>

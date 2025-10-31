@@ -1,3 +1,27 @@
+Cypress.Commands.add('login', (email, password) => {
+    cy.intercept('POST', '/user/login', {
+        fixture: 'employeeUser.json',
+    }).as('postLogin');
+
+    cy.visit('/login');
+    cy.get('form input').first().type(email);
+    cy.get('form input').eq(1).type(password);
+    cy.get('[data-e2e="submit-form-btn"]').click();
+
+    cy.wait('@postLogin');
+    cy.url().should('include', '/backoffice');
+});
+
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            login(email: string, password: string): Chainable<void>;
+        }
+    }
+}
+
+export {};
+
 // ***********************************************
 // This example namespace declaration will help
 // with Intellisense and code completion in your

@@ -6,7 +6,7 @@ export interface MovieCreateInterface {
     title: string;
     description: string;
     image_Url: string;
-    minimun_Age: number;
+    minimum_Age: number;
     genre: GenreInterface;
     is_Favorite: boolean;
 }
@@ -24,7 +24,7 @@ export interface MovieInterface extends MovieUpdateInterface {
 export interface MovieDisplayFormInterface {
     title: string;
     description: string;
-    minimun_Age: number;
+    minimum_Age: number;
     genre: string;
     is_Favorite: string;
     image_Url: string;

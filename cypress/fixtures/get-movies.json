@@ -4,7 +4,7 @@
         "title": "I Love Peru",
         "description": "Lancé dans une course effrénée vers le succès, un comédien biscornu abandonne ses plus fidèles alliés. Seul face à lui-même, une vision troublante le percute. Direction le Pérou pour une aventure spirituelle.",
         "image_Url": "iloveperu.jpg",
-        "minimun_Age": 13,
+        "minimum_Age": 13,
         "is_Favorite": false,
         "create_At": "2025-07-08T15:14:09.924Z",
         "genre": {
@@ -54,7 +54,7 @@
         "title": "The Ugly Stepsister",
         "description": "Dans un royaume où la beauté règne en maître, la jeune Elvira doit faire face à une redoutable concurrence pour espérer conquérir le cœur du prince. Parmi les nombreuses prétendantes, se trouve notamment sa demi-sœur, à l'insolente beauté. Pour parvenir à ses fins dans cette impitoyable course au physique parfait, Elvira devra recourir aux méthodes les plus extrêmes...",
         "image_Url": "theuglystepsister.webp",
-        "minimun_Age": 16,
+        "minimum_Age": 16,
         "is_Favorite": true,
         "create_At": "2025-07-08T15:01:40.880Z",
         "genre": {
@@ -143,7 +143,7 @@
         "title": "L'accident de piano",
         "description": "Magalie est une star du web hors sol et sans morale qui gagne des fortunes en postant des contenus choc sur les réseaux. Après un accident grave survenu sur le tournage d'une de ses vidéos, Magalie s'isole à la montagne avec Patrick, son assistant personnel, pour faire un break. Une journaliste détenant une information sensible commence à lui faire du chantage… La vie de Magalie bascule.",
         "image_Url": "l'accidentdepiano.webp",
-        "minimun_Age": 13,
+        "minimum_Age": 13,
         "is_Favorite": false,
         "create_At": "2025-07-08T14:56:29.972Z",
         "genre": {
@@ -211,7 +211,7 @@
         "title": "avatar: la voie de l'eau",
         "description": "Se déroulant plus d’une décennie après les événements relatés dans le premier film, AVATAR : LA VOIE DE L’EAU raconte l'histoire des membres de la famille Sully (Jake, Neytiri et leurs enfants), les épreuves auxquelles ils sont confrontés, les chemins qu’ils doivent emprunter pour se protéger les uns les autres, les batailles qu’ils doivent mener pour rester en vie et les tragédies qu'ils endurent.",
         "image_Url": "avatar.jpg",
-        "minimun_Age": 3,
+        "minimum_Age": 3,
         "is_Favorite": true,
         "create_At": "2025-10-03T15:27:44.121Z",
         "genre": {
@@ -272,7 +272,7 @@
         "title": "Other",
         "description": "Lorsque sa mère meurt brutalement, Alice, qui avait rompu tous les ponts depuis des années, se voit contrainte de rentrer chez elle pour régler les démarches funéraires. Elle renoue, malgré elle, avec une jeunesse traumatique quand elle revient dans cette maison où rien, pas même sa chambre d’adolescente, ne semble avoir changé... si ce n’est cet étrange système de vidéosurveillance très sophistiqué, ou cette ombre qui rôde alentour. Le passé ne s’enfouit pas si facilement, surtout quand il est aussi monstrueux.",
         "image_Url": "other.jpg",
-        "minimun_Age": 12,
+        "minimum_Age": 12,
         "is_Favorite": false,
         "create_At": "2025-07-11T08:21:00.211Z",
         "genre": {
@@ -303,7 +303,7 @@
         "title": "yoroi",
         "description": "Après une dernière tournée éprouvante, Aurélien décide de s'installer au Japon avec sa femme Nanako, enceinte de leur premier enfant. Alors que le jeune couple emménage dans une maison traditionnelle dans la campagne japonaise, Aurélien découvre dans un puits une armure ancestrale qui va réveiller d'étranges créatures, les Yokaïs.",
         "image_Url": "yoroi.jpg",
-        "minimun_Age": 12,
+        "minimum_Age": 12,
         "is_Favorite": true,
         "create_At": "2025-10-30T08:40:03.189Z",
         "genre": {
@@ -334,7 +334,7 @@
         "title": "Jurassic World : Renaissance",
         "description": "Cinq ans après JURASSIC WORLD : LE MONDE D’APRÈS, l’environnement de la planète s’est révélé hostile pour la plupart des dinosaures. Ceux qui subsistent vivent dans des zones équatoriales isolées, aux conditions proches de celles de leur ère d’origine. Parmi ces créatures terrifiantes, trois spécimens renferment peut-être la clé d’un remède capable de changer le destin de l’humanité.",
         "image_Url": "jurassicworld.jpg",
-        "minimun_Age": 12,
+        "minimum_Age": 12,
         "is_Favorite": false,
         "create_At": "2025-07-10T08:58:53.731Z",
         "genre": {

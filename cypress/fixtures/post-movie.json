@@ -1,0 +1,13 @@
+{
+    "id": "42d3871c-b355-4faa-8675-e723d2d7f994",
+    "title": "l'étranger",
+    "description": "Alger, 1938. Meursault, un jeune homme d’une trentaine d’années, modeste employé, enterre sa mère sans manifester la moindre émotion. Le lendemain, il entame une liaison avec Marie, une collègue de bureau. Puis il reprend sa vie de tous les jours. Mais son voisin, Raymond Sintès vient perturber son quotidien en l’entraînant dans des histoires louches jusqu’à un drame sur une plage, sous un soleil de plomb…\n",
+    "image_Url": "l'étranger.jpg",
+    "minimum_Age": 10,
+    "is_Favorite": false,
+    "create_At": "2025-10-31T10:02:02.683Z",
+    "genre": {
+        "id": "858e0185-d1d1-4865-ae01-e698edbd4ece",
+        "title": "drame"
+    }
+}

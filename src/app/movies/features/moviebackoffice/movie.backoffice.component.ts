@@ -35,7 +35,7 @@ export class MovieBackofficeComponent {
         id: '',
         title: '',
         description: '',
-        minimun_Age: 0,
+        minimum_Age: 0,
         image_Url: '',
         genre: { id: '', title: '' },
         reviews: [],
@@ -48,11 +48,11 @@ export class MovieBackofficeComponent {
         return {
             title: this.currentMovie().title,
             description: this.currentMovie().description,
-            minimun_Age: this.currentMovie().minimun_Age,
+            minimum_Age: this.currentMovie().minimum_Age,
             genre: this.currentMovie().genre.title,
             is_Favorite:
                 this.currentMovie().is_Favorite === true ? 'oui' : 'non',
-            image_Url: this.currentMovie().image_Url
+            image_Url: this.currentMovie().image_Url,
         };
     });
 
@@ -78,7 +78,7 @@ export class MovieBackofficeComponent {
     }
 
     handleAddMovie(movie: MovieDisplayFormInterface) {
-        const image_Url = movie.image_Url.split('\\').pop() || ''
+        const image_Url = movie.image_Url.split('\\').pop() || '';
         this.genreService
             .getAllGenre()
             .pipe(
@@ -87,16 +87,17 @@ export class MovieBackofficeComponent {
             )
             .subscribe((genres) => {
                 const genre = genres.find(
-                    (genre) => genre.title.toLowerCase() === movie.genre.toLowerCase(),
+                    (genre) =>
+                        genre.title.toLowerCase() === movie.genre.toLowerCase(),
                 );
                 if (genre) {
                     const newMovie: MovieCreateInterface = {
                         title: movie.title,
                         description: movie.description,
-                        minimun_Age: +movie.minimun_Age,
+                        minimum_Age: +movie.minimum_Age,
                         genre: genre,
                         is_Favorite: movie.is_Favorite === 'oui' ? true : false,
-                        image_Url: image_Url
+                        image_Url: image_Url,
                     };
                     this.movieService
                         .createMovie(newMovie)
@@ -105,14 +106,17 @@ export class MovieBackofficeComponent {
                             takeUntilDestroyed(this.destroyRef),
                         )
                         .subscribe();
+                    this.isDisplayAddForm.set(false);
                 }
             });
     }
 
-    handleUploadFile(file: File){
+    handleUploadFile(file: File) {
         const formData = new FormData();
         formData.append('file', file);
-        this.uploadService.addImage(formData).pipe(takeUntilDestroyed(this.destroyRef))
+        this.uploadService
+            .addImage(formData)
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe();
     }
 
@@ -122,17 +126,18 @@ export class MovieBackofficeComponent {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((genres) => {
                 const genre = genres.find(
-                    (genre) => genre.title.toLowerCase() === movie.genre.toLowerCase(),
+                    (genre) =>
+                        genre.title.toLowerCase() === movie.genre.toLowerCase(),
                 );
                 if (genre) {
                     const updatedMovie: MovieUpdateInterface = {
                         id: this.currentMovie().id,
                         title: movie.title,
                         description: movie.description,
-                        minimun_Age: movie.minimun_Age,
+                        minimum_Age: +movie.minimum_Age,
                         genre: genre,
                         is_Favorite: movie.is_Favorite === 'oui' ? true : false,
-                        image_Url: movie.image_Url
+                        image_Url: movie.image_Url,
                     };
                     this.movieService
                         .updateMovie(updatedMovie)
@@ -141,11 +146,12 @@ export class MovieBackofficeComponent {
                             takeUntilDestroyed(this.destroyRef),
                         )
                         .subscribe();
+                        this.isDiplayEditForm.set(false)
                 }
             });
     }
 
-    handleCloseForm(close: boolean){
+    handleCloseForm(close: boolean) {
         this.isDiplayEditForm.set(close);
         this.isDisplayAddForm.set(close);
     }
@@ -176,14 +182,14 @@ export class MovieBackofficeComponent {
                         controlKey: 'description',
                         formFieldType: 'textarea',
                         label: 'description',
-                        rows:10,
+                        rows: 10,
                         validators: [Validators.required],
                     },
                     {
-                        controlKey: 'minimun_Age',
+                        controlKey: 'minimum_Age',
                         formFieldType: 'input',
                         inputType: 'number',
-                        label: 'age minimun',
+                        label: 'age minimum',
                         min: 0,
                         validators: [
                             Validators.required,
@@ -209,8 +215,8 @@ export class MovieBackofficeComponent {
                     {
                         controlKey: 'image_Url',
                         formFieldType: 'input',
-                        inputType:'file',
-                        accept:'image/png, image/jpeg, image/jpg, image/webp',
+                        inputType: 'file',
+                        accept: 'image/png, image/jpeg, image/jpg, image/webp',
                         label: 'affiche',
                         defaultValue: '',
                         selectOptions: ['oui', 'non'],
@@ -232,9 +238,9 @@ export class MovieBackofficeComponent {
             accessor: (row: MovieInterface) => row.description,
         },
         {
-            key: 'minimun_Age',
-            label: 'age minimun',
-            accessor: (row: MovieInterface) => row.minimun_Age,
+            key: 'minimum_Age',
+            label: 'age minimum',
+            accessor: (row: MovieInterface) => row.minimum_Age,
         },
         {
             key: 'genre',

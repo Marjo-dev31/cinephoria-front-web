@@ -2,9 +2,9 @@
     "id": "ef8357b7-d6f0-48c3-b9b4-2c7f28df18ca",
     "firstname": "nicolas",
     "lastname": "riot",
-    "mail": "nico.riot@gmail.com",
+    "mail": "test.employee@gmail.com",
     "password": "$2b$10$.aAjebj9b0ol0axWeHJW5uQyr8UmHY0jf6Z6lKx.C6H/v9iR20xUe",
-    "username": "nicolasr",
+    "username": "nicolasR",
     "role": {
         "id": "e515a4db-1444-4d0e-91e9-71f82b091fe5",
         "name": "employee"

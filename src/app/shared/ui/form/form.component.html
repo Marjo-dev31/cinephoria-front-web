@@ -63,7 +63,7 @@
                 ) {
                     @if (control.controlKey === 'cardNumber') {
                         <span class="text-red-600 text-sm"
-                            >Veuillez respecter les indications : Le numéro de
+                            >Le numéro de
                             carte bancaire doit être composé de 16
                             chiffres</span
                         >
@@ -74,7 +74,7 @@
                         >
                     }
                     @if (control.controlKey === 'password') {
-                        <span class="text-red-600 text-sm"
+                        <span class="text-red-600 text-sm" data-e2e="pattern-pwd-msg"
                             >Le mot de passe doit être composé de 12 caractères
                             dont 1 chiffre, 1 majuscule, 1 minuscule et 1 des
                             caractères spéciaux</span
@@ -82,7 +82,7 @@
                     }
                 }
                 @if(formModel.get(control.controlKey)?.hasError('email')){
-                    <span class="text-red-600 text-sm">Le format de mail est incorrect</span>
+                    <span class="text-red-600 text-sm" data-e2e="pattern-email-msg">Le format de mail est incorrect</span>
                 }
                 @if( control.controlKey === 'confirmPassword'){
                     @if(formModel.get('password')?.value !== formModel.get('confirmPassword')?.value){
