@@ -1,5 +1,13 @@
 {
-  "id":"2",
-  "username":"adminUser",
-  "role":"admin"
+    "id": "2e580c4b-1c70-4be4-8921-4a3f8941dec4",
+    "firstname": "marjory",
+    "lastname": "bravo",
+    "mail": "test.admin@gmail.com",
+    "password": "$2b$10$cDeO6v2Lzqhx87Dg2XLEoOav9s/qOIvcXLdxE4kc8VA9vygQQY6Fu",
+    "username": "marjoB",
+    "role": {
+        "id": "70a38433-ab41-4b06-86dd-38624fc3e891",
+        "name": "admin"
+    },
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlNTgwYzRiLTFjNzAtNGJlNC04OTIxLTRhM2Y4OTQxZGVjNCIsIm1haWwiOiJtYXJqb3J5LmJyYXZvLmRldkBnbWFpbC5jb20iLCJyb2xlIjp7ImlkIjoiNzBhMzg0MzMtYWI0MS00YjA2LTg2ZGQtMzg2MjRmYzNlODkxIiwibmFtZSI6ImFkbWluIn0sImlhdCI6MTc2MTg5ODM2OSwiZXhwIjoxNzYxOTA5MTY5fQ.Vw9KFuLS8ykCNtapXVl0j07S2NOvpGm4vQdYsrAxl4I"
 }

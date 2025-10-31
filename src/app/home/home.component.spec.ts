@@ -18,7 +18,7 @@ describe('HomeComponent', () => {
                     {
                         title: 'test',
                         description: 'test',
-                        minimun_Age: 0,
+                        minimum_Age: 0,
                         is_Favorite: false,
                         imag_Url: 'test.jpg',
                     },

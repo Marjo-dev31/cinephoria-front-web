@@ -15,7 +15,7 @@ describe('MovieBackofficeComponent', () => {
                     id: '',
                     title: '',
                     description: '',
-                    minimun_Age: 0,
+                    minimum_Age: 0,
                     image_Url: '',
                     genre: { id: '', title: '' },
                     reviews: [],

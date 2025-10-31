@@ -1,5 +1,13 @@
 {
-  "id":"1",
-  "username":"currentUser",
-  "role":"user"
+    "id": "a44ae064-9c64-4c4a-acbb-c692b413ffda",
+    "firstname": "test",
+    "lastname": "test",
+    "mail": "test.user@gmail.com",
+    "password": "$2b$10$M5DIe7KRc6SRazxpbLj2Wus9Jo3/3puAaowmlYFbE4f.sXO3I1SuK",
+    "username": "userTest",
+    "role": {
+        "id": "dcb758c4-9d0b-11f0-ba6b-e6e2c8442dc8",
+        "name": "user"
+    },
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE0NGFlMDY0LTljNjQtNGM0YS1hY2JiLWM2OTJiNDEzZmZkYSIsIm1haWwiOiJmYngtaGVsbG8yMkB5b3BtYWlsLmNvbSIsInJvbGUiOnsiaWQiOiJkY2I3NThjNC05ZDBiLTExZjAtYmE2Yi1lNmUyYzg0NDJkYzgiLCJuYW1lIjoidXNlciJ9LCJpYXQiOjE3NjE4OTgzOTQsImV4cCI6MTc2MTkwOTE5NH0.b_o-niP2spkcpwEwapWsCQtrw-4X-uzTDZfl2xSLPgw"
 }

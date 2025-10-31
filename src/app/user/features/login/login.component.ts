@@ -18,7 +18,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
             se connecter
         </h2>
         @if (errorMessage()) {
-            <p class="text-red-600 text-center">{{ errorMessage() }}</p>
+            <p class="text-red-600 text-center" data-e2e="error-login-msg">{{ errorMessage() }}</p>
         }
         <app-form
             [formModelConfig]="formModelConfig"

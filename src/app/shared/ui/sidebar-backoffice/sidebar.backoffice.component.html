@@ -1,7 +1,7 @@
 <aside class="h-auto bg-peach absolute rounded-br-lg w-full md:w-96">
     <div class="relative">
         @if (isShowSidebar()) {
-            <h2 class="text-center text-3xl font-bold font-roboto p-4 capitalize">
+            <h2 class="text-center text-3xl font-bold font-roboto p-4 capitalize" data-e2e="welcome-message">
                 Bienvenue {{ currentUserName() }}
             </h2>
             <ul class="py-10">
@@ -10,7 +10,7 @@
                         <a
                             [routerLink]="['/backoffice' + sidebarItem.route]"
                             class="capitalize p-4"
-                            >{{ sidebarItem.label }}</a
+                           data-e2e="sidebarItem" >{{ sidebarItem.label }}</a
                         >
                     </li>
                 }

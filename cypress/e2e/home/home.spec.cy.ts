@@ -1,5 +1,4 @@
 describe('Home component', () => {
-    beforeEach(() => {});
     it('should visits the initial project page and display hero title', () => {
         cy.visit('/');
         cy.get('[data-e2e="herotitle"]').should('contain', 'Cinéphoria');
@@ -9,7 +8,7 @@ describe('Home component', () => {
         cy.clock(fixedDate.getTime());
         cy.visit('/');
         cy.intercept('GET', '/movies', {
-            fixture: './movies.json',
+            fixture: './get-movies.json',
         });
         cy.get('[data-e2e="carousel"]').should('exist');
         cy.get('[data-e2e="empty-lastMovies"]').should('not.exist');
