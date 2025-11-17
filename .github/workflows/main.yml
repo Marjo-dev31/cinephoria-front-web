@@ -43,16 +43,16 @@ jobs:
           start: npm start
           wait-on: http://localhost:4200
 
-      # 8. Build Angular app
+      # 7. Build Angular app
       - name: Build Angular
         run: npm run build --prod
 
-      # 9. Upload build as artifact (optional but useful)
+      # 8. Upload build as artifact
       - name: Upload dist
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist/
+          path: dist/cinephoria-front/browser
 
   deploy:
     needs: build-test
@@ -64,7 +64,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist
-          path: dist/
+          path: dist/cinephoria-front/browser
 
       # Configure AWS
       - name: Configure AWS credentials
@@ -77,9 +77,9 @@ jobs:
       # Deploy to S3
       - name: Deploy to S3
         run: |
-          aws s3 sync dist/ s3://${{ secrets.S3_BUCKET }} --delete
+          aws s3 sync dist/cinephoria-front/browser s3://${{ secrets.S3_BUCKET }} --delete
 
-      # Optional: Invalidate CloudFront cache
+      # Invalidate CloudFront cache
       - name: Invalidate CloudFront
         run: |
           aws cloudfront create-invalidation \
