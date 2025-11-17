@@ -81,6 +81,12 @@ export class ShowingComponent implements OnInit {
 
     isLogin = computed(() => !!this.currentUser()?.id);
 
+    public movieFilteredCinema = computed(()=>
+  { const movies = this.showingFilterByCinema().map((showing)=> showing.movie)
+    return Array.from(new Map(movies.map((movie)=> [movie?.id, movie])).values())
+}
+    )
+
     public showingFilterByCinema = computed(() =>
         this.showings()?.filter(
             (showing) => showing.room.cinema.id === this.searchCinemaSignal(),

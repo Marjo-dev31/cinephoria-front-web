@@ -60,7 +60,7 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ],
-              "optimization": false,
+              "optimization": true,
               "extractLicenses": false,
               "sourceMap": true
             }

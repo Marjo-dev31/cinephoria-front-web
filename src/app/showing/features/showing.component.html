@@ -39,9 +39,9 @@
                 (input)="onSearchMovie(searchMovie.value)"
             >
                 <option value="" disabled selected>--</option>
-                @for (showing of showingFilterByCinema(); track $index) {
-                    <option value="{{ showing.movie!.id }}">
-                        {{ showing.movie?.title }}
+                @for (movie of movieFilteredCinema(); track $index) {
+                    <option value="{{ movie!.id }}">
+                        {{ movie?.title }}
                     </option>
                 }
             </select>
