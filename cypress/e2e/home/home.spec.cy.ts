@@ -4,12 +4,12 @@ describe('Home component', () => {
         cy.get('[data-e2e="herotitle"]').should('contain', 'Cinéphoria');
     });
     it('should display carousel if at least one movie was created since last wednesday', () => {
-        const fixedDate = new Date(2025, 9, 30);
+        const fixedDate = new Date(2025, 7, 10);
         cy.clock(fixedDate.getTime());
-        cy.visit('/');
         cy.intercept('GET', '/movies', {
             fixture: './get-movies.json',
         });
+        cy.visit('/');
         cy.get('[data-e2e="carousel"]').should('exist');
         cy.get('[data-e2e="empty-lastMovies"]').should('not.exist');
     });

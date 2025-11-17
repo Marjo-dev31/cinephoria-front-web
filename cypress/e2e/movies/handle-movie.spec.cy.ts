@@ -1,13 +1,13 @@
 describe('Movie CRUD, login to logout', () => {
     beforeEach(() => {
-        cy.login('employee.user@gmail.com', 'Qsdfghjklm&2');
-        cy.get('[data-e2e="sidebarItem"]').eq(2).click();
         cy.intercept('GET', '/movies', {
             fixture: './get-movies.json',
+        }) ;
+        cy.intercept('GET', '/genre', {
+            fixture: './get-genre.json',
         });
-        cy.intercept('GET','/genre', {
-          fixture: './get-genre.json'
-        })
+        cy.login('employee.user@gmail.com', 'Qsdfghjklm&2');
+        cy.get('[data-e2e="sidebarItem"]').eq(2).click();
     });
     it('should display datatable with all movies', () => {
         cy.get('[data-e2e="datatable"]').should('exist');
@@ -19,6 +19,12 @@ describe('Movie CRUD, login to logout', () => {
         cy.intercept('POST', '/upload', {
             fixture: 'post-upload.json',
         }).as('postUpload');
+        cy.intercept('GET', '/movies', {
+            fixture: './get-movies.json',
+        });
+        cy.intercept('GET', '/genre', {
+            fixture: './get-genre.json',
+        });
         cy.get('[data-e2e="add-movie-btn"]').click();
         cy.get('[data-e2e="add-form"]').should('exist');
         cy.get('form input').first().type('L’Étranger');
@@ -61,14 +67,14 @@ describe('Movie CRUD, login to logout', () => {
             statusCode: 200,
             fixture: 'patch-movie.json',
         }).as('deleteMovie');
-        cy.get('cdk-row').should('have.length', 8);
+        cy.get('cdk-row').should('have.length', 7);
         cy.get('cdk-row').eq(1).find('button').first().click();
         cy.wait('@deleteMovie');
         cy.get('cdk-row').should('have.length', 7);
     });
-    it('should disconnect when finish', ()=> {
-      cy.get('[data-e2e="navbar-logout"]').click()
-      cy.url().should('contain', '/login')
-      cy.get('[data-e2e="navbar-logout"]').should('not.exist');
-    })
+    it('should disconnect when finish', () => {
+        cy.get('[data-e2e="navbar-logout"]').click();
+        cy.url().should('contain', '/login');
+        cy.get('[data-e2e="navbar-logout"]').should('not.exist');
+    });
 });

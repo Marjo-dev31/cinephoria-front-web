@@ -31,24 +31,24 @@ describe('Header', () => {
         cy.get('[data-e2e="navbar-login"]').click();
         cy.url().should('include', '/login');
     });
-    it('should display burgermenu on mobile', () => {
+    it('should display burgermenu on mobile', async () => {
         cy.viewport('iphone-6');
         cy.get('[data-e2e="header-burgermenu"]').should('exist').click();
         cy.get('[data-e2e="aside-burger"]').should('be.visible');
     });
-    it('should navigate on "Se connecter" when click on', () => {
+    it('should navigate on "Se connecter" when click on', async () => {
         cy.viewport('iphone-6');
         cy.get('[data-e2e="header-burgermenu"]').should('exist').click();
         cy.get('[data-e2e="aside-login"]').click();
         cy.url().should('include', '/login');
     });
-    it('should navigate on "Films" when click on', () => {
+    it('should navigate on "Films" when click on', async () => {
         cy.viewport('iphone-6');
         cy.get('[data-e2e="header-burgermenu"]').should('exist').click();
         cy.get('[data-e2e="aside-movies"]').click();
         cy.url().should('include', '/movies');
     });
-    it('should navigate on "Réservation" when click on', () => {
+    it('should navigate on "Réservation" when click on', async () => {
         cy.viewport('iphone-6');
         cy.get('[data-e2e="header-burgermenu"]').should('exist').click();
         cy.get('[data-e2e="aside-reservation"]').click();
