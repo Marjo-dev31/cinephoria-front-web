@@ -2,15 +2,21 @@ describe('Movie CRUD, login to logout', () => {
     beforeEach(() => {
         cy.intercept('GET', '/movies', {
             fixture: './get-movies.json',
-        }) ;
+        });
         cy.intercept('GET', '/genre', {
             fixture: './get-genre.json',
         });
         cy.login('employee.user@gmail.com', 'Qsdfghjklm&2');
+        cy.get('[data-e2e="sidebarItem"]').should('exist');
         cy.get('[data-e2e="sidebarItem"]').eq(2).click();
     });
     it('should display datatable with all movies', () => {
-        cy.get('[data-e2e="datatable"]').should('exist');
+        cy.get('[data-e2e="datatable"]')
+            .should('exist')
+            .within(() => {
+                cy.get('cdk-row').should('have.length', 7);
+                cy.contains('Other').should('be.visible');
+            });
     });
     it('should display form and add movie on validation', () => {
         cy.intercept('POST', '/movies', {
@@ -43,9 +49,11 @@ describe('Movie CRUD, login to logout', () => {
         cy.wait('@postMovie');
         cy.wait('@postUpload');
         cy.get('[data-e2e="add-form"]').should('not.exist');
+        cy.get('[data-e2e="datatable"]')
+            .should('exist')
     });
     it('should display form and update movie on validation', () => {
-        cy.intercept('PATCH', '/movies/*', {
+        cy.intercept('PATCH', '**/movies/*', {
             statusCode: 200,
             fixture: 'patch-movie.json',
         }).as('patchMovie');

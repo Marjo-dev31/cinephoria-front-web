@@ -45,7 +45,7 @@ jobs:
 
       # 7. Build Angular app
       - name: Build Angular
-        run: npm run build --prod
+        run: npm run build -- --configuration production
 
       # 8. Upload build as artifact
       - name: Upload dist
