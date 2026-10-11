@@ -1,0 +1,30 @@
+[
+    {
+        "id": "09af2edf-0c2d-4563-b6cf-6f8c288a6553",
+        "title": "romance"
+    },
+    {
+        "id": "266e0722-914a-4015-adf8-09bac7fcd9d7",
+        "title": "aventure"
+    },
+    {
+        "id": "856eed4e-246b-4199-a469-6f0572651296",
+        "title": "science-fiction"
+    },
+    {
+        "id": "858e0185-d1d1-4865-ae01-e698edbd4ece",
+        "title": "drame"
+    },
+    {
+        "id": "cd7b8cec-0cd1-4c9a-bcff-ae28ac03a458",
+        "title": "thriller"
+    },
+    {
+        "id": "d0059c72-889e-4394-b9b6-5f00a5dfce3d",
+        "title": "épouvante"
+    },
+    {
+        "id": "e3d87fe4-94de-4f1a-b1c7-57e4230d2858",
+        "title": "comédie"
+    }
+]

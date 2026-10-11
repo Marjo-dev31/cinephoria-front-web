@@ -33,6 +33,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.production.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -48,7 +54,13 @@
               "outputHashing": "all"
             },
             "development": {
-              "optimization": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ],
+              "optimization": true,
               "extractLicenses": false,
               "sourceMap": true
             }
@@ -98,6 +110,37 @@
               "src/**/*.html"
             ]
           }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "cinephoria-front:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "cinephoria-front:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "cinephoria-front:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "cinephoria-front:serve:production"
+            }
+          }
         }
       }
     }
@@ -130,7 +173,9 @@
   },
   "cli": {
     "schematicCollections": [
-      "angular-eslint"
+      "@cypress/schematic",
+      "angular-eslint",
+      "@schematics/angular"
     ]
   }
 }
