@@ -2,7 +2,7 @@ name: CI/CD Angular
 
 on:
   push:
-    branches: [ feature/testcicd ]
+    branches: [ main ]
 
 jobs:
   build-test:
