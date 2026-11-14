@@ -1,4 +1,11 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    ElementRef,
+    inject,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { map } from 'rxjs';
@@ -19,7 +26,7 @@ Chart.register(...registerables);
             <div
                 class="w-3/4 h-96 border-2 border-primary rounded-lg p-4 mb-10"
             >
-                <canvas id="myChart">{{ chart }}</canvas>
+                <canvas #chartCanvas></canvas>
             </div>
         </div>
     `,
@@ -28,7 +35,10 @@ export class DashboardComponent implements OnInit {
     private readonly movieService = inject(MoviesService);
     private readonly destroyRef = inject(DestroyRef);
 
-    chart!: Chart;
+    @ViewChild('chartCanvas', { static: true })
+    chartCanvas!: ElementRef<HTMLCanvasElement>;
+
+    chart?: Chart;
 
     ngOnInit(): void {
         this.movieService
@@ -80,7 +90,8 @@ export class DashboardComponent implements OnInit {
                         },
                     },
                 };
-                this.chart = new Chart('myChart', config);
+                this.chart?.destroy();
+                this.chart = new Chart(this.chartCanvas.nativeElement, config);
             });
     }
 }
