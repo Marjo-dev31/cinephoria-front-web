@@ -32,8 +32,8 @@ export class HomeComponent {
         lastWednesday.setHours(0, 0, 0, 0);
 
         const recentMovies = movies.filter((movie) => {
-            const createAtDate = new Date(movie.create_At);
-            return createAtDate >= lastWednesday ? movie : null;
+            const createdAtDate = new Date(movie.created_At);
+            return createdAtDate >= lastWednesday ? movie : null;
         });
         return recentMovies;
     }

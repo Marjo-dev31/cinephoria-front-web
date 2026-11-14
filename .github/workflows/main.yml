@@ -40,8 +40,9 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          start: npm start
-          wait-on: http://localhost:4200
+          start: npm run start:ci
+          wait-on: http://127.0.0.1:4200
+          wait-on-timeout: 180
 
       # 7. Build Angular app
       - name: Build Angular

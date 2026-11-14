@@ -1,8 +1,8 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { MoviesService } from '../../../data-access/movies.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { map } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MoviesService } from '../../../data-access/movies.service';
 Chart.register(...registerables);
 
 @Component({
@@ -10,7 +10,9 @@ Chart.register(...registerables);
     standalone: true,
     imports: [],
     template: `
-        <div class="flex flex-col justify-center items-center mx-2 md:ml-96 md:w-2/3">
+        <div
+            class="flex flex-col justify-center items-center mx-2 md:ml-96 md:w-2/3"
+        >
             <h2 class="text-center text-4xl font-bold font-roboto p-4">
                 Suivi des ventes
             </h2>
@@ -25,7 +27,7 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit {
     private readonly movieService = inject(MoviesService);
     private readonly destroyRef = inject(DestroyRef);
-    
+
     chart!: Chart;
 
     ngOnInit(): void {
@@ -37,14 +39,17 @@ export class DashboardComponent implements OnInit {
                         const now = new Date();
                         const sevenDaysAgo = new Date();
                         sevenDaysAgo.setDate(now.getDate() - 7);
-                        return new Date(movie.create_At) >= sevenDaysAgo;
+                        return new Date(movie.created_At) >= sevenDaysAgo;
                     }),
                 ),
-                takeUntilDestroyed(this.destroyRef)
+                takeUntilDestroyed(this.destroyRef),
             )
             .subscribe((moviesFiltered) => {
-                const salesByMovie = moviesFiltered.reduce<Record<string, number>>((acc, movie) => {
-                    acc[movie.title] = (acc[movie.title] || 0) + movie.nbOfSales;
+                const salesByMovie = moviesFiltered.reduce<
+                    Record<string, number>
+                >((acc, movie) => {
+                    acc[movie.title] =
+                        (acc[movie.title] || 0) + movie.nbOfSales;
                     return acc;
                 }, {});
                 const config: ChartConfiguration = {
