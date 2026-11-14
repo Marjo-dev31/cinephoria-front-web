@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it } from '@jest/globals';
 
-import { HeaderComponent } from './header.component';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { UserService } from '../../../user/data-access/user.service';
+import { HeaderComponent } from './header.component';
 
 let mockActivatedRoute;
 
@@ -12,14 +13,12 @@ describe('HeaderComponent', () => {
     let fixture: ComponentFixture<HeaderComponent>;
 
     const mockUserService = {
-            currentUser: new BehaviorSubject<any>({
-                id: 1,
-                username: 'testUser',
-                role: 'admin',
-            }),
-        };
-
-
+        currentUser: new BehaviorSubject<any>({
+            id: 1,
+            username: 'testUser',
+            role: 'admin',
+        }),
+    };
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({

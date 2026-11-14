@@ -1,28 +1,30 @@
-import { Component, DestroyRef, inject} from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { FormComponent } from '../../../shared/ui/form/form.component';
-import { UserService } from '../../data-access/user.service';
-import { RoleService } from '../../data-access/role.service';
-import { UserCreateInterface } from '../../models/user.interface';
-import { RoleInterface } from '../../models/role.interface';
+import { Validators } from '@angular/forms';
 import { DynamicControl } from '../../../shared/models/form.interface';
+import { FormComponent } from '../../../shared/ui/form/form.component';
+import { RoleService } from '../../data-access/role.service';
+import { UserService } from '../../data-access/user.service';
+import { RoleInterface } from '../../models/role.interface';
+import { UserCreateInterface } from '../../models/user.interface';
 
 @Component({
     selector: 'app-signup',
     standalone: true,
     imports: [FormComponent],
-    template: `<div class="flex flex-col justify-center items-center m-auto w-2/3">
-    <h2 class="text-center text-4xl font-bold font-roboto p-4 capitalize">
-        créer un compte
-    </h2>
-    <app-form
-        [formModelConfig]="formModelConfig"
-        (outputForm)="handleAddAccount($event)"
-        class="w-96"
+    template: `<div
+        class="flex flex-col justify-center items-center m-auto w-2/3"
     >
-    </app-form>
-</div>`,
+        <h2 class="text-center text-4xl font-bold font-roboto p-4 capitalize">
+            créer un compte
+        </h2>
+        <app-form
+            [formModelConfig]="formModelConfig"
+            (outputForm)="handleAddAccount($event)"
+            class="w-96"
+        >
+        </app-form>
+    </div>`,
 })
 export class SignUpComponent {
     private readonly userService = inject(UserService);
@@ -34,7 +36,7 @@ export class SignUpComponent {
     });
 
     handleAddAccount(user: UserCreateInterface) {
-        const roleUser= this.allRoles().find(
+        const roleUser = this.allRoles().find(
             (role: RoleInterface) => role.name === 'user',
         );
         const newUser: UserCreateInterface = {
@@ -49,7 +51,6 @@ export class SignUpComponent {
             .addAccount(newUser)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe();
-
     }
 
     readonly formModelConfig: DynamicControl[] = [

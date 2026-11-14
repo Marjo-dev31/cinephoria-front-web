@@ -1,5 +1,11 @@
 import { NgStyle } from '@angular/common';
 import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Validators } from '@angular/forms';
+import { tap } from 'rxjs';
+import { GenreService } from '../../../shared/data-access/genre.service';
+import { UploadService } from '../../../shared/data-access/upload.service';
+import { DynamicControl } from '../../../shared/models/form.interface';
 import { DatatableComponent } from '../../../shared/ui/datatable/datatable.component';
 import { FormComponent } from '../../../shared/ui/form/form.component';
 import { MoviesService } from '../../data-access/movies.service';
@@ -9,12 +15,6 @@ import {
     MovieInterface,
     MovieUpdateInterface,
 } from '../../models/movie.interface';
-import { DynamicControl } from '../../../shared/models/form.interface';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { tap } from 'rxjs';
-import { GenreService } from '../../../shared/data-access/genre.service';
-import { Validators } from '@angular/forms';
-import { UploadService } from '../../../shared/data-access/upload.service';
 
 @Component({
     selector: 'app-moviebackoffice',
@@ -146,7 +146,7 @@ export class MovieBackofficeComponent {
                             takeUntilDestroyed(this.destroyRef),
                         )
                         .subscribe();
-                        this.isDiplayEditForm.set(false)
+                    this.isDiplayEditForm.set(false);
                 }
             });
     }

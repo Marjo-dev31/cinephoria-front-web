@@ -5,7 +5,7 @@ import { ReviewInterface } from "../../reviews/models/review.interface";
   name:'averagePipe'
 })
 export class AveragePipe implements PipeTransform {
-  transform(reviews: ReviewInterface[]): number {
+  transform(reviews: Pick<ReviewInterface, 'grade'>[]): number {
     if(reviews.length === 0) {
       return 0
     }

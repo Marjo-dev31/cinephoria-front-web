@@ -1,13 +1,8 @@
-import {
-    Component,
-    computed,
-    inject,
-    Signal,
-} from '@angular/core';
-import { CarouselComponent } from '../shared/ui/carrousel.component';
-import { MovieInterface, } from '../movies/models/movie.interface';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MoviesService } from '../movies/data-access/movies.service';
+import { MovieInterface } from '../movies/models/movie.interface';
+import { CarouselComponent } from '../shared/ui/carrousel.component';
 
 @Component({
     selector: 'app-home',
@@ -38,7 +33,7 @@ export class HomeComponent {
 
         const recentMovies = movies.filter((movie) => {
             const createAtDate = new Date(movie.create_At);
-           return createAtDate >= lastWednesday ? movie : null;
+            return createAtDate >= lastWednesday ? movie : null;
         });
         return recentMovies;
     }

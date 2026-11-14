@@ -1,3 +1,5 @@
+import { Dialog } from '@angular/cdk/dialog';
+import { CurrencyPipe, DatePipe, NgStyle } from '@angular/common';
 import {
     Component,
     computed,
@@ -6,32 +8,28 @@ import {
     OnInit,
     signal,
 } from '@angular/core';
-import { ShowingService } from '../data-access/showing.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { CinemaService } from '../../shared/data-access/cinema.service';
 import {
     FormControl,
     FormGroup,
     FormsModule,
-    NgForm,
-    NgModel,
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
-import { CurrencyPipe, DatePipe, NgStyle } from '@angular/common';
-import { seatAvailableNumber } from '../../shared/util/seatAvailableNumber';
-import { accessibleSeatAvailableNumber } from '../../shared/util/accessibleSeatAvailableNumber';
-import { HoursDisplayPipe } from '../../shared/util/pipes/hoursDisplay.pipe';
-import { ShowingInterface } from '../models/showing.interface';
-import { DynamicControl } from '../../shared/models/form.interface';
-import { Dialog } from '@angular/cdk/dialog';
-import { PaymentDialogComponent } from '../../shared/ui/payment.dialog.component';
-import { SeatService } from '../../shared/data-access/seat.service';
-import { OrderService } from '../../order/data-access/order.service';
-import { upcomingDate } from '../../shared/util/upcomingDate';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { OrderService } from '../../order/data-access/order.service';
+import { CinemaService } from '../../shared/data-access/cinema.service';
+import { SeatService } from '../../shared/data-access/seat.service';
+import { DynamicControl } from '../../shared/models/form.interface';
+import { PaymentDialogComponent } from '../../shared/ui/payment.dialog.component';
+import { accessibleSeatAvailableNumber } from '../../shared/util/accessibleSeatAvailableNumber';
+import { HoursDisplayPipe } from '../../shared/util/pipes/hoursDisplay.pipe';
+import { seatAvailableNumber } from '../../shared/util/seatAvailableNumber';
+import { upcomingDate } from '../../shared/util/upcomingDate';
 import { UserService } from '../../user/data-access/user.service';
+import { ShowingService } from '../data-access/showing.service';
+import { ShowingInterface } from '../models/showing.interface';
 
 @Component({
     selector: 'app-showing',
@@ -43,7 +41,7 @@ import { UserService } from '../../user/data-access/user.service';
         HoursDisplayPipe,
         NgStyle,
         RouterLink,
-        FormsModule
+        FormsModule,
     ],
     templateUrl: './showing.component.html',
 })
@@ -61,7 +59,7 @@ export class ShowingComponent implements OnInit {
     isPDCChecked = false;
     isCGVChecked = false;
 
-    private showings = toSignal(this.showingService.getAllShowing(), {
+    private readonly showings = toSignal(this.showingService.getAllShowing(), {
         initialValue: [],
     });
     public cinemas = toSignal(this.cinemaService.getAllCinema(), {
@@ -81,11 +79,14 @@ export class ShowingComponent implements OnInit {
 
     isLogin = computed(() => !!this.currentUser()?.id);
 
-    public movieFilteredCinema = computed(()=>
-  { const movies = this.showingFilterByCinema().map((showing)=> showing.movie)
-    return Array.from(new Map(movies.map((movie)=> [movie?.id, movie])).values())
-}
-    )
+    public movieFilteredCinema = computed(() => {
+        const movies = this.showingFilterByCinema().map(
+            (showing) => showing.movie,
+        );
+        return Array.from(
+            new Map(movies.map((movie) => [movie?.id, movie])).values(),
+        );
+    });
 
     public showingFilterByCinema = computed(() =>
         this.showings()?.filter(
@@ -175,7 +176,7 @@ export class ShowingComponent implements OnInit {
             });
 
             dialogRef.closed.subscribe((resaIsValidate) => {
-                console.log(resaIsValidate)
+                console.log(resaIsValidate);
                 if (resaIsValidate) {
                     const seatArray = this.selectSeatIndex().map(
                         (index) => this.selectedShowingSignal()[0].seat[index],
