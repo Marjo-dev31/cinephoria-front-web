@@ -41,7 +41,7 @@ export class MovieBackofficeComponent {
         reviews: [],
         showing: [],
         is_Favorite: false,
-        create_At: new Date(),
+        created_At: new Date(),
     });
 
     currentMovieDisplayOnForm = computed<MovieDisplayFormInterface>(() => {

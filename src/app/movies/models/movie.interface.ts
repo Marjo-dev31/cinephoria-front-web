@@ -18,7 +18,7 @@ export interface MovieUpdateInterface extends MovieCreateInterface {
 export interface MovieInterface extends MovieUpdateInterface {
     reviews: ReviewInterface[];
     showing: ShowingInterface[];
-    create_At: Date;
+    created_At: Date;
 }
 
 export interface MovieDisplayFormInterface {
@@ -34,5 +34,5 @@ export interface MovieOnMongoInterface {
     _id: string;
     title: string;
     nbOfSales: number;
-    create_At: Date;
+    created_At: Date;
 }
