@@ -6,7 +6,7 @@
         "image_Url": "iloveperu.jpg",
         "minimum_Age": 13,
         "is_Favorite": false,
-        "create_At": "2025-07-08T15:14:09.924Z",
+        "created_At": "2025-07-08T15:14:09.924Z",
         "genre": {
             "id": "e3d87fe4-94de-4f1a-b1c7-57e4230d2858",
             "title": "comédie"
@@ -56,7 +56,7 @@
         "image_Url": "theuglystepsister.webp",
         "minimum_Age": 16,
         "is_Favorite": true,
-        "create_At": "2025-07-08T15:01:40.880Z",
+        "created_At": "2025-07-08T15:01:40.880Z",
         "genre": {
             "id": "d0059c72-889e-4394-b9b6-5f00a5dfce3d",
             "title": "épouvante"
@@ -145,7 +145,7 @@
         "image_Url": "l'accidentdepiano.webp",
         "minimum_Age": 13,
         "is_Favorite": false,
-        "create_At": "2025-07-08T14:56:29.972Z",
+        "created_At": "2025-07-08T14:56:29.972Z",
         "genre": {
             "id": "e3d87fe4-94de-4f1a-b1c7-57e4230d2858",
             "title": "comédie"
@@ -213,7 +213,7 @@
         "image_Url": "avatar.jpg",
         "minimum_Age": 3,
         "is_Favorite": true,
-        "create_At": "2025-10-03T15:27:44.121Z",
+        "created_At": "2025-10-03T15:27:44.121Z",
         "genre": {
             "id": "856eed4e-246b-4199-a469-6f0572651296",
             "title": "science-fiction"
@@ -274,7 +274,7 @@
         "image_Url": "other.jpg",
         "minimum_Age": 12,
         "is_Favorite": false,
-        "create_At": "2025-07-11T08:21:00.211Z",
+        "created_At": "2025-07-11T08:21:00.211Z",
         "genre": {
             "id": "cd7b8cec-0cd1-4c9a-bcff-ae28ac03a458",
             "title": "thriller"
@@ -305,7 +305,7 @@
         "image_Url": "yoroi.jpg",
         "minimum_Age": 12,
         "is_Favorite": true,
-        "create_At": "2025-10-30T08:40:03.189Z",
+        "created_At": "2025-10-30T08:40:03.189Z",
         "genre": {
             "id": "266e0722-914a-4015-adf8-09bac7fcd9d7",
             "title": "aventure"
@@ -336,7 +336,7 @@
         "image_Url": "jurassicworld.jpg",
         "minimum_Age": 12,
         "is_Favorite": false,
-        "create_At": "2025-07-10T08:58:53.731Z",
+        "created_At": "2025-07-10T08:58:53.731Z",
         "genre": {
             "id": "266e0722-914a-4015-adf8-09bac7fcd9d7",
             "title": "aventure"
