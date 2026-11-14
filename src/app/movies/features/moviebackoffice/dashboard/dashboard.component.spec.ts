@@ -1,8 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
 import { DashboardComponent } from './dashboard.component';
 import { MoviesService } from '../../../data-access/movies.service';
 import { of } from 'rxjs';
+
+jest.mock('chart.js', () => {
+    const Chart = Object.assign(jest.fn(), { register: jest.fn() });
+
+    return { Chart, registerables: [] };
+});
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;

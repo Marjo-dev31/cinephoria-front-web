@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RoomBackofficeComponent } from './room.backoffice.component';
 import { ProjectionQualityService } from '../../../shared/data-access/projectionQuality.service';

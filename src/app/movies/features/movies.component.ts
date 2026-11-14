@@ -28,8 +28,7 @@ export class MoviesComponent {
     private readonly dialog = inject(Dialog);
     private readonly router = inject(Router);
 
-    // check if it works in production
-    public readonly url = `${environment.serverUrl}/uploads/`;
+    public readonly url = `https://cinephoria-prod-uploads.s3.eu-west-3.amazonaws.com/`;
 
     public searchGenre = signal('');
     public searchCinema = signal('');

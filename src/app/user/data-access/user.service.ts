@@ -21,7 +21,7 @@ export class UserService {
         role: '',
     });
 
-    access_token = new BehaviorSubject<string | undefined >('');
+    access_token = new BehaviorSubject<string | undefined>('');
 
     addAccount(userEmployee: UserCreateInterface): Observable<UserInterface> {
         return this.http.post<UserInterface>(this.url, userEmployee);

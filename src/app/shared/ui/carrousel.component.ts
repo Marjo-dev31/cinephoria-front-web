@@ -1,6 +1,5 @@
 import { Component, input } from '@angular/core';
 import { MovieUpdateInterface } from '../../movies/models/movie.interface';
-import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-carousel',
@@ -47,8 +46,12 @@ import { environment } from '../../../environments/environment';
                         />
                     </svg>
                 </button>
-                <button (click)="next()" [tabIndex]="0" (keyup.enter)="next()"
-                class="cursor-pointer ">
+                <button
+                    (click)="next()"
+                    [tabIndex]="0"
+                    (keyup.enter)="next()"
+                    class="cursor-pointer "
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -71,8 +74,7 @@ import { environment } from '../../../environments/environment';
 export class CarouselComponent {
     items = input.required<MovieUpdateInterface[]>();
 
-    // check if it works in production
-    url = `${environment.serverUrl}/uploads/`;
+    url = `https://cinephoria-prod-uploads.s3.eu-west-3.amazonaws.com/`;
 
     currentIndex = 0;
 
@@ -81,9 +83,8 @@ export class CarouselComponent {
     }
 
     previous() {
-            this.currentIndex =
-                (this.currentIndex - 1 + this.items().length) %
-                this.items().length;
+        this.currentIndex =
+            (this.currentIndex - 1 + this.items().length) % this.items().length;
     }
 
     next() {
