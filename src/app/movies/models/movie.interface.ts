@@ -31,8 +31,8 @@ export interface MovieDisplayFormInterface {
 }
 
 export interface MovieOnMongoInterface {
-    _id: string;
+    id: string;
     title: string;
     nbOfSales: number;
-    created_At: Date;
+    create_At: Date;
 }
