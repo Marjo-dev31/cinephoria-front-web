@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
                         const now = new Date();
                         const sevenDaysAgo = new Date();
                         sevenDaysAgo.setDate(now.getDate() - 7);
-                        return new Date(movie.created_At) >= sevenDaysAgo;
+                        return new Date(movie.create_At) >= sevenDaysAgo;
                     }),
                 ),
                 takeUntilDestroyed(this.destroyRef),
